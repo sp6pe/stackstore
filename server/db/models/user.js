@@ -25,7 +25,7 @@ var schema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
     isProduct: {
         type: Boolean,
         default: false
@@ -41,7 +41,6 @@ var schema = new mongoose.Schema({
     reviewsCreated: [{
         type: String
     }]
-
 
     // salt: {
     //     type: String
