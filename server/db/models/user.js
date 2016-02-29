@@ -25,7 +25,7 @@ var schema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
     isProduct: {
         type: Boolean,
         default: false
