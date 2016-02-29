@@ -42,7 +42,6 @@ var schema = new mongoose.Schema({
         type: String
     }]
 
-
     // salt: {
     //     type: String
     // },
