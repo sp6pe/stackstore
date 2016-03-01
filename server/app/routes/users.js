@@ -26,7 +26,7 @@ router.post('/',function(req,res,next){
 })
 
 router.param('userId',function(req,res,next,id){
-	User.findbyId(id).exec()
+	User.findById(id).exec()
 	.then(function(user){
 		if(!user) throw Error('No such user')
 		req.user = user;

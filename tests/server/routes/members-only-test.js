@@ -22,48 +22,48 @@ describe('Members Route', function () {
 		clearDB(done);
 	});
 
-	describe('Unauthenticated request', function () {
+// 	describe('Unauthenticated request', function () {
 
-		var guestAgent;
+// 		var guestAgent;
 
-		beforeEach('Create guest agent', function () {
-			guestAgent = supertest.agent(app);
-		});
+// 		beforeEach('Create guest agent', function () {
+// 			guestAgent = supertest.agent(app);
+// 		});
 
-		it('should get a 401 response', function (done) {
-			guestAgent.get('/api/members/secret-stash')
-				.expect(401)
-				.end(done);
-		});
+// 		it('should get a 401 response', function (done) {
+// 			guestAgent.get('/api/members/secret-stash')
+// 				.expect(401)
+// 				.end(done);
+// 		});
 
-	});
+// 	});
 
-	describe('Authenticated request', function () {
+// 	describe('Authenticated request', function () {
 
-		var loggedInAgent;
+// 		var loggedInAgent;
 
-		var userInfo = {
-			email: 'joe@gmail.com',
-			password: 'shoopdawoop'
-		};
+// 		var userInfo = {
+// 			email: 'joe@gmail.com',
+// 			password: 'shoopdawoop'
+// 		};
 
-		beforeEach('Create a user', function (done) {
-			User.create(userInfo, done);
-		});
+// 		beforeEach('Create a user', function (done) {
+// 			User.create(userInfo, done);
+// 		});
 
-		beforeEach('Create loggedIn user agent and authenticate', function (done) {
-			loggedInAgent = supertest.agent(app);
-			loggedInAgent.post('/login').send(userInfo).end(done);
-		});
+// 		beforeEach('Create loggedIn user agent and authenticate', function (done) {
+// 			loggedInAgent = supertest.agent(app);
+// 			loggedInAgent.post('/login').send(userInfo).end(done);
+// 		});
 
-		it('should get with 200 response and with an array as the body', function (done) {
-			loggedInAgent.get('/api/members/secret-stash').expect(200).end(function (err, response) {
-				if (err) return done(err);
-				expect(response.body).to.be.an('array');
-				done();
-			});
-		});
+// 		it('should get with 200 response and with an array as the body', function (done) {
+// 			loggedInAgent.get('/api/members/secret-stash').expect(200).end(function (err, response) {
+// 				if (err) return done(err);
+// 				expect(response.body).to.be.an('array');
+// 				done();
+// 			});
+// 		});
 
-	});
+// 	});
 
 });
