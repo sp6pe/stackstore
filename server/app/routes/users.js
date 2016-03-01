@@ -55,3 +55,5 @@ router.delete('/:userId',function(req,res,next){
 	})
 	.then(next,null)
 })
+
+router.use('/:userId/cart', require('./cart'));
