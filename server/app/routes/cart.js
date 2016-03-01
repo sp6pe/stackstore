@@ -3,16 +3,20 @@ var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
 require('../../db/models');
-var Cart = mongoose.model('User');
+var Cart = mongoose.model('Cart');
 _=require('lodash');
 
 
 
 //api/carts
 router.post('/',function(req,res,next){
-	Cart.create({productList:[req.body.id]})
+	Cart.create({})
 	.then(function(cart){
-		res.status(201).json(cart);
+		cart.addProduct(req.body.id)
+		.then(function(cart) {
+			res.status(201).json(cart);	
+		})
+		.then(null,next);
 	})
 	.then(null,next);
 })
