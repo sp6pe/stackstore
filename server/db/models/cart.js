@@ -14,7 +14,10 @@ var schema = new mongoose.Schema({
     status:{
     	type:String,
     	enum:['created', 'processing','cancelled','complete']
-    }
+    },
+    finalCart: [{
+        type: String
+    }]
 });
 
 mongoose.model('Cart', schema);

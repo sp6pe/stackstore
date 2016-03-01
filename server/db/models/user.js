@@ -26,7 +26,7 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isProduct: {
+    isInterviewer: {
         type: Boolean,
         default: false
     },
@@ -38,7 +38,7 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Cart"
     },
-    reviewsCreated: [{
+    previousOrders: [{ 
         type: String
     }]
 
