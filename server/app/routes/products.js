@@ -17,7 +17,6 @@ router.param('productId', function(req, res, next, productId) {
 router.get('/', function(req, res, next) {
 	Product.find({})
 	.then(function(products) {
-		if (products.length === 0) throw new Error('No products found');
 		res.json(products);
 	})
 	.then(null, next);

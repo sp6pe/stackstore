@@ -1,23 +1,5 @@
 var mongoose = require('mongoose');
 
-var Reviews = new mongoose.Schema({
-    review: {
-        type: String,
-        required: true,
-        minlength: 20
-    },
-    stars: {
-        type: Number,
-        required: true,
-        min: 0,
-        max: 5
-    },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
-});
-
 var schema = new mongoose.Schema({
     title: {
         type: String,
@@ -30,10 +12,6 @@ var schema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    category: {
-        type: String,
-        enum: ['Javascript', 'Angular', 'Front End', 'Back End']
-    },
     quantity: {
         type: Number,
         required: true
@@ -42,9 +20,19 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
-    reviews: [Reviews]
+    categories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }]
 
 });
 
+schema.statics.findByCategoryId = function(categoryId) {
+    return this.find({ categories: categoryId }).populate('categories');
+};
+
+schema.statics.findByUserId = function(userId) {
+    return this.find({ user: userId });
+};
 
 mongoose.model('Product', schema);

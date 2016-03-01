@@ -9,6 +9,7 @@ require('../../../server/db/models');
 
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+var Category = mongoose.model('Category');
 
 describe('Product', function () {
 
@@ -55,125 +56,54 @@ describe('Product', function () {
         .then(null, done);
       });
 
-      it('requires title', function(done) {
-        var product = new Product({
-          price: 150,
-          quantity: 1
+      it('can find by category ID', function(done) {
+        var category = new Category({
+          name: 'Javascript'
         });
 
-        product.validate(function(err) {
-          expect(err).to.be.an('object');
-          expect(err.message).to.equal('Product validation failed');
-          done();
-        });
-      });
+        category.save()
+          .then(function(savedCategory) {
+            var product = new Product({
+              title: 'Test title',
+              price: 150,
+              quantity: 1,
+              categories: [savedCategory._id]
+            });
 
-      it('requires price', function(done) {
-        var product = new Product({
-          title: 'Test title',
-          quantity: 1
-        });
-
-        product.validate(function(err) {
-          expect(err).to.be.an('object');
-          expect(err.message).to.equal('Product validation failed');
-          done();
-        });
-      });
-
-      it('requires quantity', function(done) {
-        var product = new Product({
-          title: 'Test title',
-          price: 150
-        });
-
-        product.validate(function(err) {
-          expect(err).to.be.an('object');
-          expect(err.message).to.equal('Product validation failed');
-          done();
-        });
-      });
-
-      it('only chooses from available categories', function(done) {
-        var product = new Product({
-          title: 'Test title',
-          price: 150,
-          quantity: 1,
-          category: 'dog'
-        });
-
-        product.validate(function(err) {
-          expect(err).to.be.an('object');
-          expect(err.message).to.equal('Product validation failed');
-          done();
-        });
-      });
-
-      describe('Reviews', function() {
-        it('contains a review', function(done) {
-          var product = new Product({
-            title: 'Test title',
-            price: 150,
-            quantity: 1,
-            reviews: [{
-              review: 'This is a test review with min length 20',
-              stars: 5
-            }]
-          });
-
-          product.save().then(function(savedProduct) {
-            expect(savedProduct.reviews[0].review).to.equal('This is a test review with min length 20');
-            expect(savedProduct.reviews[0].stars).to.equal(5);
+            return product.save();
+            
+          })
+          .then(function(savedProduct) {
+            return Product.findByCategoryId(savedProduct.categories[0]);
+          })
+          .then(function(productWithCat) {
+            expect(productWithCat[0].categories[0].name).to.equal('Javascript');
             done();
           })
           .then(null, done);
-          
-        });
+      });
 
-        it('requires reviews to have minlength of 20 characters', function(done) {
-          var product = new Product({
-            title: 'Test title',
-            price: 150,
-            quantity: 1,
-            reviews: [{
-              review: 'Short review',
-              stars: 5
-            }]
-          });
+      it('can find by user id', function(done){
+        var product = new Product({
+              title: 'Another Test title',
+              price: 120,
+              quantity: 2,
+              user: user._id
+            });
 
-          product.validate(function(err) {
-            expect(err).to.be.an('object');
-            expect(err.message).to.equal('Product validation failed');
-            done();
-          });
-        });
-
-        it('requires reviews to have 1 to 5 stars', function(done) {
-          var product = new Product({
-            title: 'Test title',
-            price: 150,
-            quantity: 1,
-            reviews: [{
-              review: 'This is a test review with min length 20',
-              stars: 8
-            }]
-          });
-
-          product.validate(function(err) {
-            expect(err).to.be.an('object');
-            expect(err.message).to.equal('Product validation failed');
-            done();
-          });
-        });
-
-
-
+        product.save()
+        .then(function(savedProduct){
+          return Product.findByUserId(user._id);
+        })
+        .then(function(productWithUser){
+          expect(productWithUser[0].title).to.equal('Another Test title');
+          done();
+        })
+        .then(null,done);
       });
 
 
 
-
-
-    })
+    });
 
 });
