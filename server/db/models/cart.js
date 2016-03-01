@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-// var _ = require('lodash');
+var Product = mongoose.model('Product');
 
 var schema = new mongoose.Schema({
     productList: [{
@@ -14,7 +14,34 @@ var schema = new mongoose.Schema({
     status:{
     	type:String,
     	enum:['created', 'processing','cancelled','complete']
-    }
+    },
+    finalCart: [{
+        type: String
+    }]
 });
+
+
+schema.methods.addProduct = function (productId) {
+    var cart = this;
+    var product;
+    return Product.findOne({_id: productId})
+    .then(function (item) {
+        product = item;
+        cart.productList.addToSet(item._id);
+        return cart.save();
+    })
+    .then(function () {
+        return product;
+    });
+};
+
+schema.methods.removeProduct = function (product) {
+    var cart = this;
+    return product.remove()
+    .then(function () {
+        cart.productList.pull(product);
+        return cart.save();
+    });
+};
 
 mongoose.model('Cart', schema);
