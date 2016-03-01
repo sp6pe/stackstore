@@ -6,6 +6,12 @@ var Reviews = new mongoose.Schema({
         required: true,
         minlength: 20
     },
+    stars: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 5
+    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -25,7 +31,8 @@ var schema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: [String]
+        type: String,
+        enum: ['Javascript', 'Angular', 'Front End', 'Back End']
     },
     quantity: {
         type: Number,
