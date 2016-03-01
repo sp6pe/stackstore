@@ -40,21 +40,31 @@ router.get('/:userId',function(req,res,next){
 })
 
 router.put('/:userId', function (req, res, next) {
-	User.findByIdAndUpdate(req.user.id,req.body, {new: true})
-	.then(function(user){
-		//console.log(book);
-		res.json(user).status(200);
-	})
-	.then(null,next)
+
+
+		User.findByIdAndUpdate(req.user.id,req.body,  {new: true,runValidators: true})
+		.then(function(user){
+
+			console.log("this is being sent", user)
+			res.json(user).status(200);
+		})
+		.then(null,next)
+
 });
 
 
 router.delete('/:userId',function(req,res,next){
-	req.user.remove()
-	.then(function(){
-		res.status(204).end()
-	})
-	.then(next,null)
+
+
+	User.findById(req.user.id).remove().exec()
+			.then(function(){
+				res.sendStatus(204);
+			})
+			.then(next,null)
 })
+
+
+
+
 
 router.use('/:userId/cart', require('./cart'));
