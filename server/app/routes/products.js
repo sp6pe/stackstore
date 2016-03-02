@@ -17,7 +17,6 @@ router.param('productId', function(req, res, next, productId) {
 router.get('/', function(req, res, next) {
 	Product.find({})
 	.then(function(products) {
-		if (products.length === 0) throw new Error('No products found');
 		res.json(products);
 	})
 	.then(null, next);
@@ -36,7 +35,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:productId', function(req, res, next) {
-	Product.findByIdAndUpdate(req.product._id, req.body, {new: true})
+	Product.findByIdAndUpdate(req.product._id, req.body, {new: true,runValidators: true})
 	.then(function(product) {
 		res.json(product);
 	})
@@ -49,3 +48,5 @@ router.delete('/:productId', function(req, res, next) {
 		res.status(204).end();
 	})
 });
+
+router.use('/:productId/category', require('./product-category'));

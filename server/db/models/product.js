@@ -1,16 +1,5 @@
 var mongoose = require('mongoose');
-
-var Reviews = new mongoose.Schema({
-    review: {
-        type: String,
-        required: true,
-        minlength: 20
-    },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
-});
+var Category = mongoose.model('Category');
 
 var schema = new mongoose.Schema({
     title: {
@@ -24,9 +13,6 @@ var schema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    category: {
-        type: [String]
-    },
     quantity: {
         type: Number,
         required: true
@@ -35,9 +21,49 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
-    reviews: [Reviews]
+    categories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }]
 
 });
 
+schema.statics.findByCategoryId = function(categoryId) {
+    return this.find({ categories: categoryId }).populate('categories');
+};
+
+schema.statics.findByUserId = function(userId) {
+    return this.find({ user: userId });
+};
+
+schema.methods.addCategory = function(categoryData) {
+    var product = this;
+    var category;
+
+    return Category.find(categoryData)
+        .then(function(category) {
+            if (category.length === 0) {
+                return Category.create(categoryData);
+            } else {
+                return category[0];
+            }
+        })
+        .then(function(cat) {
+            category = cat;
+            product.categories.addToSet(cat._id);
+            return product.save();
+        })
+        .then(function() {
+            return category;
+        })
+};
+
+schema.methods.removeCategory = function(category) {
+    var product = this;
+ 
+     product.categories.pull(category);
+     return product.save();
+      
+};
 
 mongoose.model('Product', schema);

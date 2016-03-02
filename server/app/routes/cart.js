@@ -4,7 +4,7 @@ module.exports = router;
 var mongoose = require('mongoose');
 require('../../db/models');
 var Cart = mongoose.model('Cart');
-_=require('lodash');
+var _ = require('lodash');
 
 
 //get all carts (admin only)

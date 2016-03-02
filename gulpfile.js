@@ -65,6 +65,20 @@ gulp.task('testServerCartJS', function () {
     }).pipe(mocha({ reporter: 'spec' }));
 });
 
+gulp.task('testServerCatJS', function () {
+    require('babel/register');
+    return gulp.src('./tests/server/**/categoryRouteTest.js', {
+        read: false
+    }).pipe(mocha({ reporter: 'spec' }));
+});
+
+gulp.task('testServerProductJS', function () {
+    require('babel/register');
+    return gulp.src('./tests/server/**/productRouteTest.js', {
+        read: false
+    }).pipe(mocha({ reporter: 'spec' }));
+});
+
 gulp.task('testServerJSWithCoverage', function (done) {
     gulp.src('./server/**/*.js')
         .pipe(istanbul({
