@@ -4,7 +4,7 @@ module.exports = router;
 require('../../db/models');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-_=require('lodash');
+var _ = require('lodash');
 
 
 
