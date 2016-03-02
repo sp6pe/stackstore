@@ -1,9 +1,8 @@
 app.config(function ($stateProvider) {
 
-    // $stateProvider.state('login', {
-    //     url: '/login',
-    //     templateUrl: 'js/login/login.html',
-    //     controller: 'LoginCtrl'
-    // });
+    $stateProvider.state('create_product', {
+        url: '/create/product',
+        templateUrl: 'js/product/product.creation/product.creation.html'
+    });
 
 });

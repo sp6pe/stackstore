@@ -742,4 +742,29 @@ body {
   width: 60%;
   margin: 0 auto;
   margin-top: 6em;
-   }
+}
+
+#course-creation-form {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 6em;
+  font-size:18px;
+}
+
+#course-creation-title {
+  width: 600px;
+}
+
+#course-creation-description {
+   resize: none;
+   font-size:16px;
+}
+
+
+#course-creation-price {
+  width: 80px;
+}
+
+#course-creation-hour {
+  width: 40px;
+}
