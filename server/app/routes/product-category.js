@@ -1,8 +1,7 @@
 var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
-var Product = mongoose.model('Product');
-var Cateogry = mongoose.model('Category');
+var Category = mongoose.model('Category');
 
 // For adding a category to a specific product
 router.post('/', function(req, res, next) {
@@ -22,4 +21,4 @@ router.delete('/:id',function(req,res,next){
 			})
 			.then(null,next)
 
-})
+});

@@ -39,11 +39,19 @@ schema.statics.findByUserId = function(userId) {
 schema.methods.addCategory = function(categoryData) {
     var product = this;
     var category;
-    return Category.create(categoryData)
+
+    return Category.find(categoryData)
+        .then(function(category) {
+            if (category.length === 0) {
+                return Category.create(categoryData);
+            } else {
+                return category[0];
+            }
+        })
         .then(function(cat) {
             category = cat;
             product.categories.addToSet(cat._id);
-            return product.save()
+            return product.save();
         })
         .then(function() {
             return category;
