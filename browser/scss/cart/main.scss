@@ -1,0 +1,104 @@
+.cart-body {
+	background-color: #f7f7f7;
+}
+
+.cart-view {
+	margin-top: 10em;
+}
+
+.cart-item {
+	position: relative;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid black;
+
+	h4 {
+		color: #777777;
+		font-weight: 400;
+	}
+}
+
+.cart-header{
+	border-bottom: 1px solid black;
+	display: block;
+	h4	{
+		display: inline-block;
+		font-weight: 400;
+	}
+
+	.header-price {
+		width: 10%;
+		margin-left: 45%;
+	}
+
+	.header-quantity {
+		width: 20%;
+		margin-left: 5%;
+	}
+
+	.header-total {
+		float:right;
+		width: 7%;
+		padding-right: 0;
+		margin-right: 0;
+	}
+}
+
+.cart-item-img {
+	display: inline-block;
+	width: 15%;
+
+	img {
+		display: inline-block;
+		width:100%;
+		height:auto;
+		vertical-align: middle;
+	}
+}
+
+.cart-item-info {
+	display: inline-block;
+	padding-left: 5%;
+	width: 30%;
+}
+
+.cart-item-price {
+	display: inline-block;
+	width: 15%;
+	font-size: 24px;
+}
+
+.cart-item-qty {
+	display: inline-block;
+	width: 15%;
+	span {
+		margin-right: 10px;
+		font-size: 24px;
+		font-weight: 700;
+		position: relative;
+		top: 4px;
+	}
+}
+
+.cart-item-total {
+	display: inline-block;
+	width: 22%;
+	text-align: right;
+}
+
+.checkout-btn {
+	float: right;
+	margin-top: 1em;
+	font-size: 1.5em;
+	font-weight: 700;
+	font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.remove-item {
+	position: absolute;
+	right: 10px;
+	bottom: 15px;
+	font-weight: 400;
+	font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
