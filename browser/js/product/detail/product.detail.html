@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div>
+                <!-- Product Details Go Here -->
+                <h2>{{ product.title }}</h2>
+                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                <img class="img-responsive img-centered" src="../../../static/img/portfolio/roundicons-free.png" alt="">
+                <p>{{ product.description }}</p>
+                <p>
+                    <strong>Only ${{ product.price }}/hour</strong></p>
+                <ul class="list-inline">
+                    <li>Interviewer: {{ product.user.name.firstName }} {{ product.user.name.lastName }}</li>
+                    <li>Category: {{ product.category.name }}</li>
+                </ul>
+                <button type="button" class="btn btn-primary"><i class="fa fa-times"></i> Close Project</button>
+            </div>
+        </div>
+    </div>
+</div>
