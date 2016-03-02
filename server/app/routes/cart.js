@@ -7,6 +7,15 @@ var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
 
+//get all carts (admin only)
+router.get('/', function(req,res,next){
+	Cart.find({})
+	.then(function(carts){
+		res.json(carts);
+	})
+	.then(null,next);
+});
+
 
 //api/carts
 router.post('/',function(req,res,next){
@@ -24,13 +33,16 @@ router.post('/',function(req,res,next){
 
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
-	Cart.findbyId(id).exec()
+	Cart.findById(id)
 	.then(function(cart){
-		if(!cart) throw Error('No such cart')
+		if(!cart) throw Error('No such cart');
 		req.cart = cart;
 		next();
 	})
-	.then(null,next);
+	.then(null,function(err){
+		err.status = 404;
+		next(err);
+	});
 })
 
 
@@ -62,10 +74,6 @@ router.delete('/:cartId',function(req,res,next){
 
 
 
-
-
-
-
 // //get all items in a users cart 
 // ///users/:userId/carts/
 // router.get('/',function(req,res,next){
@@ -75,10 +83,6 @@ router.delete('/:cartId',function(req,res,next){
 // 	})
 // 	.then(null,next)
 // })
-
-
-
-
 
 
 router.delete('/',function(req,res,next){

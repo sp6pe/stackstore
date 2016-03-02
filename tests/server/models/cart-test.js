@@ -25,4 +25,65 @@ describe('Cart model', function () {
     it('should exist', function () {
         expect(Cart).to.be.a('function');
     });
+
+    describe('addProduct method', function() {
+
+     it('can add one product to cart', function(done) {
+        var product = new Product({
+             title: 'Test Product',
+             price: 500,
+             quantity: 1
+            });
+
+        product.save()
+        .then(function(){
+            var cart = new Cart({});
+            return cart.save();              
+        })
+        .then(function(cart){
+            return cart.addProduct(product._id);
+        })
+        .then(function(cartWithProduct) {
+            Cart.findById(cartWithProduct._id).populate('productList')
+            .then(function(populatedCart){
+                expect(populatedCart.productList[0].title).to.equal('Test Product');    
+            });
+            
+            done();
+        })
+        .then(null, done);
+     
+     });
+
+    });
+
+    describe('removeProduct method', function() {
+
+     it('can remove one product from cart', function(done) {
+        var newCart = new Cart({});
+        newCart.save();
+        var product = new Product({
+             title: 'Product To Be Removed',
+             price: 20,
+             quantity: 2
+            });
+
+        product.save()
+        .then(function(product){
+            return newCart.addProduct(product._id);
+        })
+        .then(function(cart){
+            return cart.removeProduct(product);
+        })
+        .then(function(cartRemovedProduct){
+            expect(cartRemovedProduct.productList).to.have.lengthOf(0);
+            done();
+        })
+        .then(null,done);
+     
+     });
+
+    });
+
+
 });

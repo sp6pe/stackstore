@@ -7,12 +7,12 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
     }],
-    creation:{
-    	type:Date, 
+    dateCreated:{
+    	type: Date, 
     	default: Date.now
     },
     status:{
-    	type:String,
+    	type: String,
     	enum:['created', 'processing','cancelled','complete']
     },
     finalCart: [{
@@ -23,11 +23,11 @@ var schema = new mongoose.Schema({
 
 schema.methods.addProduct = function (productId) {
     var cart = this;
-    return Product.findOne({_id: productId})
-    .then(function (item) {
-        cart.productList.addToSet(item._id);
+    return Product.findById(productId)
+    .then(function (product) {
+        cart.productList.addToSet(product._id);
         return cart.save();
-    })
+    });
 };
 
 schema.methods.removeProduct = function (product) {
@@ -37,6 +37,7 @@ schema.methods.removeProduct = function (product) {
         cart.productList.pull(product);
         return cart.save();
     });
+
 };
 
 mongoose.model('Cart', schema);
