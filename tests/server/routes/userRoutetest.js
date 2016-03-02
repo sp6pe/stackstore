@@ -12,9 +12,6 @@ var agent = supertest.agent(app);
 
 describe('Users Route', function () {
 
-
-	describe('Get with /api/users', function() {
-		
 		beforeEach('Establish DB connection', function (done) {
 			if (mongoose.connection.db) return done();
 			mongoose.connect(dbURI, done);
@@ -23,6 +20,9 @@ describe('Users Route', function () {
 		afterEach('Clear test database', function (done) {
 			clearDB(done);
 		});
+
+  describe('Get with /api/users', function() {
+    
 
 
 		it ('should find no users', function(done) {
@@ -111,19 +111,8 @@ describe('Users Route', function () {
 
 	describe('POST /users', function () {
 
-        /**
-         * Test the creation of an article
-         * Here we don't get back just the article, we get back a Object
-         * of this type:
-         *
-         * {
-     *   message: 'Created successfully'
-     *   article: {
-     *     _id: ...
-     *     title: ...
-     *   }
-     * }
-         */
+      //var user;
+       
         it('posts a new user', function (done) {
             agent
                 .post('/api/users/')
@@ -134,6 +123,7 @@ describe('Users Route', function () {
                 .expect(201)
                 .expect(function (res) {
                     //expect(res.body.message).to.equal('Created successfully');
+                    console.log(res.body);
                     expect(res.body._id).to.not.be.an('undefined');
                     expect(res.body.email).to.equal('Jai@123.com');
                 })
@@ -152,15 +142,94 @@ describe('Users Route', function () {
         });
 
         // Check if the articles were actually saved to the database
-        xit('saves the user to the DB', function (done) {
+        it('saves the user to the DB', function (done) {
+
+
         		User.find({})
         		.then(function(data) {
-        			console.log(data);
+        			//console.log(data);
+              done();
         		})
-        		.then(null,done);
+            .then(null,done);
+
+        })
+      
+
+    });
+
+describe('PUT api/users/:id', function () {
+
+
+ 
+        it('updates an user', function (done) {
+          //console.log(user._id);
+             var user = new User({
+                email: 'jai@jai.com',
+                password: '1234'
+            });
+
+             user.save();
+            // console.log(user);
+
+            agent
+                .put('/api/users/' + user._id)
+                .send({
+                    password: '5678'
+                })
+                .expect(200)
+                .expect(function (res) {
+                  console.log('this is the body',res.body);
+                    //expect(res.body).to.equal('Updated successfully');
+                    expect(res.body._id).to.not.be.an('undefined');
+                    expect(res.body.email).to.equal('jai@jai.com');
+                    expect(res.body.password).to.equal('5678');
+                })
+                .end(done);
 
         });
 
+
+       it('gets 500 for invalid update', function (done) {
+          var user1 = new User({
+                email: 'jai@jai.com',
+                password: '1234'
+            });
+
+            user1.save();
+            agent
+                .put('/api/users/' + user1._id)
+                .send({
+                    password: '',
+                    email:''
+                })
+                .expect(500)
+                .end(done);
+        });
+
     });
+
+describe('Delete api/users/:id', function () {
+
+
+
+  it('deletes an user', function (done) {
+          //console.log(user._id);
+          var user3 = new User({
+            email: 'franline@jai.com',
+            password: '12345'
+          });
+
+          user3.save();
+          //console.log(user);
+
+        agent
+            .delete('/api/users/' + user3._id)
+            .expect(204)
+            .end(done);
+
+
+        });
+
+  });
 
 });
