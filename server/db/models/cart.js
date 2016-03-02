@@ -23,16 +23,11 @@ var schema = new mongoose.Schema({
 
 schema.methods.addProduct = function (productId) {
     var cart = this;
-    var product;
     return Product.findOne({_id: productId})
     .then(function (item) {
-        product = item;
         cart.productList.addToSet(item._id);
         return cart.save();
     })
-    .then(function () {
-        return product;
-    });
 };
 
 schema.methods.removeProduct = function (product) {
