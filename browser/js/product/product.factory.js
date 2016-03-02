@@ -34,7 +34,7 @@ app.factory('ProductFactory', function($http){
 		});
 	};
 
-	ProductFactory.remove = function(id)
+	ProductFactory.remove = function(id){
 		return $http.delete('/api/products/' + id)
 		.then(function(response){
 			console.log('ProductFactory remove: ', response.data);
