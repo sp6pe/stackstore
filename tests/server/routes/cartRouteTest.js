@@ -12,42 +12,74 @@ var agent = supertest.agent(app);
 
 describe('Carts Route', function() {
   
-  beforeEach('Establish DB connection', function (done) {
+  before('Establish DB connection', function (done) {
     if (mongoose.connection.db) return done();
     mongoose.connect(dbURI, done);
   });
 
-  afterEach('Clear test database', function (done) {
-    clearDB(done);
-  });
+  // after('Clear test database', function (done) {
+  //   clearDB(done);
+  // });
 
-  describe('Post with /api/carts', function() {
+  describe('/api', function() {
+    var createdCart;
     
-    it ('posts a new cart', function (done) {
+    it ('Post one cart at /api/carts', function (done) {
+        agent
+        .post('/api/carts/')
+        .expect(201)
+        .end(function (err, res) {
+          if (err) return done(err);
+          console.log(res.body);
+          expect(res.body._id).to.be.a('string');
+          createdCart = res.body;
+          done();
+        });      
+      
+    });  
+    
+    it ('Get one cart at /api/carts/:cartId', function (done) {
+        console.log(createdCart);
+        agent
+        .get('/api/carts/' + createdCart._id)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          console.log(res.body);
+          expect(res.body._id).to.be.a('string');
+          done();
+        });
+    });
 
-      var item = new Product({
+    // it ('Get one cart that doesn\'t exist', function (done) {
+    //     agent
+    //     .get('/api/carts/123asdf')
+    //     .expect(404)
+    //     .end(done);
+    // });
+
+    it ('Adds product to an existing cart at /api/carts/:cartId', function (done) {
+
+      var product = new Product({
         title: "test",
         price: 150,
         quantity: 10
       })
-
-      item.save().then(function() {
+      product.save().then(function() {
         agent
-        .post('/api/carts/')
-        .send({id: item._id})
+        .post('/api/carts/' + createdCart._id)
+        .send({id: product._id})
         .expect(201)
         .expect(function (res) {
-          console.log(res.body);
-          expect(res.body.productList[0]).to.equal(item.id);
-        })
-        .end(done);      
-      })
-    })
+          expect(res.body.productList[0]).to.equal(product._id);
+          done();
+        });     
+      });
+    });  
 
+  });
 
-    
-  })
-})
+});
 
 // it('posts a new user', function (done) {
 //             agent
