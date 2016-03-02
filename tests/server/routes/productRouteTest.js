@@ -178,23 +178,22 @@ describe('Products Route', function () {
 
           });
 
-          // what is invalid update
-         // it('gets 500 for invalid update', function (done) {
-         //    var product1 = new Product({
-         //          email: 'jai@jai.com',
-         //          password: '1234',
-         //      });
+         it('gets 500 for invalid update', function (done) {
+            var product1 = new Product({
+                title: 'Test product #1',
+                price: 300,
+                quantity: 2
+              });
 
-         //      user1.save();
-         //      agent
-         //          .put('/api/users/' + user1._id)
-         //          .send({
-         //              password: '',
-         //              email:''
-         //          })
-         //          .expect(500)
-         //          .end(done);
-         //  });
+              product1.save();
+              agent
+                  .put('/api/products/' + product1._id)
+                  .send({
+                    title: ''
+                  })
+                  .expect(500)
+                  .end(done);
+          });
 
       });
 

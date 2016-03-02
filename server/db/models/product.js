@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Category = mongoose.model('Category');
 
 var schema = new mongoose.Schema({
     title: {
@@ -33,6 +34,28 @@ schema.statics.findByCategoryId = function(categoryId) {
 
 schema.statics.findByUserId = function(userId) {
     return this.find({ user: userId });
+};
+
+schema.methods.addCategory = function(categoryData) {
+    var product = this;
+    var category;
+    return Category.create(categoryData)
+        .then(function(cat) {
+            category = cat;
+            product.categories.addToSet(cat._id);
+            return product.save()
+        })
+        .then(function() {
+            return category;
+        })
+};
+
+schema.methods.removeCategory = function(category) {
+    var product = this;
+ 
+     product.categories.pull(category);
+     return product.save();
+      
 };
 
 mongoose.model('Product', schema);

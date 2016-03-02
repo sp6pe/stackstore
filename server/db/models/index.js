@@ -3,10 +3,10 @@
 // anywhere the User model needs to be used.
 require('./user');
 
+require('./category');
+
 require('./product');
 
 require('./cart');
 
 require('./review');
-
-require('./category');
