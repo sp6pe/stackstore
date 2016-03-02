@@ -1,6 +1,6 @@
 <div class="main-content">
 
-    <form class="form-register" method="post" action="#" id="course-creation-form">
+    <form class="form-register" method="post" id="course-creation-form" ng-submit='createCourse()'>
 
         <div class="form-register-with-email">
 
@@ -13,28 +13,28 @@
                 <div class="form-row">
                     <label>
                         <span>What would you like to call your course?</span>
-                        <input type="text" name="title" placeholder="Technical Interview for Google" id="course-creation-title">
+                        <input type="text" name="title" placeholder="Technical Interview for Google" id="course-creation-title" ng-model="newProduct.title">
                     </label>
                 </div>
 
                 <div class="form-row">
                     <label>
                         <span>Please provide a short description:</span><br>
-                        <textarea type="text" name="description" rows="4" cols="100" placeholder="description" id="course-creation-description"></textarea>
+                        <textarea type="text" name="description" rows="4" cols="100" placeholder="description" id="course-creation-description" ng-model="newProduct.description"></textarea>
                     </label>
                 </div>
 
                 <div class="form-row">
                     <label>
                         <span>What is the hourly rate for your time? $</span>
-                        <input type="text" name="price" placeholder="9999.99" id="course-creation-price">
+                        <input type="text" name="price" placeholder="9999.99" id="course-creation-price" ng-model="newProduct.price">
                     </label>
                 </div>
 
                 <div class="form-row">
                     <label>
                         <span>How many one hour interviews will be available?</span>
-                        <input type="text" name="quantity" placeholder="999" id="course-creation-hour">
+                        <input type="text" name="quantity" placeholder="999" id="course-creation-hour" ng-model="newProduct.quantity">
                         <span>interviews</span>
                     </label>
                 </div>
