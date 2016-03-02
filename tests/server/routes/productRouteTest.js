@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 var expect = require('chai').expect;
 var dbURI = 'mongodb://localhost:27017/testingDB';
 var clearDB = require('mocha-mongoose')(dbURI);
@@ -143,6 +144,54 @@ describe('Products Route', function () {
                 .expect(500)
                 .end(done);
         });
+
+       it('is able to add a new category', function(done) {
+           var product = new Product({
+                title: 'Test product #1',
+                price: 300,
+                quantity: 2
+            });
+
+           product.save()
+             .then(function(product) {
+               agent
+                   .post('/api/products/' + product._id + '/category')
+                   .send({
+                       name: 'Javascript'
+                   })
+                   .expect(201)
+                   .expect(function (res) {
+                       //expect(res.body.message).to.equal('Created successfully');
+                       expect(res.body.name).to.equal('Javascript');
+                   })
+                   .end(done);
+             });
+       });
+
+       it('is able to add an existing category', function(done) {
+
+          var category = new Category({name: 'Javascript'});
+
+          var product = new Product({
+               title: 'Test product #1',
+               price: 300,
+               quantity: 2
+           });
+
+          Promise.all([category.save(), product.save()]).then(function () {
+            agent
+                .post('/api/products/' + product._id + '/category')
+                .send({
+                    name: 'Javascript'
+                })
+                .expect(201)
+                .expect(function (res) {
+                    //expect(res.body.message).to.equal('Created successfully');
+                    expect(res.body.name).to.equal('Javascript');
+                })
+                .end(done);
+            });
+          });  
 
     });
 
