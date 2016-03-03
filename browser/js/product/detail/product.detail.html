@@ -1,20 +1,35 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <div>
+            <div class="product-single">
                 <!-- Product Details Go Here -->
+                <br><br>
                 <h2>{{ product.title }}</h2>
                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-responsive img-centered" src="../../../static/img/portfolio/roundicons-free.png" alt="">
+                <!-- <p>{{ reviews }}</p> -->
+                <img class="img-responsive img-centered product-image" src="../../../static/img/AngularJS_Interview.png" alt="">
                 <p>{{ product.description }}</p>
-                <p>
-                    <strong>Only ${{ product.price }}/hour</strong></p>
+                <p><strong>Price: ${{ product.price }}/hour</strong></p>
                 <ul class="list-inline">
-                    <li>Interviewer: {{ product.user.name.firstName }} {{ product.user.name.lastName }}</li>
+                    <li>Interviewer: {{ product.user.name.firstName }} {{ product.user.name.lastName }}</li> 
+                    <br>
                     <li>Category: {{ product.category.name }}</li>
+                    <br>
                 </ul>
                 <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add to Cart</button>
             </div>
+            <div class="product-reviews">
+                <h3>Customer Reviews</h3>
+                <ul class="list-inline" ng-repeat="review in reviews">
+                    <li>{{ review.title }}</li>
+                    <br>
+                    <li>{{ review.content }}</li>
+                    <br>
+                    <li>{{ review.stars }}</li>
+                    <br>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

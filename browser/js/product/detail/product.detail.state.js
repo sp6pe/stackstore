@@ -8,8 +8,11 @@ app.config(function($stateProvider){
 		controller: 'ProductCtrl',
 		resolve: {
 			theProduct: function(ProductFactory, $stateParams){
-				console.log($stateParams);
 				return ProductFactory.fetchById($stateParams.productId);
+			},
+			theReviews: function(ReviewFactory, $stateParams){
+				// console.log('$stateParams.productId', $stateParams.productId)
+				return ReviewFactory.fetchByProductId($stateParams.productId);
 			}
 		}
 	});
