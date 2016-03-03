@@ -25,8 +25,5 @@
 // @import 'tutorial/main';
 // @import 'login/main';
 
-.navbar {
-	background-color: #333;
-}
-
+@import 'directives/navbar';
 @import 'cart/main';
