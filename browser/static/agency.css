@@ -768,3 +768,16 @@ body {
 #course-creation-hour {
   width: 40px;
 }
+
+.product-single {
+  text-align: center;
+}
+
+.product-image {
+  width: 40%;
+}
+
+.product-reviews {
+  text-align: center;
+}
+
