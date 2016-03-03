@@ -20,6 +20,7 @@ app.factory('ReviewFactory', function($http){
 
 	ReviewFactory.fetchByProductId = function(productId){
 		//fetch all reviews corresponding to a product
+		console.log("reviewfactory", productId)
 		return $http.get('/api/reviews/product/' + productId)
 		.then(function(response){
 			console.log('ReviewFactory fetchById: ', response.data);
