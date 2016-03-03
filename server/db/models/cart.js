@@ -26,9 +26,15 @@ var schema = new mongoose.Schema({
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
     var cart = this;
+    var index = -1;
     return Product.findById(productId)
     .then(function (product) {
-        var index = cart.productList.indexOf(product._id);
+         cart.productList.forEach(function(productObj, i){
+            if(String(productObj._id) === String(product._id)){
+                index = i;            
+            } 
+         });
+        console.log(index, 'Found index of product');
         // It already exists
         if (index !== -1) {
             cart.quantityIndex[index]++;
@@ -36,16 +42,22 @@ schema.methods.addProduct = function (productId) {
             cart.productList.addToSet(product._id);
             cart.quantityIndex.push(1);
         }
+        cart.markModified("quantityIndex");
         return cart.save();
     });
 };
 
 schema.methods.decreaseQty = function(productId) {
     var cart = this;
-
+    var index = -1;
     return Product.findById(productId)
     .then(function (product) {
-        var index = cart.productList.indexOf(product._id);
+
+         cart.productList.forEach(function(productObj, i){
+            if(String(productObj._id) === String(product._id)){
+                index = i;            
+            } 
+         });
         // It already exists
         if (index !== -1) {
             cart.quantityIndex[index]--;
@@ -55,6 +67,7 @@ schema.methods.decreaseQty = function(productId) {
                 cart.quantityIndex.splice(index, 1);
             }
         }
+        cart.markModified("quantityIndex");
         return cart.save();
     });
 };

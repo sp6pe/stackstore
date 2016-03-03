@@ -28,9 +28,10 @@
 				</div>
 				<div class="cart-item-price">{{product.price | currency}}</div>
 				<div class="cart-item-qty">
-					<span>{{product.quantity}}</span>
-					<button class="btn btn-default minus"><i class="fa fa-minus"></i></button>
-					<button class="btn btn-default plus"><i class="fa fa-plus"></i></button>
+					<!-- This gets the index of the current productsInCart iteration, kind of hacky -->
+					<span>{{quantityIndex[$index]}}</span>
+					<button class="btn btn-default minus" ng-click="decreaseItemQuantity(product._id)"><i class="fa fa-minus"></i></button>
+					<button class="btn btn-default plus" ng-click="increaseItemQuantity(product._id)"><i class="fa fa-plus"></i></button>
 				</div>
 				<div class="cart-item-total">
 					<h3>$150</h3>
