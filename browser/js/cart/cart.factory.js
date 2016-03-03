@@ -19,8 +19,8 @@ app.factory("CartFactory", function($http) {
 		})
 	}
 
-	CartFactory.create = function() {
-		return $http.post('/api/carts')
+	CartFactory.create = function(data) {
+		return $http.post('/api/carts',data)
 		.then(function(response) {
 			console.log("CartFactory.create: ", response.data);
 			return response.data;

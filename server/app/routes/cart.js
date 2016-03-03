@@ -19,9 +19,10 @@ router.get('/', function(req,res,next){
 
 //api/carts
 router.post('/',function(req,res,next){
+	console.log(req.body);
 	Cart.create({})
 	.then(function(cart){
-		cart.addProduct(req.body.id)
+		cart.addProduct(req.body._id)
 		.then(function(cart) {
 			res.status(201).json(cart);	
 		})

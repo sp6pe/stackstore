@@ -1,9 +1,18 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct, theReviews){
+app.controller('ProductCtrl', function($scope, theProduct,CartFactory){
+
+
 
 	$scope.product = theProduct;
 
-	$scope.reviews = theReviews;
+
+	$scope.addToCart = function(product){
+		CartFactory.create(product).then(function(cart){
+			console.log(cart);
+			return cart;
+		})
+	}
+	//$scope.reviews = theReviews;
 
 });
