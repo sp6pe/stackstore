@@ -8,8 +8,8 @@ router.delete('/:id',function(req,res,next){
 	Product.findById(req.params.id)
 			.then(function(product){
 				return req.cart.removeProduct(product);
-			}).then(function(){
-				res.sendStatus(204)
+			}).then(function(item){
+				res.send(item);
 			})
 			.then(null,next)
 
