@@ -19,7 +19,7 @@ app.factory('ProductFactory', function($http){
 	};
 
 	ProductFactory.create = function(productInfo){
-		return $http.post('/api/products')
+		return $http.post('/api/products', productInfo)
 		.then(function(response){
 			console.log('ProductFactory create: ', response.data);
 			return response.data;

@@ -26,22 +26,22 @@ var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Cart = Promise.promisifyAll(mongoose.model('Cart'));
 
 
-var seedUsers = function () {
+// var seedUsers = function () {
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+//     var users = [
+//         {
+//             email: 'testing@fsa.com',
+//             password: 'password'
+//         },
+//         {
+//             email: 'obama@gmail.com',
+//             password: 'potus'
+//         }
+//     ];
 
-    return User.createAsync(users);
+//     return User.createAsync(users);
 
-};
+// };
 
 var seedProducts = function () {
 
@@ -60,6 +60,36 @@ var seedProducts = function () {
             title: 'Test Course 3',
             price: 180,
             quantity: 5
+        },
+        {
+            title: 'Test Course 4',
+            price: 180,
+            quantity: 5
+        },
+        {
+            title: 'Test Course 5',
+            price: 180,
+            quantity: 5
+        },
+        {
+            title: 'Test Course 6',
+            price: 180,
+            quantity: 5
+        },
+        {
+            title: 'Test Course 7',
+            price: 180,
+            quantity: 5
+        },
+        {
+            title: 'Test Course 8',
+            price: 180,
+            quantity: 5
+        },
+        {
+            title: 'Test Course 9',
+            price: 180,
+            quantity: 5
         }
     ];
 
@@ -68,7 +98,7 @@ var seedProducts = function () {
 };
 
 var seedCart = function (products) {
-
+    
     var carts = [
     {
             status: 'created',
@@ -82,27 +112,6 @@ var seedCart = function (products) {
     return Cart.createAsync(carts);
 
 };
-
-
-
-
-// connectToDb.then(function () {
-//     Cart.findAsync({}).then(function (carts) {
-//         if (carts.length === 0) {
-//             return seedUsers();
-//         } else {
-//             console.log(chalk.magenta('Seems to already be cart data, exiting!'));
-//             process.kill(0);
-//         }
-//     }).then(function () {
-//         console.log(chalk.green('Seed successful!'));
-//         process.kill(0);
-//     }).catch(function (err) {
-//         console.error(err);
-//         process.kill(1);
-//     });
-// });
-
 
 
 // connectToDb.then(function () {
