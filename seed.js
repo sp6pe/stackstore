@@ -29,22 +29,22 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Cart = Promise.promisifyAll(mongoose.model('Cart'));
 
 
-// var seedUsers = function () {
+var seedUsers = function () {
 
-//     var users = [
-//         {
-//             email: 'testing@fsa.com',
-//             password: 'password'
-//         },
-//         {
-//             email: 'obama@gmail.com',
-//             password: 'potus'
-//         }
-//     ];
+    var users = [
+        {
+            email: 'testing@fsa.com',
+            password: 'password'
+        },
+        {
+            email: 'obama@gmail.com',
+            password: 'potus'
+        }
+    ];
 
-//     return User.createAsync(users);
+    return User.createAsync(users);
 
-// };
+};
 
 
 var seedProducts = function () {
@@ -228,6 +228,7 @@ var seedReviews = function (products) {
 // });
 
 connectToDb.then(function () {      
+    // return seedUsers();
     console.log(chalk.green('Seed successful!'));
     return seedProducts();
 })
