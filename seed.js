@@ -23,6 +23,8 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
+var Cart = Promise.promisifyAll(mongoose.model('Cart'));
+
 
 var seedUsers = function () {
 
@@ -61,38 +63,77 @@ var seedProducts = function () {
         }
     ];
 
-    return Product.createAsync(users);
+    return Product.createAsync(products);
+
+};
+
+var seedCart = function (products) {
+
+    var carts = [
+    {
+            status: 'created',
+            productList:[products]
+  
+            
+        }
+  
+    ];
+
+    return Cart.createAsync(carts);
 
 };
 
 
 
-connectToDb.then(function () {
-    User.findAsync({}).then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
-        console.log(chalk.green('Seed successful!'));
-        process.kill(0);
-    }).catch(function (err) {
-        console.error(err);
-        process.kill(1);
-    });
-});
+
+// connectToDb.then(function () {
+//     Cart.findAsync({}).then(function (carts) {
+//         if (carts.length === 0) {
+//             return seedUsers();
+//         } else {
+//             console.log(chalk.magenta('Seems to already be cart data, exiting!'));
+//             process.kill(0);
+//         }
+//     }).then(function () {
+//         console.log(chalk.green('Seed successful!'));
+//         process.kill(0);
+//     }).catch(function (err) {
+//         console.error(err);
+//         process.kill(1);
+//     });
+// });
+
+
+
+// connectToDb.then(function () {
+//     User.findAsync({}).then(function (users) {
+//         if (users.length === 0) {
+//             return seedUsers();
+//         } else {
+//             console.log(chalk.magenta('Seems to already be user data, exiting!'));
+//             process.kill(0);
+//         }
+//     }).then(function () {
+//         console.log(chalk.green('Seed successful!'));
+//         process.kill(0);
+//     }).catch(function (err) {
+//         console.error(err);
+//         process.kill(1);
+//     });
+// });
 
 connectToDb.then(function () {
     Product.findAsync({}).then(function (products) {
-        if (products.length === 0) {
+        // if (products.length === 0) {
             return seedProducts();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
+        // } else {
+        //     console.log(chalk.magenta('Seems to already be user data, exiting!'));
+        //     process.kill(0);
+        // }
+    }).then(function (products) {
+        return products.forEach(function(product){
+            return seedCart(product)
+        });
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
