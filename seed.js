@@ -111,21 +111,28 @@ var seedProducts = function () {
 
 };
 
-// var seedCart = function (products) {
+var seedCart = function (products) {
 
-//     var carts = [
-//     {
-//             status: 'created',
-//             productList:[products]
+    // var productsList = [];
+    // var qtyIndex = [];
+
+    // products.forEach(function(product) {
+    //     productsList.push(product._id);
+    //     qtyIndex.push(Math.ceil(Math.Random() * 10));
+    // });
+
+    var carts = [
+        {
+            status: 'created',
+            productList: ["56d86d2ffe24bdc740bf8715","56d86d2ffe24bdc740bf8714"],
+            quantityIndex: [1,3]
+        }
   
-            
-//         }
-  
-//     ];
+    ];
 
-//     return Cart.createAsync(carts);
+    return Cart.createAsync(carts);
 
-// };
+};
 
 var seedReviews = function (products) {
 
@@ -218,26 +225,9 @@ var seedReviews = function (products) {
 //     });
 // });
 
-connectToDb.then(function () {
-    Product.findAsync({}).then(function (products) {
-        // if (products.length === 0) {
-            return seedProducts();
-        // } else {
-        //     console.log(chalk.magenta('Seems to already be user data, exiting!'));
-        //     process.kill(0);
-        // }
-    }).then(function (products) {
-        return products.forEach(function(product){
-
-            return seedReviews(product)
-
-            // return seedCart(product)
-
-        });
-        console.log(chalk.green('Seed successful!'));
-        process.kill(0);
-    }).catch(function (err) {
-        console.error(err);
-        process.kill(1);
-    });
+connectToDb.then(function () {      
+    return seedCart();
+    console.log(chalk.green('Seed successful!'));
+}).catch(function (err) {
+    console.error(err);
 });
