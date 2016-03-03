@@ -121,10 +121,12 @@ var seedCart = function (products) {
     //     qtyIndex.push(Math.ceil(Math.Random() * 10));
     // });
 
+    var productList = [products[0], products[1]];
+
     var carts = [
         {
             status: 'created',
-            productList: ["56d86d2ffe24bdc740bf8715","56d86d2ffe24bdc740bf8714"],
+            productList: productList,
             quantityIndex: [1,3]
         }
   
@@ -226,8 +228,13 @@ var seedReviews = function (products) {
 // });
 
 connectToDb.then(function () {      
-    return seedUsers();
+    // return seedUsers();
     console.log(chalk.green('Seed successful!'));
-}).catch(function (err) {
+    return seedProducts();
+})
+.then(function(products) {
+    return seedCart(products);
+})
+.catch(function (err) {
     console.error(err);
 });
