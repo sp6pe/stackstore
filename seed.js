@@ -23,6 +23,8 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
+var Cart = Promise.promisifyAll(mongoose.model('Cart'));
+
 
 // var seedUsers = function () {
 
@@ -95,6 +97,21 @@ var seedProducts = function () {
 
 };
 
+var seedCart = function (products) {
+    
+    var carts = [
+    {
+            status: 'created',
+            productList:[products]
+  
+            
+        }
+  
+    ];
+
+    return Cart.createAsync(carts);
+
+};
 
 
 // connectToDb.then(function () {
@@ -116,13 +133,16 @@ var seedProducts = function () {
 
 connectToDb.then(function () {
     Product.findAsync({}).then(function (products) {
-        if (products.length === 0) {
+        // if (products.length === 0) {
             return seedProducts();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
+        // } else {
+        //     console.log(chalk.magenta('Seems to already be user data, exiting!'));
+        //     process.kill(0);
+        // }
+    }).then(function (products) {
+        return products.forEach(function(product){
+            return seedCart(product)
+        });
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
