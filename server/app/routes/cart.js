@@ -19,11 +19,11 @@ router.get('/', function(req,res,next){
 
 //api/carts
 router.post('/',function(req,res,next){
-	console.log(req.body);
 	Cart.create({})
 	.then(function(cart){
 		cart.addProduct(req.body._id)
 		.then(function(cart) {
+		console.log(cart, 'Inside post route');
 			res.status(201).json(cart);	
 		})
 		.then(null,next);
