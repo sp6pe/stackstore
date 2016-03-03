@@ -27,8 +27,18 @@ app.factory("CartFactory", function($http) {
 		})
 	}
 
-	CartFactory.update = function(id) {
-		return $http.put('/api/carts/' + id)
+	CartFactory.increaseQty = function(id, data) {
+		console.log(id, data);
+		return $http.post('/api/carts/' + id + '/add/', data)
+		.then(function(response) {
+			console.log('CartFactory.increaseQty: ', response.data);
+			return response.data;
+		})
+	}
+
+
+	CartFactory.decreaseQty = function(id ,data) {
+		return $http.post('/api/carts/' + id +'/remove/', data)
 		.then(function(response) {
 			console.log('CartFactory.update: ', response.data);
 			return response.data;
