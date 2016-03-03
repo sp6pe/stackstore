@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct,CartFactory){
+app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews){
 
 
 
@@ -13,6 +13,6 @@ app.controller('ProductCtrl', function($scope, theProduct,CartFactory){
 			return cart;
 		})
 	}
-	//$scope.reviews = theReviews;
+	$scope.reviews = theReviews;
 
 });
