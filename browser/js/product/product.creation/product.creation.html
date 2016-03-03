@@ -1,6 +1,6 @@
 <div class="main-content">
 
-    <form class="form-register" method="post" id="course-creation-form" ng-submit='createCourse()'>
+    <form class="form-register" id="course-creation-form" ng-submit='createCourse()' name='productForm' novalidate>
 
         <div class="form-register-with-email">
 
@@ -10,44 +10,48 @@
                     <h1>Create an Interview Product</h1>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row" ng-class="{ 'has-error' : productForm.title.$invalid && !productForm.title.$pristine }">
                     <label>
                         <span>What would you like to call your course?</span>
-                        <input type="text" name="title" placeholder="Technical Interview for Google" id="course-creation-title" ng-model="newProduct.title">
+                        <input type="text" name="title" placeholder="Technical Interview for Google" id="course-creation-title" ng-model="newProduct.title" required>
+                        <p ng-show="productForm.title.$invalid && !productForm.title.$pristine" class="help-block">A title is needed.</p>
                     </label>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row" ng-class="{ 'has-error' : productForm.description.$invalid && !productForm.description.$pristine }">
                     <label>
                         <span>Please provide a short description:</span><br>
-                        <textarea type="text" name="description" rows="4" cols="100" placeholder="description" id="course-creation-description" ng-model="newProduct.description"></textarea>
+                        <textarea type="text" name="description" rows="4" cols="100" placeholder="description" id="course-creation-description" ng-model="newProduct.description" required></textarea>
+                        <p ng-show="productForm.description.$invalid && !productForm.description.$pristine" class="help-block">A description is needed.</p>
                     </label>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row" ng-class="{ 'has-error' : productForm.price.$invalid && !productForm.price.$pristine }">
                     <label>
                         <span>What is the hourly rate for your time? $</span>
-                        <input type="text" name="price" placeholder="9999.99" id="course-creation-price" ng-model="newProduct.price">
+                        <input type="text" name="price" placeholder="9999.99" id="course-creation-price" ng-model="newProduct.price" required>
+                        <p ng-show="productForm.price.$invalid && !productForm.price.$pristine" class="help-block">A price is needed.</p>
                     </label>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row" ng-class="{ 'has-error' : productForm.quantity.$invalid && !productForm.quantity.$pristine }">
                     <label>
                         <span>How many one hour interviews will be available?</span>
-                        <input type="text" name="quantity" placeholder="999" id="course-creation-hour" ng-model="newProduct.quantity">
+                        <input type="text" name="quantity" placeholder="999" id="course-creation-hour" ng-model="newProduct.quantity" required>
                         <span>interviews</span>
+                        <p ng-show="productForm.quantity.$invalid && !productForm.quantity.$pristine" class="help-block">A quantity is needed.</p>
                     </label>
                 </div>
                 <br>
                 <div class="form-row">
                     <label class="form-checkbox">
-                        <input type="checkbox" name="checkbox" checked>
+                        <input type="checkbox" name="checkbox" ng-required="value.length==0" checked required>
                         <span>I agree to the <a href="#">terms and conditions</a></span>
                     </label>
                 </div>
                 <br>
                 <div class="form-row">
-                    <button type="submit">Create Course</button>
+                    <button type="submit" ng-disabled="productForm.$invalid">Create Course</button>
                 </div>
 
             </div>
