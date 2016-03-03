@@ -1,7 +1,12 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    review: {
+    title: {
+        type: String,
+        required: true,
+        maxlength: 100
+    },
+    content: {
         type: String,
         required: true,
         minlength: 20
@@ -27,7 +32,7 @@ schema.statics.findByAuthorId = function(authorId) {
 };
 
 schema.statics.findByProductId = function(productId) {
-    return this.find({ product: productId }).exec();
+    return this.find({ product: productId });
 };
 
 mongoose.model('Review', schema);

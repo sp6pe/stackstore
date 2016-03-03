@@ -23,6 +23,15 @@ router.get('/', function(req, res, next) {
 	.then(null, next);
 });
 
+router.get('/product/:productId', function(req, res, next) {
+	Review.findByProductId(req.params.productId).exec()
+	.then(function(reviews) {
+		if (reviews.length === 0) throw new Error('No reviews found');
+		res.json(reviews);
+	})
+	.then(null, next);
+});
+
 router.get('/:reviewId', function(req, res, next) {
 	res.json(req.review);
 });
