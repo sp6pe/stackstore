@@ -36,6 +36,7 @@ router.post('/',function(req,res,next){
 
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
+	console.log(id, 'the cart ID!!!!');
 	Cart.findById(id).populate('productList')
 	.then(function(cart){
 		if(!cart) throw Error('No such cart');
