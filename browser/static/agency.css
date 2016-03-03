@@ -777,7 +777,10 @@ body {
   width: 40%;
 }
 
-.product-reviews {
+.review-section-title {
   text-align: center;
 }
 
+.review-info {
+  text-align: left;
+}

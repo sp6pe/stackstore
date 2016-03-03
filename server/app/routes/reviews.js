@@ -7,7 +7,6 @@ router.param('reviewId', function(req, res, next, reviewId) {
 	Review.findById(reviewId)
 	.populate('author product')
 	.then(function(review) {
-		if (!review) throw new Error('Review not found');
 		req.review = review;
 		next();
 	})
@@ -17,7 +16,6 @@ router.param('reviewId', function(req, res, next, reviewId) {
 router.get('/', function(req, res, next) {
 	Review.find({})
 	.then(function(reviews) {
-		if (reviews.length === 0) throw new Error('No reviews found');
 		res.json(reviews);
 	})
 	.then(null, next);
@@ -26,7 +24,6 @@ router.get('/', function(req, res, next) {
 router.get('/product/:productId', function(req, res, next) {
 	Review.findByProductId(req.params.productId).exec()
 	.then(function(reviews) {
-		if (reviews.length === 0) throw new Error('No reviews found');
 		res.json(reviews);
 	})
 	.then(null, next);

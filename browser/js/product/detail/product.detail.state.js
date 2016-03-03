@@ -11,7 +11,6 @@ app.config(function($stateProvider){
 				return ProductFactory.fetchById($stateParams.productId);
 			},
 			theReviews: function(ReviewFactory, $stateParams){
-				console.log('$stateParams.productId', $stateParams.productId)
 				return ReviewFactory.fetchByProductId($stateParams.productId);
 			}
 		}
