@@ -6,7 +6,6 @@
                 <br><br>
                 <h2>{{ product.title }}</h2>
                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <!-- <p>{{ reviews }}</p> -->
                 <img class="img-responsive img-centered product-image" src="../../../static/img/AngularJS_Interview.png" alt="">
                 <p>{{ product.description }}</p>
                 <p><strong>Price: ${{ product.price }}/hour</strong></p>
@@ -17,18 +16,37 @@
                     <br>
                 </ul>
                 <button type="button" class="btn btn-primary" ng-click ="addToCart(product)"><i class="fa fa-plus"></i> Add to Cart</button>
-              
             </div>
+            <br>
             <div class="product-reviews">
-                <h3>Customer Reviews</h3>
-                <ul class="list-inline" ng-repeat="review in reviews">
-                    <li>{{ review.title }}</li>
-                    <br>
-                    <li>{{ review.content }}</li>
-                    <br>
-                    <li>{{ review.stars }}</li>
-                    <br>
-                </ul>
+                <h3 class="review-section-title">Customer Reviews</h3>
+                <br>
+
+                <div ng-show="noReviews">
+                    <p>Be the first to review this item. Share your rating and review so that other customers can decide if this is the right item for them.</p>
+                </div>
+
+                <button>Write a review</button>
+                <br>
+
+                <div ng-hide="noReviews">
+                    <p>Showing {{ reviewDisplayLimit }} out of {{ reviewAmount }} review(s).</p>
+                    <div ng-hide="lessReviewsThanLimit">
+                        <p ng-show="reviewsLimited"><a ng-click="showAllReviews()">See all reviews.</a></p>
+                        <p ng-hide="reviewsLimited"><a ng-click="showLessReviews()">Show less reviews</a></p>
+                    </div>
+                </div>
+
+                    <ul class="list-inline review-info" ng-repeat="review in reviews | limitTo:reviewDisplayLimit">
+                        <li>{{ review.stars }} stars <strong>{{ review.title }}</strong></li>
+                        <br>
+                        <li>By John on {{ review.date | date:'MM/dd/yyyy' }}</li>
+                        <br>
+                        <li>{{ review.content }}</li>
+                        <br>
+                        <br>
+                    </ul>
+             
             </div>
 
         </div>
