@@ -17,6 +17,9 @@
     <!-- Custom CSS -->
     <link href="/static/agency.css" rel="stylesheet">
 
+    <!-- our CSS -->
+    <link href="/style.css" rel="stylesheet">
+
      <!-- Custom Fonts -->
     <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -26,11 +29,11 @@
 
 
 </head>
-<body ng-app="FullstackGeneratedApp">
+<body ng-app="FullstackGeneratedApp" ng-controller="appCtrl as appController" class="{{ appController.bodyClasses }}">
     <navbar></navbar>
     <div id="main" ui-view></div>
 
-        <footer>
+    <footer>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">

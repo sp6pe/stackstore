@@ -22,9 +22,29 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 
+
 var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
+var User = Promise.promisifyAll(mongoose.model('User'));
+var Cart = Promise.promisifyAll(mongoose.model('Cart'));
 
+
+// var seedUsers = function () {
+
+//     var users = [
+//         {
+//             email: 'testing@fsa.com',
+//             password: 'password'
+//         },
+//         {
+//             email: 'obama@gmail.com',
+//             password: 'potus'
+//         }
+//     ];
+
+//     return User.createAsync(users);
+
+// };
 
 
 var seedProducts = function () {
@@ -56,6 +76,11 @@ var seedProducts = function () {
             quantity: 8
         },
         {
+            title: 'Test Course 5',
+            price: 180,
+            quantity: 5
+        },
+        {
             title: 'Test Course 6',
             price: 180,
             quantity: 5
@@ -69,6 +94,11 @@ var seedProducts = function () {
             title: 'Test Course 8',
             price: 80,
             quantity: 8
+        },
+        {
+            title: 'Test Course 8',
+            price: 180,
+            quantity: 5
         },
         {
             title: 'Test Course 9',
@@ -153,6 +183,24 @@ var seedReviews = function (products) {
 
 
 
+// var seedCart = function (products) {
+    
+//     var carts = [
+//     {
+//             status: 'created',
+//             productList:[products]
+  
+            
+//         }
+  
+//     ];
+
+//     return Cart.createAsync(carts);
+
+// };
+
+
+
 // connectToDb.then(function () {
 //     User.findAsync({}).then(function (users) {
 //         if (users.length === 0) {
@@ -180,7 +228,11 @@ connectToDb.then(function () {
         // }
     }).then(function (products) {
         return products.forEach(function(product){
+
             return seedReviews(product)
+
+            // return seedCart(product)
+
         });
         console.log(chalk.green('Seed successful!'));
         process.kill(0);

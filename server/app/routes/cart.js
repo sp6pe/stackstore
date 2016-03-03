@@ -9,7 +9,7 @@ var _ = require('lodash');
 
 //get all carts (admin only)
 router.get('/', function(req,res,next){
-	Cart.find({})
+	Cart.find({}).populate('productList')
 	.then(function(carts){
 		res.json(carts);
 	})
@@ -33,7 +33,7 @@ router.post('/',function(req,res,next){
 
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
-	Cart.findById(id)
+	Cart.findById(id).populate('productList')
 	.then(function(cart){
 		if(!cart) throw Error('No such cart');
 		req.cart = cart;
@@ -92,3 +92,5 @@ router.delete('/',function(req,res,next){
 	})
 	.then(next,null)
 })
+
+router.use('/:cartId/products', require('./cart-product'));
