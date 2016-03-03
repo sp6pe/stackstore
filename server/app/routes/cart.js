@@ -32,6 +32,8 @@ router.post('/',function(req,res,next){
 })
 
 
+
+
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
 	Cart.findById(id).populate('productList')
@@ -54,15 +56,28 @@ router.get('/:cartId',function(req,res,next){
 })
 
 
-//post to specific cart 
-//:cartId
-router.post('/:cartId',function(req,res,next){
+//post to an already existing cart 
+router.post('/:cartId/add',function(req,res,next){
 	req.cart.addProduct(req.body.id)
 	.then(function(item){
 		res.send(item);
 	})
 	.then(null,next);
 })
+
+//remove from an already existing cart 
+router.post('/:cartId/remove',function(req,res,next){
+
+	req.cart.decreaseQty(req.body.id)
+	.then(function(item){
+		res.send(item);
+	})
+	.then(null,next);
+})
+
+
+
+
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){
@@ -86,12 +101,12 @@ router.delete('/:cartId',function(req,res,next){
 // })
 
 
-router.delete('/',function(req,res,next){
-	req.cart.remove()
-	.then(function(){
-		res.status(204).end()
-	})
-	.then(next,null)
-})
+// router.delete('/',function(req,res,next){
+// 	req.cart.remove()
+// 	.then(function(){
+// 		res.status(204).end()
+// 	})
+// 	.then(next,null)
+// })
 
 router.use('/:cartId/products', require('./cart-product'));
