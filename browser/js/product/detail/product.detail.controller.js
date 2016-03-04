@@ -1,26 +1,34 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews){
+app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews, ReviewFactory){
 
 	$scope.product = theProduct;
 	$scope.reviews = theReviews;
 
 	$scope.addToCart = function(product){
 		CartFactory.create(product).then(function(cart){
-			console.log(cart);
 			return cart;
 		})
-	}
-
+	};
 	
 	var displayLimit = 2;
 	$scope.reviewAmount = theReviews.length;
+	
+	$scope.typingReview = false;
+	$scope.toggleWrite = function(){
+		$scope.typingReview = !$scope.typingReview;
+
+		ReviewFactory.fetchByProductId(theProduct._id)
+		.then(function(newReviews){
+			$scope.reviews = newReviews;
+			$scope.reviewAmount = newReviews.length;
+		});
+	};
 
 	if($scope.reviewAmount === 0){
 		$scope.noReviews = true;
 	} else if ($scope.reviewAmount < displayLimit){
 		$scope.noReviews = false;
-		$scope.reviewDisplayLimit = theReviews.length;
 		$scope.lessReviewsThanLimit = true;
 	
 	} else {
@@ -32,9 +40,8 @@ app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews
 	}
 
 	$scope.showAllReviews = function(){
-		$scope.reviewDisplayLimit = undefined;
 		$scope.reviewsLimited = false;
-		console.log(theReviews);
+		$scope.reviewDisplayLimit = undefined;
 	};
 
 	$scope.showLessReviews = function(){

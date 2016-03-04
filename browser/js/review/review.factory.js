@@ -27,8 +27,8 @@ app.factory('ReviewFactory', function($http){
 		});
 	};
 
-	ReviewFactory.create = function(){
-		return $http.post('/api/reviews')
+	ReviewFactory.create = function(data){
+		return $http.post('/api/reviews', data)
 		.then(function(response){
 			// console.log('ReviewFactory create: ', response.data);
 			return response.data;

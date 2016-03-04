@@ -770,6 +770,7 @@ body {
 
 .product-single {
   text-align: center;
+  margin-top: 5em;
 }
 
 .product-image {
@@ -784,7 +785,17 @@ body {
   text-align: left;
 }
 
+textarea[name=content]{
+    resize: none;
+    width: 100%;   
+}
+
+input[name=title]{
+  width:100%;
+}
+
 #product-creation-categories {
   width: 300px;
   height:80px;
 }
+
