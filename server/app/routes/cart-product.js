@@ -11,6 +11,5 @@ router.delete('/:id',function(req,res,next){
 			}).then(function(item){
 				res.send(item);
 			})
-			.then(null,next)
-
+			.then(null,next);
 });
