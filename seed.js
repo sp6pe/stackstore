@@ -34,11 +34,17 @@ var seedUsers = function () {
     var users = [
         {
             email: 'testing@fsa.com',
-            password: 'password'
+            password: 'password',
+            firstName: 'Joe',
+            lastName: 'Alvez',
+            photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
         },
         {
             email: 'obama@gmail.com',
-            password: 'potus'
+            password: 'potus',
+            firstName: 'Joe',
+            lastName: 'Alvez',
+            photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
         }
     ];
 
@@ -47,18 +53,19 @@ var seedUsers = function () {
 };
 
 
-var seedProducts = function () {
-
+var seedProducts = function (users) {
     var products = [
         {
             title: 'Test Course 1',
             price: 100,
-            quantity: 10
+            quantity: 10,
+            user: users[0]._id
         },
         {
             title: 'Test Course 2',
             price: 80,
-            quantity: 8
+            quantity: 8,
+            user: users[1]._id
         },
         {
             title: 'Test Course 3',
@@ -230,7 +237,10 @@ var seedReviews = function (products) {
 connectToDb.then(function () {      
     // return seedUsers();
     console.log(chalk.green('Seed successful!'));
-    return seedProducts();
+    return seedUsers();
+})
+.then(function(users) {
+    return seedProducts(users);
 })
 .then(function(products) {
     return seedCart(products);

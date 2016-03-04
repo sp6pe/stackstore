@@ -8,8 +8,16 @@ var _ = require('lodash');
 
 
 //get all carts (admin only)
+// Have to do this crazy deep population on products AND user for those products
 router.get('/', function(req,res,next){
-	Cart.find({}).populate('productList')
+	Cart.find({}).populate({
+		path: 'productList', 
+		model: 'Product',
+		populate: {
+			path: 'user',
+			model: 'User'
+  		}
+	})
 	.then(function(carts){
 		res.json(carts);
 	})
@@ -37,7 +45,7 @@ router.post('/',function(req,res,next){
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
 	console.log(id, 'the cart ID!!!!');
-	Cart.findById(id).populate('productList')
+	Cart.findById(id).populate('productList user')
 	.then(function(cart){
 		if(!cart) throw Error('No such cart');
 		req.cart = cart;
@@ -84,7 +92,7 @@ router.post('/:cartId/remove',function(req,res,next){
 router.delete('/:cartId',function(req,res,next){
 	req.cart.removeProduct(req.body)
 	.then(function(){
-		res.sendStatus(204);
+		res.sendStatus(204)
 	})
 	.then(null,next)
 })
