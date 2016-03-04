@@ -26,13 +26,19 @@
                     <p>Be the first to review this item. Share your rating and review so that other customers can decide if this is the right item for them.</p>
                 </div>
 
-                <button>Write a review</button>
-                <br>
+                <button class="btn btn-default" ng-hide="typingReview" ng-click="toggleWrite()">Write a review</button>
+                <button class="btn btn-default" ng-show="typingReview" ng-click="toggleWrite()">Cancel review</button>
+                
+                <write-review product-id="{{ product._id }}" ng-show="typingReview" hideform="toggleWrite()"></write-review>
 
                 <div ng-hide="noReviews">
-                    <p>Showing {{ reviewDisplayLimit }} out of {{ reviewAmount }} review(s).</p>
+                    <div ng-show="lessReviewsThanLimit">
+                        <p>Showing {{ reviewAmount }} review(s).</p>
+                    </div>
                     <div ng-hide="lessReviewsThanLimit">
+                        <p ng-show="reviewsLimited">Showing {{ reviewDisplayLimit }} out of {{ reviewAmount }} reviews.</p>
                         <p ng-show="reviewsLimited"><a ng-click="showAllReviews()">See all reviews.</a></p>
+                        <p ng-hide="reviewsLimited">Showing all {{ reviewAmount }} reviews.</p>
                         <p ng-hide="reviewsLimited"><a ng-click="showLessReviews()">Show less reviews</a></p>
                     </div>
                 </div>
@@ -46,7 +52,7 @@
                         <br>
                         <br>
                     </ul>
-             
+
             </div>
 
         </div>

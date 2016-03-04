@@ -771,6 +771,7 @@ body {
 
 .product-single {
   text-align: center;
+  margin-top: 5em;
 }
 
 .product-image {
@@ -784,3 +785,20 @@ body {
 .review-info {
   text-align: left;
 }
+
+textarea[name=content]{
+    resize: none;
+    width: 100%;   
+}
+
+input[name=title]{
+  width:100%;
+}
+
+
+
+
+
+
+
+
