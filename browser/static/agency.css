@@ -760,7 +760,6 @@ body {
    font-size:16px;
 }
 
-
 #course-creation-price {
   width: 80px;
 }
@@ -795,10 +794,8 @@ input[name=title]{
   width:100%;
 }
 
-
-
-
-
-
-
+#product-creation-categories {
+  width: 300px;
+  height:80px;
+}
 

@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 	.then(null, next);
 });
 
-router.get('/:categoryId', function(req, res, next) {
+router.get('/:categoryId', function(req, res) {
 	res.json(req.category);
 });
 
@@ -42,7 +42,7 @@ router.put('/:categoryId', function(req, res, next) {
 	.then(null, next);
 });
 
-router.delete('/:categoryId', function(req, res, next) {
+router.delete('/:categoryId', function(req, res) {
 	req.category.remove()
 	.then(function(success) {
 		res.status(204).end();

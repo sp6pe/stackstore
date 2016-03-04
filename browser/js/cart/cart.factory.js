@@ -49,6 +49,7 @@ app.factory("CartFactory", function($http) {
 		//console.log("in factory", cartId,productId)
 		return $http.delete('/api/carts/' + cartId + '/products/' + productId)
 		.then(function(response) {
+			console.log(response, 'this is the response!!');
 			console.log('CartFactory.remove: ', response.data);
 			return response.data;
 		})

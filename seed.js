@@ -29,36 +29,43 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Cart = Promise.promisifyAll(mongoose.model('Cart'));
 
 
-// var seedUsers = function () {
+var seedUsers = function () {
 
-//     var users = [
-//         {
-//             email: 'testing@fsa.com',
-//             password: 'password'
-//         },
-//         {
-//             email: 'obama@gmail.com',
-//             password: 'potus'
-//         }
-//     ];
+    var users = [
+        {
+            email: 'testing@fsa.com',
+            password: 'password',
+            firstName: 'Joe',
+            lastName: 'Alvez',
+            photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
+        },
+        {
+            email: 'obama@gmail.com',
+            password: 'potus',
+            firstName: 'Joe',
+            lastName: 'Alvez',
+            photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
+        }
+    ];
 
-//     return User.createAsync(users);
+    return User.createAsync(users);
 
-// };
+};
 
 
-var seedProducts = function () {
-
+var seedProducts = function (users) {
     var products = [
         {
             title: 'Test Course 1',
             price: 100,
-            quantity: 10
+            quantity: 10,
+            user: users[0]._id
         },
         {
             title: 'Test Course 2',
             price: 80,
-            quantity: 8
+            quantity: 8,
+            user: users[1]._id
         },
         {
             title: 'Test Course 3',
@@ -121,10 +128,12 @@ var seedCart = function (products) {
     //     qtyIndex.push(Math.ceil(Math.Random() * 10));
     // });
 
+    var productList = [products[0], products[1]];
+
     var carts = [
         {
             status: 'created',
-            productList: ["56d86d2ffe24bdc740bf8715","56d86d2ffe24bdc740bf8714"],
+            productList: productList,
             quantityIndex: [1,3]
         }
   
@@ -226,8 +235,16 @@ var seedReviews = function (products) {
 // });
 
 connectToDb.then(function () {      
-    return seedCart();
+    // return seedUsers();
     console.log(chalk.green('Seed successful!'));
-}).catch(function (err) {
+    return seedUsers();
+})
+.then(function(users) {
+    return seedProducts(users);
+})
+.then(function(products) {
+    return seedCart(products);
+})
+.catch(function (err) {
     console.error(err);
 });
