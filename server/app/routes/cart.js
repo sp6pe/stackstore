@@ -61,7 +61,6 @@ router.get('/:cartId',function(req,res,next){
 	res.json(req.cart)
 })
 
-
 //post to an already existing cart 
 router.post('/:cartId/add',function(req,res,next){
 	req.cart.addProduct(req.body.id)
@@ -69,7 +68,7 @@ router.post('/:cartId/add',function(req,res,next){
 			res.send(item);
 		})
 		.then(null,next);
-})
+});
 
 //remove from an already existing cart 
 router.post('/:cartId/remove',function(req,res,next){
@@ -79,7 +78,7 @@ router.post('/:cartId/remove',function(req,res,next){
 			res.send(item);
 		})
 		.then(null,next);
-})
+});
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){
@@ -88,6 +87,6 @@ router.delete('/:cartId',function(req,res,next){
 			res.sendStatus(204)
 		})
 		.then(null,next)
-})
+});
 
 router.use('/:cartId/products', require('./cart-product'));

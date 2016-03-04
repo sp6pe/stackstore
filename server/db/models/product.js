@@ -17,7 +17,7 @@ var schema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    user: {
+    interviewer: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
@@ -40,12 +40,12 @@ schema.methods.addCategory = function(categoryData) {
     var product = this;
     var category;
 
-    return Category.find(categoryData)
+    return Category.findOne(categoryData)
         .then(function(category) {
-            if (category.length === 0) {
+            if (!category) {
                 return Category.create(categoryData);
             } else {
-                return category[0];
+                return category;
             }
         })
         .then(function(cat) {

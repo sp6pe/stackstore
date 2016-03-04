@@ -2,7 +2,6 @@ app.controller('cartCtrl',function($scope, CartFactory){
 
 	CartFactory.fetchAll()
 		.then(function(carts){
-			console.log(carts[0], "in controller")
 			$scope.cart = carts[0];
 			$scope.productsInCart = $scope.cart.productList;
 			$scope.quantityIndex = $scope.cart.quantityIndex;
