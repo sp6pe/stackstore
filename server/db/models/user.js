@@ -30,18 +30,6 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    productsCreated: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
-    }],
-    currentCart: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Cart"
-    },
-    previousOrders: [{ 
-        type: String
-    }],
-
     salt: {
         type: String
     }
