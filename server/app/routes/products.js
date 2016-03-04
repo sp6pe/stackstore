@@ -6,6 +6,7 @@ var Product = mongoose.model('Product');
 router.param('productId', function(req, res, next, productId) {
 	Product.findById(productId)
 	.populate('user')
+	.populate('categories')
 	.then(function(product) {
 		if (!product) throw new Error('Product not found');
 		req.product = product;
@@ -23,6 +24,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:productId', function(req, res, next) {
+	console.log(req.product);
 	res.json(req.product);
 });
 

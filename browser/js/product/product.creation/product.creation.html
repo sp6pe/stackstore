@@ -42,14 +42,25 @@
                         <p ng-show="productForm.quantity.$invalid && !productForm.quantity.$pristine" class="help-block">A quantity is needed.</p>
                     </label>
                 </div>
+
+                <div class="form-row" ng-class="{ 'has-error' : productForm.categories.$invalid}">
+                    <label>Pick all categories that apply (hold command to select more than one):</label>
+                    <br>
+                    <select multiple ng-options="category._id as category.name for category in allCategories" ng-model="category" id="product-creation-categories" required> 
+                    </select>
+                </div>
+
                 <br>
+
                 <div class="form-row">
                     <label class="form-checkbox">
                         <input type="checkbox" name="checkbox" ng-required="value.length==0" checked required>
                         <span>I agree to the <a href="#">terms and conditions</a></span>
                     </label>
                 </div>
+
                 <br>
+
                 <div class="form-row">
                     <button type="submit" ng-disabled="productForm.$invalid">Create Course</button>
                 </div>

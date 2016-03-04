@@ -14,11 +14,10 @@ router.post('/', function(req, res, next) {
 
 router.delete('/:id',function(req,res,next){
 	Category.findById(req.params.id)
-			.then(function(cat){
-				return req.product.removeCategory(cat);
-			}).then(function(product){
-				res.send(product);
-			})
-			.then(null,next)
-
+	.then(function(cat){
+		return req.product.removeCategory(cat);
+	}).then(function(product){
+		res.send(product);
+	})
+	.then(null,next)
 });
