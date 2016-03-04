@@ -33,13 +33,13 @@ module.exports = function (app) {
 
     // When we give a cookie to the browser, it is just the userId (encrypted with our secret).
     passport.serializeUser(function (user, done) {
+        console.log(user, 'serialize')
         done(null, user.id);
     });
 
     // When we receive a cookie from the browser, we use that id to set our req.user
     // to a user found in the database.
     passport.deserializeUser(function (id, done) {
-        console.log('deserializeUser is on')
         UserModel.findById(id, done);
     });
 
@@ -47,6 +47,7 @@ module.exports = function (app) {
     // This is used by the browser application (Angular) to determine if a user is
     // logged in already.
     app.get('/session', function (req, res) {
+        console.log('hit session route', req.user);
         if (req.user) {
             res.send({ user: req.user.sanitize() });
         } else {
