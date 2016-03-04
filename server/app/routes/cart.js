@@ -6,7 +6,6 @@ require('../../db/models');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
-
 //get all carts (admin only)
 // Have to do this crazy deep population on products AND user for those products
 router.get('/', function(req,res,next){
@@ -24,27 +23,21 @@ router.get('/', function(req,res,next){
 	.then(null,next);
 });
 
-
 //api/carts
 router.post('/',function(req,res,next){
 	Cart.create({})
 	.then(function(cart){
 		cart.addProduct(req.body._id)
 		.then(function(cart) {
-		console.log(cart, 'Inside post route');
 			res.status(201).json(cart);	
 		})
 		.then(null,next);
 	})
 	.then(null,next);
-})
-
-
-
+});
 
 //User actions to a cart 
-router.param('cartId',function(req,res,next,id){
-	console.log(id, 'the cart ID!!!!');
+router.param('cartId',function(req,res,next,id){	
 	Cart.findById(id).populate('productList user')
 	.then(function(cart){
 		if(!cart) throw Error('No such cart');
@@ -55,49 +48,40 @@ router.param('cartId',function(req,res,next,id){
 		err.status = 404;
 		next(err);
 	});
-})
-
+});
 
 //get cart
 router.get('/:cartId',function(req,res,next){
-	res.json(req.cart)
-	.then(null,next);
-})
-
+	res.json(req.cart);
+});
 
 //post to an already existing cart 
 router.post('/:cartId/add',function(req,res,next){
 	req.cart.addProduct(req.body.id)
-	.then(function(item){
-		res.send(item);
-	})
-	.then(null,next);
-})
+		.then(function(item){
+			res.send(item);
+		})
+		.then(null,next);
+});
 
 //remove from an already existing cart 
 router.post('/:cartId/remove',function(req,res,next){
 
 	req.cart.decreaseQty(req.body.id)
-	.then(function(item){
-		res.send(item);
-	})
-	.then(null,next);
-})
-
-
-
-
+		.then(function(item){
+			res.send(item);
+		})
+		.then(null,next);
+});
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){
 	req.cart.removeProduct(req.body)
-	.then(function(){
-		res.sendStatus(204)
-	})
-	.then(null,next)
-})
-
-
+		.then(function(){
+			res.sendStatus(204)
+		})
+		.then(null,next)
+});
 
 // //get all items in a users cart 
 // ///users/:userId/carts/
@@ -108,7 +92,6 @@ router.delete('/:cartId',function(req,res,next){
 // 	})
 // 	.then(null,next)
 // })
-
 
 // router.delete('/',function(req,res,next){
 // 	req.cart.remove()

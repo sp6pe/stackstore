@@ -20,7 +20,6 @@ app.factory("UserFactory", function($http) {
 	}
 
 	UserFactory.create = function(data) {
-		console.log('on controller',data)
 		return $http.post('/api/users',data)
 		.then(function(response) {
 			console.log("UserFactory.create: ", response.data);
