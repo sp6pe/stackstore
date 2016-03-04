@@ -1,9 +1,7 @@
 
 
-app.controller('allProductsCtrl',function($scope,ProductFactory){
+app.controller('allProductsCtrl',function($scope,allProducts){
 
-	ProductFactory.fetchAll().then(function(product){
-		$scope.products = product;
-	})
+	$scope.products = allProducts;
 
 })
