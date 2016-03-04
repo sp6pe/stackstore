@@ -21,7 +21,10 @@ app.controller('cartCtrl',function($scope, CartFactory){
 
 	$scope.removeProduct = function(productId) {
 		//console.log(cartId,productId);
-		CartFactory.removeProduct($scope.cart._id,productId);
+		CartFactory.removeProduct($scope.cart._id,productId)
+			.then(function(cart) {
+				$scope.productsInCart = cart.productList;
+			})
 	};
 
 	$scope.decreaseItemQuantity = function(productId) {
