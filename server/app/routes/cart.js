@@ -20,7 +20,6 @@ router.get('/', function(req,res,next){
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	//console.log('req.body._id',req.body);
 	Cart.create({})
 		.then(function(newCart){
 			return newCart.addProduct(req.body._id)
@@ -29,11 +28,36 @@ router.post('/',function(req,res,next){
 			res.status(201).json(cartWithProduct);	
 		})
 		.then(null,next);
+
+	//if there is no cart 
+	if(!req.session.cart){
+		//create an empty cart and add req.session.cart to it 
+		Cart.create({})
+			.then(function(newCart){
+				req.session.cart = newCart._id;
+				return newCart.addProduct(req.body._id)
+			})
+			.then(function(cartWithProduct) {
+				res.status(201).json(cartWithProduct);	
+			})
+			.then(null,next);
+	} else{//if there is a cart, then add to the existing cart 
+		Cart.findById(req.session.cart)
+			.then(function(existingCart){
+				('it found the cart',existingCart)
+				return existingCart.addProduct(req.body._id)
+			})
+			.then(function(cart){
+				res.status(201).json(cart);
+			})
+			.then(null,next);
+	}
 })
 
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
-	Cart.findById(id).populate('productList.product customer')
+	Cart.findById(id)
+		.populate('productList.product customer')
 		.deepPopulate('productList.product.interviewer')
 		.then(function(cart){
 			if(!cart) return next(new Error('No such cart'));

@@ -7,6 +7,7 @@ app.controller('ProductCreationCtrl', function ($scope,ProductFactory,$state,all
 	$scope.createCourse = function() {
 		
 		$scope.newProduct.categories = $scope.category;
+		// $scope.newProduct.interviewer = //USER INFO FROM SESSION
 		
 		ProductFactory.create($scope.newProduct)
 		.then(function() {

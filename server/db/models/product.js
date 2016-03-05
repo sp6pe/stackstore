@@ -32,8 +32,8 @@ schema.statics.findByCategoryId = function(categoryId) {
     return this.find({ categories: categoryId }).populate('categories');
 };
 
-schema.statics.findByUserId = function(userId) {
-    return this.find({ user: userId });
+schema.statics.findByInterviewerId = function(interviewerId) {
+    return this.find({ interviewer: interviewerId }).populate('interviewer');
 };
 
 schema.methods.addCategory = function(categoryData) {
