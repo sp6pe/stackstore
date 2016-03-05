@@ -24,7 +24,11 @@ router.get('/', function(req,res,next){
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	console.log(req.session.cart);
+	console.log(req.session, ' this is the session');
+
+	console.log(req.user, 'this is the req.user');
+
+
 
 	if(!req.session.cart){
 
