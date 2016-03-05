@@ -6,41 +6,38 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var _ = require('lodash');
 
-
-
 router.get('/',function(req,res,next){
 	return User.find({})
-	.then(function(users){
-		res.json(users)
-	})
-	.then(null,next)
-})
-
+		.then(function(users){
+			res.json(users)
+		})
+		.then(null,next)
+});
 
 router.post('/',function(req,res,next){
 	User.create(req.body)
-	.then(function(user){
-		req.login(user, function () {
-			res.status(201).json(user);
-		});
+		.then(function(user){
+			req.login(user, function () {
+				res.status(201).json(user);
+			});
 
-	})
-	.then(null,next)
-})
+		})
+		.then(null,next)
+});
 
 router.param('userId',function(req,res,next,id){
 	User.findById(id).exec()
-	.then(function(user){
-		if(!user) throw Error('No such user')
-		req.user = user;
-		next();
-	})
-	.then(null,next);
-})
+		.then(function(user){
+			if(!user) throw Error('No such user')
+			req.user = user;
+			next();
+		})
+		.then(null,next);
+});
 
 router.get('/:userId',function(req,res,next){
-	res.json(req.user)
-})
+	res.json(req.user);
+});
 
 router.put('/:userId', function (req, res, next) {
 
@@ -55,9 +52,7 @@ router.put('/:userId', function (req, res, next) {
 
 });
 
-
 router.delete('/:userId',function(req,res,next){
-
 
 	User.findById(req.user.id).remove().exec()
 			.then(function(){
@@ -65,9 +60,5 @@ router.delete('/:userId',function(req,res,next){
 			})
 			.then(next,null)
 })
-
-
-
-
 
 router.use('/:userId/cart', require('./cart'));
