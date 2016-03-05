@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var schema = new mongoose.Schema({
     productList:[{
@@ -90,5 +91,7 @@ schema.methods.removeProduct = function (product) {
 schema.methods.checkout = function(cart) {
 
 };
+
+schema.plugin(deepPopulate);
 
 mongoose.model('Cart', schema);
