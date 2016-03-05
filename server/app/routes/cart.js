@@ -24,14 +24,11 @@ router.get('/', function(req,res,next){
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	console.log(req.session, ' this is the session');
-
-	console.log(req.user, 'this is the req.user');
 
 
-
+	//if there is no cart 
 	if(!req.session.cart){
-
+		//create an empty cart and add req.session.cart to it 
 		Cart.create({})
 			.then(function(newCart){
 				req.session.cart = newCart._id;
@@ -41,14 +38,13 @@ router.post('/',function(req,res,next){
 				res.status(201).json(cartWithProduct);	
 			})
 			.then(null,next);
-	} else{
+	} else{//if there is a cart, then add to the existing cart 
 		Cart.findById(req.session.cart)
 			.then(function(existingCart){
-				console.log('req.session.cart', existingCart)
+				('it found the cart',existingCart)
 				return existingCart.addProduct(req.body._id)
 			})
 			.then(function(cart){
-				console.log('cart', cart);
 				res.status(201).json(cart);
 			})
 			.then(null,next);
@@ -58,7 +54,9 @@ router.post('/',function(req,res,next){
 
 //User actions to a cart 
 router.param('cartId',function(req,res,next,id){
-	Cart.findById(id).populate('productList user')
+	Cart.findById(id)
+		.populate('productList.product customer')
+		.deepPopulate('productList.product.interviewer')
 		.then(function(cart){
 			if(!cart) return next(new Error('No such cart'));
 			req.cart = cart;
