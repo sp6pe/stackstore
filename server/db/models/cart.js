@@ -39,7 +39,7 @@ var schema = new mongoose.Schema({
 var alreadyInCart;
 var index;
 
-function checkInCart() {
+function checkInCart(productId) {
     //console.log('this in checkINCart',this);
     for (var x = 0; x < this.productList.length; x++) {
         if (this.productList[x].product === productId) {
