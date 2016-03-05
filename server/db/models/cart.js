@@ -35,32 +35,28 @@ var schema = new mongoose.Schema({
     }]
 });
 
-//these are used by all methods
-var alreadyInCart;
-var index;
+//returns false if not found, returns the index if it is found
+function checkInCart(productId) {
 
-function checkInCart() {
-    //console.log('this in checkINCart',this);
     for (var x = 0; x < this.productList.length; x++) {
-        if (this.productList[x].product === productId) {
-            alreadyInCart = true;
-            index = x;
-            break;
+        if (this.productList[x].product.toString() === productId) {
+            console.log('inside if statement');
+            return x;
         }
     }
-}
+
+    return false;
+};
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
-    alreadyInCart = false;
 
-    checkInCart.call(this);//need to set context of this to function
+    var isInCart = checkInCart.call(this, productId); //need to set context of this to function
 
-    if (alreadyInCart) {
-        this.productList[index].quantity ++;
+    if (isInCart !== false) {
+        this.productList[isInCart].quantity ++;
     } else {
-        console.log('pushes a productid');
-        this.productList.push({product:productId, quantity:1})
+        this.productList.push({product:productId, quantity:1});
     }
 
     this.markModified('productList');
@@ -68,14 +64,14 @@ schema.methods.addProduct = function (productId) {
 };
 
 schema.methods.decreaseQty = function(productId) {
-    alreadyInCart = false;
+    var isInCart = checkInCart.call(this, productId);
 
-   checkInCart.call(this);
+    if (isInCart === false) return;
 
-    this.productList[index].quantity --;
+    this.productList[isInCart].quantity--;
 
-    if (this.productList[index].quantity === 0) {
-        this.productList.splice(index,1);
+    if (this.productList[isInCart].quantity === 0) {
+        this.productList.splice(isInCart,1);
     }
 
     this.markModified('productList');
@@ -83,8 +79,8 @@ schema.methods.decreaseQty = function(productId) {
 };
 
 schema.methods.removeProduct = function (product) {
-    checkInCart.call(this);
-    this.productList[index].pull(product);
+    checkInCart.call(this, product._id);
+    this.productList[isInCart].pull(product);
     return this.save();
 };
 

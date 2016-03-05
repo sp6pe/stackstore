@@ -59,7 +59,7 @@ router.post('/:cartId/add',function(req,res,next){
 		.then(null,next);
 });
 
-//remove from an already existing cart 
+//decrease quantity from an already existing cart 
 router.post('/:cartId/remove',function(req,res,next){
 
 	req.cart.decreaseQty(req.body.id)
@@ -73,7 +73,7 @@ router.post('/:cartId/remove',function(req,res,next){
 router.delete('/:cartId',function(req,res,next){
 	req.cart.removeProduct(req.body)
 		.then(function(){
-			res.sendStatus(204)
+			res.sendStatus(204);
 		})
 		.then(null,next)
 });
