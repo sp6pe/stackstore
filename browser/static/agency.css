@@ -799,3 +799,6 @@ input[name=title]{
   height:80px;
 }
 
+.login-button {
+  margin-top: 8px;
+}
