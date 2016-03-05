@@ -20,6 +20,7 @@ app.factory("CartFactory", function($http) {
 	}
 
 	CartFactory.create = function(data) {
+		console.log('data in cartfactory', data);
 		return $http.post('/api/carts',data)
 		.then(function(response) {
 			console.log("CartFactory.create: ", response.data);

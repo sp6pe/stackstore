@@ -6,6 +6,7 @@ app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews
 	$scope.reviews = theReviews;
 
 	$scope.addToCart = function(product){
+		console.log('product in controller',product);
 		CartFactory.create(product).then(function(cart){
 			return cart;
 		})
