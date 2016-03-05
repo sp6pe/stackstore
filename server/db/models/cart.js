@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var schema = new mongoose.Schema({
     productList:[{
@@ -28,36 +29,33 @@ var schema = new mongoose.Schema({
         product:{
             type: String
         },
-        quntity:{
+        quantity:{
             type: Number
         }      
     }]
 });
 
-//these are used by all methods
-var alreadyInCart;
-var index;
+//returns false if not found, returns the index of the product if it is found
+function checkInCart(productId) {
 
-function checkInCart() {
     for (var x = 0; x < this.productList.length; x++) {
-        if (this.productList[x].product === productId) {
-            alreadyInCart = true;
-            index = x;
-            break;
+        if (this.productList[x].product.toString() === productId) {
+            return x;
         }
     }
-}
+
+    return false;
+};
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
-    alreadyInCart = false;
 
-    checkInCart();
+    var isInCart = checkInCart.call(this, productId); //need to set context of this to function
 
-    if (alreadyInCart) {
-        this.productList[index].quantity ++;
+    if (isInCart !== false) {
+        this.productList[isInCart].quantity++;
     } else {
-        this.productList.push({product:productId, quantity:1})
+        this.productList.push({product:productId, quantity:1});
     }
 
     this.markModified('productList');
@@ -65,14 +63,14 @@ schema.methods.addProduct = function (productId) {
 };
 
 schema.methods.decreaseQty = function(productId) {
-    alreadyInCart = false;
+    var isInCart = checkInCart.call(this, productId);
 
-    checkInCart();
+    if (isInCart === false) return;
 
-    this.productList[index].quantity --;
+    this.productList[isInCart].quantity--;
 
-    if (this.productList[index].quantity === 0) {
-        this.productList.splice(index,1);
+    if (this.productList[isInCart].quantity === 0) {
+        this.productList.splice(isInCart,1);
     }
 
     this.markModified('productList');
@@ -80,13 +78,18 @@ schema.methods.decreaseQty = function(productId) {
 };
 
 schema.methods.removeProduct = function (product) {
-    checkInCart();
-    this.productList[index].pull(product);
+    var isInCart = checkInCart.call(this, product._id.toString());
+
+    if (isInCart === false) return;
+
+    this.productList.splice(isInCart, 1);
     return this.save();
 };
 
 schema.methods.checkout = function(cart) {
 
 };
+
+schema.plugin(deepPopulate);
 
 mongoose.model('Cart', schema);
