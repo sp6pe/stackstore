@@ -3,8 +3,6 @@ app.controller('cartCtrl',function($scope, CartFactory){
 	CartFactory.fetchAll()
 		.then(function(carts){
 			$scope.cart = carts[0];
-			$scope.productsInCart = $scope.cart.productList;
-			$scope.quantityIndex = $scope.cart.quantityIndex;
 			$scope.setCurrentTotal();
 		})
 		.catch(function(err) {
@@ -17,8 +15,7 @@ app.controller('cartCtrl',function($scope, CartFactory){
 			.then(function(cart){
 				$scope.cart = cart;
 				$scope.setCurrentTotal();
-			})
-			.catch(console.error.bind(console));
+			});
 	};
 
 	$scope.removeProduct = function(productId) {
@@ -40,7 +37,7 @@ app.controller('cartCtrl',function($scope, CartFactory){
 
 	$scope.setCurrentTotal = function() {
 		var total = 0;
-		$scope.productsInCart.forEach(function(productObj, index) {
+		$scope.cart.productList.forEach(function(productObj, index) {
 			total += productObj.product.price * productObj.quantity;
 		});
 		$scope.total = total;
