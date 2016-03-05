@@ -35,12 +35,11 @@ var schema = new mongoose.Schema({
     }]
 });
 
-//returns false if not found, returns the index if it is found
+//returns false if not found, returns the index of the product if it is found
 function checkInCart(productId) {
 
     for (var x = 0; x < this.productList.length; x++) {
         if (this.productList[x].product.toString() === productId) {
-            console.log('inside if statement');
             return x;
         }
     }
@@ -54,7 +53,7 @@ schema.methods.addProduct = function (productId) {
     var isInCart = checkInCart.call(this, productId); //need to set context of this to function
 
     if (isInCart !== false) {
-        this.productList[isInCart].quantity ++;
+        this.productList[isInCart].quantity++;
     } else {
         this.productList.push({product:productId, quantity:1});
     }
@@ -79,8 +78,11 @@ schema.methods.decreaseQty = function(productId) {
 };
 
 schema.methods.removeProduct = function (product) {
-    checkInCart.call(this, product._id);
-    this.productList[isInCart].pull(product);
+    var isInCart = checkInCart.call(this, product._id.toString());
+
+    if (isInCart === false) return;
+
+    this.productList.splice(isInCart, 1);
     return this.save();
 };
 

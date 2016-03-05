@@ -15,16 +15,16 @@ app.controller('cartCtrl',function($scope, CartFactory){
 	$scope.increaseItemQuantity = function(productId){
 		CartFactory.increaseQty($scope.cart._id, {'id': productId})
 			.then(function(cart){
-				$scope.quantityIndex = cart.quantityIndex;
+				$scope.cart = cart;
 				$scope.setCurrentTotal();
 			})
+			.catch(console.error.bind(console));
 	};
 
 	$scope.removeProduct = function(productId) {
-		//console.log(cartId,productId);
 		CartFactory.removeProduct($scope.cart._id,productId)
 			.then(function(cart) {
-				$scope.productsInCart = cart.productList;
+				$scope.cart = cart;
 				$scope.setCurrentTotal();
 			})
 	};
@@ -33,7 +33,7 @@ app.controller('cartCtrl',function($scope, CartFactory){
 		//console.log(cartId,productId);
 		CartFactory.decreaseQty($scope.cart._id,{'id': productId})
 			.then(function(cart){
-				$scope.quantityIndex = cart.quantityIndex;
+				$scope.cart = cart;
 				$scope.setCurrentTotal();
 			})
 	};
