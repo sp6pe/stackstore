@@ -28,7 +28,7 @@ var schema = new mongoose.Schema({
         product:{
             type: String
         },
-        quntity:{
+        quantity:{
             type: Number
         }      
     }]
@@ -39,6 +39,7 @@ var alreadyInCart;
 var index;
 
 function checkInCart() {
+    //console.log('this in checkINCart',this);
     for (var x = 0; x < this.productList.length; x++) {
         if (this.productList[x].product === productId) {
             alreadyInCart = true;
@@ -52,11 +53,12 @@ function checkInCart() {
 schema.methods.addProduct = function (productId) {
     alreadyInCart = false;
 
-    checkInCart();
+    checkInCart.call(this);//need to set context of this to function
 
     if (alreadyInCart) {
         this.productList[index].quantity ++;
     } else {
+        console.log('pushes a productid');
         this.productList.push({product:productId, quantity:1})
     }
 
@@ -67,7 +69,7 @@ schema.methods.addProduct = function (productId) {
 schema.methods.decreaseQty = function(productId) {
     alreadyInCart = false;
 
-    checkInCart();
+   checkInCart.call(this);
 
     this.productList[index].quantity --;
 
@@ -80,7 +82,7 @@ schema.methods.decreaseQty = function(productId) {
 };
 
 schema.methods.removeProduct = function (product) {
-    checkInCart();
+    checkInCart.call(this);
     this.productList[index].pull(product);
     return this.save();
 };

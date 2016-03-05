@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 require('../../db/models');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
+//var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 //get all carts (admin only)
 // Have to do this crazy deep population on products AND interviewer for those products
@@ -18,20 +19,19 @@ router.get('/', function(req,res,next){
 					path: 'interviewer',
 					model: 'User'
 		  		}
-		  	},
-	  		{
-	  			path: 'customer',
-	  			model: 'User'
-	  		}
-	  	)
+		  	}
+	  	).populate('User')
 		.then(function(carts){
 			res.json(carts);
 		})
 		.then(null,next);
 });
 
+
+
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
+	//console.log('req.body._id',req.body);
 	Cart.create({})
 		.then(function(newCart){
 			return newCart.addProduct(req.body._id)
