@@ -20,7 +20,6 @@ app.factory("CartFactory", function($http) {
 	}
 
 	CartFactory.create = function(data) {
-		console.log('data in cartfactory', data);
 		return $http.post('/api/carts',data)
 		.then(function(response) {
 			console.log("CartFactory.create: ", response.data);
@@ -46,7 +45,6 @@ app.factory("CartFactory", function($http) {
 	}
 
 	CartFactory.removeProduct = function(cartId,productId) {
-		//console.log("in factory", cartId,productId)
 		return $http.delete('/api/carts/' + cartId + '/products/' + productId)
 		.then(function(response) {
 			console.log('CartFactory.remove: ', response.data);
