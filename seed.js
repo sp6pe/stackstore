@@ -59,13 +59,13 @@ var seedProducts = function (users) {
             title: 'Test Course 1',
             price: 100,
             quantity: 10,
-            user: users[0]._id
+            interviewer: users[0]._id
         },
         {
             title: 'Test Course 2',
             price: 80,
             quantity: 8,
-            user: users[1]._id
+            interviewer: users[1]._id
         },
         {
             title: 'Test Course 3',
@@ -118,23 +118,22 @@ var seedProducts = function (users) {
 
 };
 
-var seedCart = function (products) {
-
-    // var productsList = [];
-    // var qtyIndex = [];
-
-    // products.forEach(function(product) {
-    //     productsList.push(product._id);
-    //     qtyIndex.push(Math.ceil(Math.Random() * 10));
-    // });
-
-    var productList = [products[0], products[1]];
+var seedCart = function (products, users) {
 
     var carts = [
         {
             status: 'created',
-            productList: productList,
-            quantityIndex: [1,3]
+            productList: [
+                {
+                    product: products[0]._id,
+                    quantity: 5
+                },
+                {
+                    product: products[1]._id,
+                    quantity: 3
+                }
+            ],
+            customer: users[0]._id
         }
   
     ];
@@ -175,75 +174,18 @@ var seedReviews = function (products) {
     return Review.createAsync(reviews);
 
 };
-
-
-
-
-
-// connectToDb.then(function () {
-//     Cart.findAsync({}).then(function (carts) {
-//         if (carts.length === 0) {
-//             return seedUsers();
-//         } else {
-//             console.log(chalk.magenta('Seems to already be cart data, exiting!'));
-//             process.kill(0);
-//         }
-//     }).then(function () {
-//         console.log(chalk.green('Seed successful!'));
-//         process.kill(0);
-//     }).catch(function (err) {
-//         console.error(err);
-//         process.kill(1);
-//     });
-// });
-
-
-
-// var seedCart = function (products) {
-    
-//     var carts = [
-//     {
-//             status: 'created',
-//             productList:[products]
-  
-            
-//         }
-  
-//     ];
-
-//     return Cart.createAsync(carts);
-
-// };
-
-
-
-// connectToDb.then(function () {
-//     User.findAsync({}).then(function (users) {
-//         if (users.length === 0) {
-//             return seedUsers();
-//         } else {
-//             console.log(chalk.magenta('Seems to already be user data, exiting!'));
-//             process.kill(0);
-//         }
-//     }).then(function () {
-//         console.log(chalk.green('Seed successful!'));
-//         process.kill(0);
-//     }).catch(function (err) {
-//         console.error(err);
-//         process.kill(1);
-//     });
-// });
-
+var savedUsers;
 connectToDb.then(function () {      
     // return seedUsers();
     console.log(chalk.green('Seed successful!'));
     return seedUsers();
 })
 .then(function(users) {
+    savedUsers = users;
     return seedProducts(users);
 })
 .then(function(products) {
-    return seedCart(products);
+    return seedCart(products, savedUsers);
 })
 .catch(function (err) {
     console.error(err);

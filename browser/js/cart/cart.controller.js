@@ -2,7 +2,6 @@ app.controller('cartCtrl',function($scope, CartFactory){
 
 	CartFactory.fetchAll()
 		.then(function(carts){
-			console.log(carts);
 			$scope.cart = carts[0];
 			$scope.productsInCart = $scope.cart.productList;
 			$scope.quantityIndex = $scope.cart.quantityIndex;
@@ -41,8 +40,8 @@ app.controller('cartCtrl',function($scope, CartFactory){
 
 	$scope.setCurrentTotal = function() {
 		var total = 0;
-		$scope.productsInCart.forEach(function(product, index) {
-			total += product.price * $scope.quantityIndex[index];
+		$scope.productsInCart.forEach(function(productObj, index) {
+			total += productObj.product.price * productObj.quantity;
 		});
 		$scope.total = total;
 	};
