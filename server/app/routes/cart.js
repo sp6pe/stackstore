@@ -6,10 +6,6 @@ require('../../db/models');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
-
-
-
-
 //get all carts (admin only)
 // Have to do this crazy deep population on products AND interviewer for those products
 router.get('/', function(req,res,next){
@@ -24,7 +20,14 @@ router.get('/', function(req,res,next){
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-
+	Cart.create({})
+		.then(function(newCart){
+			return newCart.addProduct(req.body._id)
+		})
+		.then(function(cartWithProduct) {
+			res.status(201).json(cartWithProduct);	
+		})
+		.then(null,next);
 
 	//if there is no cart 
 	if(!req.session.cart){
@@ -49,7 +52,6 @@ router.post('/',function(req,res,next){
 			})
 			.then(null,next);
 	}
-
 })
 
 //User actions to a cart 
@@ -84,6 +86,7 @@ router.post('/:cartId/add',function(req,res,next){
 
 //decrease quantity from an already existing cart 
 router.post('/:cartId/remove',function(req,res,next){
+
 	req.cart.decreaseQty(req.body.id)
 		.then(function(item){
 			res.send(item);

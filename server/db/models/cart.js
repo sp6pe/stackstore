@@ -35,11 +35,13 @@ var schema = new mongoose.Schema({
     }]
 });
 
+schema.plugin(deepPopulate);
+
 //returns false if not found, returns the index of the product if it is found
 function checkInCart(productId) {
 
     for (var x = 0; x < this.productList.length; x++) {
-        if (this.productList[x].product.toString() === productId) {
+        if (this.productList[x].product._id.toString() === productId) {
             return x;
         }
     }
@@ -66,7 +68,6 @@ schema.methods.decreaseQty = function(productId) {
     var isInCart = checkInCart.call(this, productId);
 
     if (isInCart === false) return;
-
     this.productList[isInCart].quantity--;
 
     if (this.productList[isInCart].quantity === 0) {
@@ -89,7 +90,5 @@ schema.methods.removeProduct = function (product) {
 schema.methods.checkout = function(cart) {
 
 };
-
-schema.plugin(deepPopulate);
 
 mongoose.model('Cart', schema);
