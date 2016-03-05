@@ -6,6 +6,10 @@ require('../../db/models');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
+
+
+
+
 //get all carts (admin only)
 // Have to do this crazy deep population on products AND interviewer for those products
 router.get('/', function(req,res,next){
@@ -20,15 +24,32 @@ router.get('/', function(req,res,next){
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	//console.log('req.body._id',req.body);
-	Cart.create({})
-		.then(function(newCart){
-			return newCart.addProduct(req.body._id)
-		})
-		.then(function(cartWithProduct) {
-			res.status(201).json(cartWithProduct);	
-		})
-		.then(null,next);
+	console.log(req.session.cart);
+
+	if(!req.session.cart){
+
+		Cart.create({})
+			.then(function(newCart){
+				req.session.cart = newCart._id;
+				return newCart.addProduct(req.body._id)
+			})
+			.then(function(cartWithProduct) {
+				res.status(201).json(cartWithProduct);	
+			})
+			.then(null,next);
+	} else{
+		Cart.findById(req.session.cart)
+			.then(function(existingCart){
+				console.log('req.session.cart', existingCart)
+				return existingCart.addProduct(req.body._id)
+			})
+			.then(function(cart){
+				console.log('cart', cart);
+				res.status(201).json(cart);
+			})
+			.then(null,next);
+	}
+
 })
 
 //User actions to a cart 
