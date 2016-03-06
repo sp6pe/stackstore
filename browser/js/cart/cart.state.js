@@ -4,6 +4,11 @@ app.config(function ($stateProvider) {
         url: '/cart',
         templateUrl: 'js/cart/cart.html',
         controller: 'cartCtrl',
+        resolve: {
+        	cart: function(CartFactory) {
+        		return CartFactory.getCurrentCart();
+        	}
+        },
         data: {
                    bodyClasses: 'cart-body'
                }

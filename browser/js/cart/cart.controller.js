@@ -1,13 +1,4 @@
-app.controller('cartCtrl',function($scope, CartFactory){
-
-	CartFactory.fetchAll()
-		.then(function(carts){
-			$scope.cart = carts[0];
-			$scope.setCurrentTotal();
-		})
-		.catch(function(err) {
-			console.error(err);
-		});
+app.controller('cartCtrl',function($scope, CartFactory, cart){
 
     //add product when on the cart 
 	$scope.increaseItemQuantity = function(productId){
@@ -46,6 +37,9 @@ app.controller('cartCtrl',function($scope, CartFactory){
 	$scope.viewCompletedOrders = function(){};
 
 	$scope.viewCurrentOrders = function(){};
+
+	$scope.cart = cart;
+	$scope.setCurrentTotal();
 
 
 });
