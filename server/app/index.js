@@ -30,6 +30,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/*', function (req, res) {
+	console.log(req.sessionID);
     res.sendFile(app.get('indexHTMLPath'));
 });
 
