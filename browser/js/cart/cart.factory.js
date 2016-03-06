@@ -11,6 +11,15 @@ app.factory("CartFactory", function($http) {
 		})
 	}
 
+	// Get or create cart for current session
+	CartFactory.getCurrentCart = function() {
+		return $http.get('/api/carts/current')
+		.then(function(response) {
+			console.log("CartFactory.getCurrent: ", response.data);
+			return response.data;
+		})
+	}
+
 	CartFactory.fetchById = function(id) {
 		return $http.get('/api/carts/' + id) 
 		.then(function(response) {
