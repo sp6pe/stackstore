@@ -24,7 +24,11 @@ var schema = new mongoose.Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
-    }]
+    }],
+    photoUrl: {
+        type: String,
+        default: 'http://images.clipartpanda.com/pen-and-paper-clipart-lined_paper_w_pen.png'
+    }
 
 });
 

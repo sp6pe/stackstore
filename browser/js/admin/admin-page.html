@@ -11,45 +11,77 @@
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h3 class="section-heading">All Interviews</h2>
+                <h3 class="section-heading">All Interviews</h3>
+                    <br>
                 <filter product-model="productFilter" is-product></filter>
+                    <br>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="product in products | filter:productFilter">
                 <a ui-sref="product({productId:product._id})" class="portfolio-link" data-toggle="modal">
                     <div class='img-holder'>
-                        <img src="img/portfolio/roundicons.png" class="img-responsive img-centered" alt="">
+                        <img src="{{product.photoUrl}}" class="img-responsive img-centered" alt="">
                     </div>
                     <div class="portfolio-caption">
                         <h4>{{product.title}}</h4>
                         <p class="text-muted">{{product.price}}</p>              
                     </div>    
                 </a>
-
-                <button class="btn-delete" ng-click="removeProduct(product)"><p class="warn">delete this product</p></button>
+                <div class='btn-centered'>
+                    <button class="btn btn-delete" ng-click="removeProduct(product)"><p class="warn">delete this product</p></button>
+                </div>
             </div>          
         </div>
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h3 class="section-heading">All Users</h2>
+                <h3 class="section-heading">All Users</h3>
+                <br>
                 <filter user-model="userFilter" is-user></filter>
+                <br>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="user in users | filter:userFilter">
                 <!-- <a ui-sref="product({productId:product._id})" class="portfolio-link" data-toggle="modal"> -->
                     
-                    <img src="{{user.photoUrl}}" class="img-responsive img-centered" alt="">
+                    <img src="{{user.photoUrl}}" class="img-responsive img-centered img-holder" alt="">
 
                     <div class="portfolio-caption">
                         <h4>{{user.firstName}} {{user.lastName}}</h4>
                         <p class="text-muted">{{user.email}}</p>              
                     </div>
                 <!-- </a> -->
-                <button class="btn-delete" ng-click="removeUser(user)"><p class="warn">delete this user</p></button>
+                <div class="btn-centered">
+                    <button class="btn btn-delete" ng-click="removeUser(user)"><p class="warn">delete this user</p></button>
+                </div>
             </div>          
         </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3 class="section-heading">All Carts</h3>
+                    <br>
+                <filter cart-model="cartFilter" is-cart></filter>
+                    <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="cart in carts">
+                <!-- <a ui-sref="cart({cartId:cart._id})" class="portfolio-link" data-toggle="modal"> -->
+                    <div class='img-holder'>
+                        <img src="{{cart.customer.photoUrl}}" class="img-responsive img-centered" alt="">
+                    </div>
+                    <div class="portfolio-caption">
+                        <h4>{{cart.customer.firstName}} {{cart.customer.lastName}}</h4>              
+                    </div>    
+                <!-- </a> -->
+                <div class='btn-centered'>
+                    <button class="btn btn-delete" ng-click="removecart(cart)"><p class="warn">delete this cart</p></button>
+                </div>
+            </div>          
+        </div>
+
     </div>
 </section>

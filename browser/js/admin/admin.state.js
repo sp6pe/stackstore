@@ -13,6 +13,10 @@ app.config(function ($stateProvider) {
 
 			allUsers: function(UserFactory) {
 				return UserFactory.fetchAll();
+			},
+
+			allCarts: function(CartFactory) {
+				return CartFactory.fetchAll();
 			}
 
 		}

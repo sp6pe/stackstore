@@ -43,6 +43,13 @@
                     </label>
                 </div>
 
+                <div class="form-row" ng-class="{ 'has-error' : productForm.photoUrl.$invalid && !productForm.photoUrl.$pristine }">
+                    <label>
+                        <span>Add a photo URL if you have one</span>
+                        <input type="text" name="quantity" placeholder="something.png" id="course-creation-title" ng-model="newProduct.photoUrl" required>
+                    </label>
+                </div>
+
                 <div class="form-row" ng-class="{ 'has-error' : productForm.categories.$invalid}">
                     <label>Pick all categories that apply (hold command to select more than one):</label>
                     <br>

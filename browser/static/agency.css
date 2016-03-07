@@ -47,6 +47,12 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
 }
+
+.img-holder {
+  border: 1px;
+  border-style: solid;
+  border-color: lightgray;
+}
 .img-centered {
   margin: 0 auto;
 }
@@ -64,6 +70,10 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
 }
+.btn-centered {
+  text-align:center;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
@@ -102,8 +112,8 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .btn-delete {
-  color: #fed136;
-  background-color:red;
+  color: #FFCC33;
+  background-color:#D00000 ;
 }
 .btn-xl {
   color: #ffffff;
@@ -354,6 +364,9 @@ section h3.section-subheading {
   background-color: white;
   text-align: center;
   padding: 25px;
+  border: 1px;
+  border-style: solid;
+  border-color: lightgray;
 }
 #portfolio .portfolio-item .portfolio-caption h4 {
   text-transform: none;
