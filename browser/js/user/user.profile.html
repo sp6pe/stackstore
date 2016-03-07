@@ -1,3 +1,26 @@
-<h4>Profile Picture</h4>
+<div class="user-profile">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1">
+				<div class="row">
+					<label>Profile Picture</label><br>
+					<img class="profile-pic" src="{{ user.photoUrl }}">
+					<button class="btn btn-default">Upload New Picture</button>
+					<br><br>
+					<label>Name
+					<input class="form-control" type="text" name="name" ng-model="fullName" required></label><br>
+					<label>Email
+					<input class="form-control" type="email" name="name" ng-model="user.email" required></label><br>
+					<label>Phone
+					<input class="form-control" type="text" name="name" ng-model="user.phone" required></label><br>
+					<label>Skills
+					<input class="form-control" type="text" name="name" ng-model="user.skills" required></label><br>
+					<br>
+					<button class="btn btn-submit" id="save-profile-changes" type="submit">Save Changes</button>
+				</div>
+			</div>
 
-<p>{{ user }}</p>
+
+		</div>
+	</div>
+</div>

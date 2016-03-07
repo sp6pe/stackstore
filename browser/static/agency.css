@@ -828,6 +828,21 @@ input[name=title]{
   margin-top: 8px;
 }
 
-.user-profile {
+.user-page {
   margin-top: 10em;
+  margin-bottom: 10em;
+}
+
+.user-profile {
+  text-align: left;
+  margin-top: 4em;
+}
+
+.profile-pic {
+  width: 25%;
+}
+
+#save-profile-changes {
+  width: 40%;
+  background-color: green
 }
