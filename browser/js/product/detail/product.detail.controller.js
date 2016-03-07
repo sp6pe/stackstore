@@ -1,7 +1,8 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews, ReviewFactory){
+app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews, ReviewFactory, currentUser){
 
+	$scope.currentUser = currentUser;
 	$scope.product = theProduct;
 	$scope.reviews = theReviews;
 
@@ -13,10 +14,18 @@ app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews
 	};
 	
 	var displayLimit = 2;
+	
 	$scope.reviewAmount = theReviews.length;
 	
+	$scope.isInterviewer = function() {
+		console.log($scope.currentUser._id);
+		console.log($scope.product.interviewer._id);
+		console.log("true or false", $scope.currentUser._id === $scope.product.interviewer._id);
+		return ($scope.currentUser._id === $scope.product.interviewer._id);
+	}
+
 	$scope.typingReview = false;
-	$scope.toggleWrite = function(){
+	$scope.toggleWrite = function(){	
 		$scope.typingReview = !$scope.typingReview;
 
 		ReviewFactory.fetchByProductId(theProduct._id)

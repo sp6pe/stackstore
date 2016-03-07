@@ -12,6 +12,9 @@ app.config(function($stateProvider){
 			},
 			theReviews: function(ReviewFactory, $stateParams){
 				return ReviewFactory.fetchByProductId($stateParams.productId);
+			},
+			currentUser: function(AuthService) {
+				return AuthService.getLoggedInUser();
 			}
 		}
 	});
