@@ -19,7 +19,8 @@ var schema = new mongoose.Schema({
     },
     status:{
     	type: String,
-    	enum:['created', 'processing', 'cancelled', 'complete']
+    	enum:['created', 'processing', 'cancelled', 'complete'],
+        default: 'created'
     },
     customer: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,17 +28,28 @@ var schema = new mongoose.Schema({
     },
     finalCart: [{
         product:{
-            type: String
+            title: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String
+            },
+            price: {
+                type: Number,
+                required: true
+            },
+            photoUrl: {
+                type: String
+            }
         },
         quantity:{
             type: Number
-        }      
+        }
     }]
 });
 
 schema.plugin(deepPopulate);
-
-
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
@@ -79,20 +91,35 @@ schema.methods.removeProduct = function (product) {
     return this.save();
 };
 
-schema.methods.checkout = function(cart) {
+// The cart you call this on must have its products populated
+schema.methods.checkout = function() {
+    var cart = this;
 
+    cart.productList.forEach(function(productObj) {
+        cart.finalCart.push({
+            product: {
+                title: productObj.product.title,
+                description: productObj.product.description,
+                price: productObj.product.price,
+                photoUrl: productObj.product.interviewer.photoUrl
+            },
+            quantity: productObj.quantity
+        });
+    });
+
+    cart.status = 'complete';
+
+    return cart.save();
 };
 
 schema.methods.merge = function(sessionCart){
-  
+
     var userCart = this;
 
-
     sessionCart.productList.forEach(function(productObj){
+
         for (var i = 0; i < productObj.quantity; i++) {
             userCart.mergeAddProduct(productObj.product._id);
-  
-
         }
    
     });
@@ -103,7 +130,6 @@ schema.methods.merge = function(sessionCart){
 };
 schema.methods.mergeAddProduct = function (productId) {
 
-
     var isInCart = checkInCartNotPopulated.call(this, productId); //need to set context of this to function
     console.log('result of is in cart',isInCart) //false for 1st iteration 
 
@@ -112,14 +138,11 @@ schema.methods.mergeAddProduct = function (productId) {
     } else {
         this.productList.push({product:productId, quantity:1});
     }
-
-    //console.log('this in mergeAddProduct', this);
     
 };
 
 //returns false if not found, returns the index of the product if it is found
 function checkInCart(productId) {
-
 
     for (var x = 0; x < this.productList.length; x++) {
         if (this.productList[x].product._id.toString() === productId) {
