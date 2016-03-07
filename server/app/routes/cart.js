@@ -9,7 +9,15 @@ var _ = require('lodash');
 // Get or create cart for current session
 router.get('/current', function(req, res, next) {
 	// If there is already a cartId on the session, find that cart
-	if (req.session.cart) {
+	if(req.user){
+		Cart.find({customer:req.user._id})
+		.populate('productList.product customer')
+		.deepPopulate('productList.product.interviewer')
+		.then(function(userCart){
+			res.json(userCart)
+		})
+		.then(null,next)
+	} else if(req.session.cart){
 		Cart.findById(req.session.cart)
 			.populate('productList.product customer')
 			.deepPopulate('productList.product.interviewer')
@@ -48,10 +56,31 @@ router.get('/previous-orders', function(req, res, next) {
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	//if there is no cart 
-	if(!req.session.cart){
-		//create an empty cart and add req.session.cart to it 
-		Cart.create({})
+	console.log('req.user',req.user);
+	if(req.user){
+		Cart.find({customer:req.user._id})
+			.populate('productList.product customer')
+			.deepPopulate('productList.product.interviewer')
+			.then(function(existingCart){
+				return existingCart.addProduct(req.body._id);
+			})
+			.then(function(cart){
+				res.status(201).json(cart);
+			})
+			.then(null,next);
+	} else if(req.session.cart){
+		Cart.findById(req.session.cart)
+			.populate('productList.product customer')
+			.deepPopulate('productList.product.interviewer')
+			.then(function(existingCart){
+				return existingCart.addProduct(req.body._id);
+			})
+			.then(function(cart){
+				res.status(201).json(cart);
+			})
+			.then(null,next);
+		} else{
+				Cart.create({})
 			.then(function(newCart){
 				req.session.cart = newCart._id;
 				return newCart.addProduct(req.body._id);
@@ -60,17 +89,8 @@ router.post('/',function(req,res,next){
 				res.status(201).json(cartWithProduct);	
 			})
 			.then(null,next);
-	} else{
-		//if there is a cart, then add to the existing cart 
-		Cart.findById(req.session.cart)
-			.then(function(existingCart){
-				return existingCart.addProduct(req.body._id);
-			})
-			.then(function(cart){
-				res.status(201).json(cart);
-			})
-			.then(null,next);
-	}
+		}
+
 })
 
 //User actions to a cart

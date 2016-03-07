@@ -51,6 +51,22 @@ function checkInCart(productId) {
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
+    //console.log('product id ', productId);
+
+    var isInCart = checkInCart.call(this, productId); //need to set context of this to function
+    if (isInCart !== false) {
+        this.productList[isInCart].quantity++;
+
+    } else {
+        this.productList.push({product:productId, quantity:1});
+    }
+
+    this.markModified('productList');
+    return this.save();
+};
+
+schema.methods.mergeAddProduct = function (productId) {
+
 
     var isInCart = checkInCart.call(this, productId); //need to set context of this to function
 
@@ -60,8 +76,11 @@ schema.methods.addProduct = function (productId) {
         this.productList.push({product:productId, quantity:1});
     }
 
-    this.markModified('productList');
-    return this.save();
+    //console.log('this in mergeAddProduct', this);
+
+
+
+    
 };
 
 schema.methods.decreaseQty = function(productId) {
@@ -91,4 +110,31 @@ schema.methods.checkout = function(cart) {
 
 };
 
+schema.methods.merge = function(sessionCart){
+
+    var userCart = this;
+
+
+    sessionCart.productList.forEach(function(productObj){
+        console.log('productObj in foreach', productObj);
+        for (var i = 0; i < productObj.quantity; i++) {
+            userCart.mergeAddProduct(productObj.product._id);
+  
+
+        }
+    });
+
+    userCart.markModified('productList');
+  
+    return userCart.save();
+
+};
+
 mongoose.model('Cart', schema);
+
+
+
+
+
+
+
