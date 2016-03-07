@@ -4,6 +4,7 @@ module.exports = router;
 require('../../db/models');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
 router.get('/',function(req,res,next){
@@ -58,6 +59,6 @@ router.delete('/:userId',function(req,res,next){
 				res.sendStatus(204);
 			})
 			.then(next,null)
-})
+});
 
 router.use('/:userId/cart', require('./cart'));

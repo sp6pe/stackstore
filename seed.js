@@ -134,7 +134,21 @@ var seedCart = function (products, users) {
                 }
             ],
             customer: users[0]._id
-        }
+        },
+        {
+            status: 'complete',
+            productList: [
+                {
+                    product: products[0]._id,
+                    quantity: 5
+                },
+                {
+                    product: products[1]._id,
+                    quantity: 3
+                }
+            ],
+            customer: users[0]._id
+        },
   
     ];
 
