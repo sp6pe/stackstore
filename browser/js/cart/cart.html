@@ -45,7 +45,7 @@
 				<h3>Total: {{total | currency}}</h3>
 			</div>
 
-			<button class="btn btn-primary checkout-btn" ng-hide="!cart.productList.length">Checkout</button>
+			<button class="btn btn-primary checkout-btn" ng-hide="!cart.productList.length" ng-click="checkout()">Checkout</button>
 
 		</div>
 	</div>

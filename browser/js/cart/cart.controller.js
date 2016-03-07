@@ -34,6 +34,16 @@ app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 		$scope.total = total;
 	};
 
+	$scope.checkout = function() {
+		CartFactory.checkout($scope.cart._id)
+			.then(function(newCart) {
+				$scope.cart = newCart;
+			})
+			.catch(function(err) {
+				console.error(err);
+			});
+	};
+
 	$scope.isLoggedIn = function() {
 		return AuthService.isAuthenticated();
 	};

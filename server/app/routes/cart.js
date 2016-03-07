@@ -9,9 +9,8 @@ var _ = require('lodash');
 // Get or create cart for current session
 router.get('/current', function(req, res, next) {
 	// If there is already a cartId on the session, find that cart
-	console.log('req.user',req.user);
 	if(req.user){
-		Cart.findOne({customer:req.user._id})
+		Cart.findOne({customer:req.user._id, status:'created'})
 		.populate('productList.product customer')
 		.deepPopulate('productList.product.interviewer')
 		.then(function(userCart){
@@ -67,9 +66,8 @@ router.get('/previous-orders', function(req, res, next) {
 
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	console.log('req.user',req.user);
 	if(req.user){
-		Cart.findOne({customer:req.user._id})
+		Cart.findOne({customer:req.user._id, status:'created'})
 			.populate('productList.product customer')
 			.deepPopulate('productList.product.interviewer')
 			.then(function(existingCart){
@@ -144,6 +142,27 @@ router.post('/:cartId/remove',function(req,res,next){
 		.then(null,next);
 });
 
+// Checkout
+router.post('/:cartId/checkout',function(req,res,next){
+
+	req.cart.checkout()
+		.then(function(cart) {
+			if (req.user) {
+				return Cart.create({customer: req.user._id});
+			} else {
+				return Cart.create({});
+			}
+		})
+		.then(function(emptyCart) {
+			if (!req.user) {
+				req.session.cart = emptyCart._id;
+			}
+			res.json(emptyCart);
+		})
+		.then(null, next);
+
+});
+
 //delete a cart
 router.delete('/:cartId/deleteCart',function(req,res,next){
 	req.cart.remove()
@@ -152,7 +171,6 @@ router.delete('/:cartId/deleteCart',function(req,res,next){
 		})
 		.then(null,next);
 });
-
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){

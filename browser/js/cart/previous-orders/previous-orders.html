@@ -7,7 +7,7 @@
 
 			<div class="prev-order" ng-repeat="order in orders">
 
-				<h3>Order #{{ $index }}</h3>
+				<h3>Order #{{ $index + 1 }}</h3>
 
 				<div class="cart-header">
 					<h4 class="header-price">Price</h4>
@@ -15,13 +15,13 @@
 					<h4 class="header-total">Total</h4>
 				</div>
 
-				<div class="cart-item" ng-repeat="productObj in order.productList">
+				<div class="cart-item" ng-repeat="productObj in order.finalCart">
 
 					<div class="cart-item-img">
-						<img src="{{productObj.product.interviewer.photoUrl}}">
+						<img src="{{productObj.product.photoUrl}}">
 					</div>
 					<div class="cart-item-info">
-						<h3>{{productObj.product.interviewer.firstName}} {{productObj.product.interviewer.lastName}}</h3>
+<!-- 						<h3>{{productObj.product.interviewer.firstName}} {{productObj.product.interviewer.lastName}}</h3> -->
 						<h4>{{productObj.product.title}}</h4>
 					</div>
 					<div class="cart-item-price">{{productObj.product.price | currency}}</div>
