@@ -65,12 +65,22 @@ app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
       		};
 
       		scope.cart = function(cart) {
-      			if (!scope.lastName) {
-      				return true;
-      			}
-      			else {
-      				return (cart.lastName.toLowerCase().indexOf(scope.lastName.toLowerCase()) > -1);
-      			}
+      			var lastNameMatch = function() {
+	      			if (!scope.lastName) {
+	      				return true;
+	      			}
+	      			return (cart.lastName.toLowerCase().indexOf(scope.lastName.toLowerCase()) > -1);
+	      		}
+
+	      		var statusMatch = function() {
+	      			if (!scope.status) {
+	      				return true;
+	      			}
+	      			return (cart.status.toLowerCase().indexOf(scope.status.toLowerCase()) > -1);
+
+	      		}
+
+	      		return lastNameMatch() && statusMatch();
       		}
     	},
 	};

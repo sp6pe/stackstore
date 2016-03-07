@@ -19,7 +19,8 @@ var schema = new mongoose.Schema({
     },
     status:{
     	type: String,
-    	enum:['created', 'processing', 'cancelled', 'complete']
+    	enum:['created', 'processing', 'cancelled', 'complete'],
+        default: 'created'
     },
     customer: {
         type: mongoose.Schema.Types.ObjectId,
