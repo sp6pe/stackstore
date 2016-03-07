@@ -3,6 +3,17 @@ module.exports = router;
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 
+router.param('productId', function(req, res, next, productId) {
+	Product.findById(productId)
+		.populate('interviewer categories')
+		.then(function(product) {
+			if (!product) return next(new Error('Product not found'));
+			req.product = product;
+			next();
+		})
+		.then(null, next);
+});
+
 router.get('/', function(req, res, next) {
 	Product.find({})
 		.then(function(products) {
@@ -15,17 +26,6 @@ router.post('/', function(req, res, next) {
 	Product.create(req.body)
 		.then(function(product) {
 			res.status(201).json(product);
-		})
-		.then(null, next);
-});
-
-router.param('productId', function(req, res, next, productId) {
-	Product.findById(productId)
-		.populate('interviewer categories')
-		.then(function(product) {
-			if (!product) return next(new Error('Product not found'));
-			req.product = product;
-			next();
 		})
 		.then(null, next);
 });

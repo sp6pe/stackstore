@@ -802,3 +802,7 @@ input[name=title]{
 .login-button {
   margin-top: 8px;
 }
+
+.user-profile {
+  margin-top: 10em;
+}

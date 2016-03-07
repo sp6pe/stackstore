@@ -7,6 +7,16 @@ var User = mongoose.model('User');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
+router.param('userId',function(req,res,next,id){
+	User.findById(id).exec()
+		.then(function(user){
+			if(!user) return next (new Error('No such user'));
+			req.user = user;
+			next();
+		})
+		.then(null,next);
+});
+
 router.get('/',function(req,res,next){
 	return User.find({})
 		.then(function(users){
@@ -24,16 +34,6 @@ router.post('/',function(req,res,next){
 
 		})
 		.then(null,next)
-});
-
-router.param('userId',function(req,res,next,id){
-	User.findById(id).exec()
-		.then(function(user){
-			if(!user) throw Error('No such user')
-			req.user = user;
-			next();
-		})
-		.then(null,next);
 });
 
 router.get('/:userId',function(req,res,next){
