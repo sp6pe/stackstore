@@ -68,7 +68,7 @@ router.get('/previous-orders', function(req, res, next) {
 router.post('/',function(req,res,next){
 	console.log('req.user',req.user);
 	if(req.user){
-		Cart.find({customer:req.user._id})
+		Cart.findOne({customer:req.user._id})
 			.populate('productList.product customer')
 			.deepPopulate('productList.product.interviewer')
 			.then(function(existingCart){
@@ -142,6 +142,16 @@ router.post('/:cartId/remove',function(req,res,next){
 		})
 		.then(null,next);
 });
+
+//delete a cart
+router.delete('/:cartId/deleteCart',function(req,res,next){
+	req.cart.remove()
+		.then(function(){
+			res.sendStatus(204);
+		})
+		.then(null,next);
+});
+
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){
