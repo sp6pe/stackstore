@@ -38,6 +38,15 @@ router.get('/current', function(req, res, next) {
 	}
 });
 
+// Get all the carts 
+router.get('/', function(req, res, next) {
+	Cart.find({})
+		.then(function(carts){
+			res.json(carts);
+		})
+	
+});
+
 // Get past orders for currently logged in user
 router.get('/previous-orders', function(req, res, next) {
 	if (req.user) {
