@@ -7,7 +7,10 @@ app.config(function ($stateProvider) {
         resolve: {
         	allCategories: function (CategoryFactory) {
         		return CategoryFactory.fetchAll();
-        	}
+        	},
+            currentUser: function(AuthService) {
+                return AuthService.getLoggedInUser();
+            }
         }
     });
 

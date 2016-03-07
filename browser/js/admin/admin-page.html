@@ -21,7 +21,7 @@
             <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="product in products | filter:productFilter">
                 <a ui-sref="product({productId:product._id})" class="portfolio-link" data-toggle="modal">
                     <div class='img-holder'>
-                        <img src="{{product.photoUrl}}" class="img-responsive img-centered" alt="">
+                        <img src="{{product.photoUrl}}" class="img-responsive img-centered">
                     </div>
                     <div class="portfolio-caption">
                         <h4>{{product.title}}</h4>
@@ -46,7 +46,7 @@
             <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="user in users | filter:userFilter">
                 <!-- <a ui-sref="product({productId:product._id})" class="portfolio-link" data-toggle="modal"> -->
                     
-                    <img src="{{user.photoUrl}}" class="img-responsive img-centered img-holder" alt="">
+                    <img src="{{user.photoUrl}}" class="img-responsive img-centered img-holder">
 
                     <div class="portfolio-caption">
                         <h4>{{user.firstName}} {{user.lastName}}</h4>
@@ -71,7 +71,7 @@
             <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="cart in carts | filter:cartFilter">
                 <!-- <a ui-sref="cart({cartId:cart._id})" class="portfolio-link" data-toggle="modal"> -->
                     <div class='img-holder'>
-                        <img src="{{cart.customer.photoUrl}}" class="img-responsive img-centered" alt="">
+                        <img src="{{cart.customer.photoUrl}}" class="img-responsive img-centered">
                     </div>
                     <div class="portfolio-caption">
                         <h4>{{cart.customer.firstName}} {{cart.customer.lastName}}</h4>
