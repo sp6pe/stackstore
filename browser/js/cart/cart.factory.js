@@ -68,5 +68,13 @@ app.factory("CartFactory", function($http) {
 			})
 	};
 
+	CartFactory.checkout = function(cartId) {
+		return $http.post('/api/carts/' + cartId + '/checkout')
+			.then(function(response) {
+				console.log('CartFactory.checkout: ', response.data);
+				return response.data;
+			})
+	}
+
 	return CartFactory;
 });
