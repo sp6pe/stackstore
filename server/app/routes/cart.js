@@ -9,8 +9,9 @@ var _ = require('lodash');
 // Get or create cart for current session
 router.get('/current', function(req, res, next) {
 	// If there is already a cartId on the session, find that cart
+	console.log('req.user',req.user);
 	if(req.user){
-		Cart.find({customer:req.user._id})
+		Cart.findOne({customer:req.user._id})
 		.populate('productList.product customer')
 		.deepPopulate('productList.product.interviewer')
 		.then(function(userCart){
