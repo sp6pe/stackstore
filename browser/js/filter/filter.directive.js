@@ -6,7 +6,8 @@ app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
 		templateUrl: 'js/filter/filter.html',
 		scope: {
 			product: "=productModel",
-			user: "=userModel"
+			user: "=userModel",
+			cart: "=cartModel"
 		},
 		link: function(scope, elem, attrs) {
 			CategoryFactory.fetchAll()
@@ -16,6 +17,7 @@ app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
 
 			if (attrs.hasOwnProperty('isProduct')) scope.isProduct = true;
 			if (attrs.hasOwnProperty('isUser')) scope.isUser = true;
+			if (attrs.hasOwnProperty('isCart')) scope.isCart = true;
 
       		scope.product = function(product) {
       			var titleMatch = function() {
@@ -61,6 +63,15 @@ app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
       			
       			return lastNameMatch() && emailMatch();
       		};
+
+      		scope.cart = function(cart) {
+      			if (!scope.lastName) {
+      				return true;
+      			}
+      			else {
+      				return (cart.lastName.toLowerCase().indexOf(scope.lastName.toLowerCase()) > -1);
+      			}
+      		}
     	},
 	};
 });	
