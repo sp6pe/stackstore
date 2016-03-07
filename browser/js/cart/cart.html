@@ -2,8 +2,9 @@
 
 	<div class="row">
 		<div class="cart-view col-lg-12">
+
 			<div class="cart-dashboard clearfix">
-				<a href="#" class="prev-orders">Previous Orders</a>
+				<a ui-sref="prevOrders" class="prev-orders" ng-show="isLoggedIn()">Previous Orders</a>
 			</div>
 
 			<h2>Your Cart</h3>
