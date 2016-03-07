@@ -5,7 +5,8 @@ app.directive('filter', function(CategoryFactory) {
 		restrict: 'E',
 		templateUrl: 'js/filter/filter.html',
 		scope: {
-			product: "=model",
+			product: "=productModel",
+			user: "=userModel"
 		},
 		link: function(scope, elem, attrs) {
 			//this is what I tried
@@ -13,6 +14,10 @@ app.directive('filter', function(CategoryFactory) {
 			.then(function(categories) {
 				scope.categories = categories;				
 			})
+
+			if (attrs.hasOwnProperty('isProduct')) scope.isProduct = true;
+			if (attrs.hasOwnProperty('isUser')) scope.isUser = true;
+
 
       		scope.product = function(product) {
       			var titleMatch = function() {
@@ -35,8 +40,28 @@ app.directive('filter', function(CategoryFactory) {
 	      			}
 	      			return (product.categories.indexOf(scope.chosenCategory) > -1);      				
       			}
-      			console.log(scope.chosenCategory);
+
       			return (titleMatch() && interviewerMatch() && categoryMatch());
+      		};
+
+      		scope.user = function(user) {
+      			var lastNameMatch = function() {
+      				if(!scope.lastName) {
+      					return true;
+      				}
+      				return (user.lastName.toLowerCase().indexOf(scope.lastName.toLowerCase()) > -1);      				
+
+      			}
+
+      			var emailMatch = function() {
+      				if(!scope.email) {
+      					return true;
+      				}
+      				return (user.email.toLowerCase().indexOf(scope.email.toLowerCase()) > -1);      				
+
+      			}
+      			
+      			return lastNameMatch() && emailMatch();
       		};
     	},
 	};
