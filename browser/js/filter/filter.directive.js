@@ -1,6 +1,6 @@
 'use strict'
 
-app.directive('filter', function(CategoryFactory) {
+app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/filter/filter.html',
@@ -9,7 +9,6 @@ app.directive('filter', function(CategoryFactory) {
 			user: "=userModel"
 		},
 		link: function(scope, elem, attrs) {
-			//this is what I tried
 			CategoryFactory.fetchAll()
 			.then(function(categories) {
 				scope.categories = categories;				
@@ -17,7 +16,6 @@ app.directive('filter', function(CategoryFactory) {
 
 			if (attrs.hasOwnProperty('isProduct')) scope.isProduct = true;
 			if (attrs.hasOwnProperty('isUser')) scope.isUser = true;
-
 
       		scope.product = function(product) {
       			var titleMatch = function() {
