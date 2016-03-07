@@ -37,17 +37,7 @@ var schema = new mongoose.Schema({
 
 schema.plugin(deepPopulate);
 
-//returns false if not found, returns the index of the product if it is found
-function checkInCart(productId) {
 
-    for (var x = 0; x < this.productList.length; x++) {
-        if (this.productList[x].product._id.toString() === productId) {
-            return x;
-        }
-    }
-
-    return false;
-};
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
@@ -65,23 +55,6 @@ schema.methods.addProduct = function (productId) {
     return this.save();
 };
 
-schema.methods.mergeAddProduct = function (productId) {
-
-
-    var isInCart = checkInCart.call(this, productId); //need to set context of this to function
-
-    if (isInCart !== false) {
-        this.productList[isInCart].quantity++;
-    } else {
-        this.productList.push({product:productId, quantity:1});
-    }
-
-    //console.log('this in mergeAddProduct', this);
-
-
-
-    
-};
 
 schema.methods.decreaseQty = function(productId) {
     var isInCart = checkInCart.call(this, productId);
@@ -111,23 +84,62 @@ schema.methods.checkout = function(cart) {
 };
 
 schema.methods.merge = function(sessionCart){
-
+  
     var userCart = this;
 
 
     sessionCart.productList.forEach(function(productObj){
-        console.log('productObj in foreach', productObj);
         for (var i = 0; i < productObj.quantity; i++) {
             userCart.mergeAddProduct(productObj.product._id);
   
 
         }
+   
     });
-
     userCart.markModified('productList');
   
     return userCart.save();
 
+};
+schema.methods.mergeAddProduct = function (productId) {
+
+
+    var isInCart = checkInCartNotPopulated.call(this, productId); //need to set context of this to function
+    console.log('result of is in cart',isInCart) //false for 1st iteration 
+
+    if (isInCart !== false) {
+        this.productList[isInCart].quantity++;
+    } else {
+        this.productList.push({product:productId, quantity:1});
+    }
+
+    //console.log('this in mergeAddProduct', this);
+    
+};
+
+//returns false if not found, returns the index of the product if it is found
+function checkInCart(productId) {
+
+
+    for (var x = 0; x < this.productList.length; x++) {
+        if (this.productList[x].product._id.toString() === productId) {
+            return x;
+        }
+    }
+
+    return false;
+};
+
+function checkInCartNotPopulated(productId) {
+
+    for (var x = 0; x < this.productList.length; x++) {
+  
+        if (this.productList[x].product.toString() === productId) {
+            return x;
+        }
+    }
+
+    return false;
 };
 
 mongoose.model('Cart', schema);
