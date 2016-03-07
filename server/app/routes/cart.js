@@ -41,6 +41,7 @@ router.get('/current', function(req, res, next) {
 // Get all the carts 
 router.get('/', function(req, res, next) {
 	Cart.find({})
+		.populate('customer')
 		.then(function(carts){
 			res.json(carts);
 		})

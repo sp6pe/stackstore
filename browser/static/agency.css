@@ -48,6 +48,10 @@ h6 {
   font-weight: 700;
 }
 
+.long-status-input {
+  width: 300px;
+}
+
 .img-holder {
   border: 1px;
   border-style: solid;
