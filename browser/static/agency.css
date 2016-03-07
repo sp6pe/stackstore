@@ -100,6 +100,11 @@ fieldset[disabled] .btn-primary.active {
   color: #fed136;
   background-color: #ffffff;
 }
+
+.btn-delete {
+  color: #fed136;
+  background-color:red;
+}
 .btn-xl {
   color: #ffffff;
   background-color: #fed136;
@@ -110,6 +115,9 @@ fieldset[disabled] .btn-primary.active {
   border-radius: 3px;
   font-size: 18px;
   padding: 20px 40px;
+}
+.warn {
+  font-weight:bold;
 }
 .btn-xl:hover,
 .btn-xl:focus,
