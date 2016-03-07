@@ -41,7 +41,6 @@ router.get('/:userId',function(req,res,next){
 
 router.put('/:userId', function (req, res, next) {
 
-
 		User.findByIdAndUpdate(req.user.id,req.body, {new: true,runValidators: true})
 		.then(function(user){
 

@@ -12,10 +12,10 @@ router.param('categoryId', function(req, res, next, categoryId) {
 			next();
 		})
 		.then(null, function (err) {
-		// make any error in finding result in 404 (not found)
-		err.status = 404;
-		next(err);
-	});
+			// make any error in finding result in 404 (not found)
+			err.status = 404;
+			next(err);
+		});
 });
 
 router.get('/', function(req, res, next) {
