@@ -25,10 +25,20 @@ router.get('/',function(req,res,next){
 		.then(null,next)
 });
 
+//signup route
 router.post('/',function(req,res,next){
 	User.create(req.body)
 		.then(function(user){
 			req.login(user, function () {
+				Cart.create({customer:user._id})//create a new user cart
+					.then(function(userCart){
+					  Cart.findById(req.session.cart)//find the session cart
+					  	.populate('productList.product customer')
+						.deepPopulate('productList.product.interviewer')
+                        .then(function(sessionCart){
+                            userCart.merge(sessionCart);//merge
+                        })
+					})
 				res.status(201).json(user);
 			});
 

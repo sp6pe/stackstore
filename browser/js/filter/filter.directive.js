@@ -1,15 +1,15 @@
 'use strict'
 
-app.directive('filter', function(CategoryFactory) {
+app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/filter/filter.html',
 		scope: {
 			product: "=productModel",
-			user: "=userModel"
+			user: "=userModel",
+			cart: "=cartModel"
 		},
 		link: function(scope, elem, attrs) {
-			//this is what I tried
 			CategoryFactory.fetchAll()
 			.then(function(categories) {
 				scope.categories = categories;				
@@ -17,7 +17,7 @@ app.directive('filter', function(CategoryFactory) {
 
 			if (attrs.hasOwnProperty('isProduct')) scope.isProduct = true;
 			if (attrs.hasOwnProperty('isUser')) scope.isUser = true;
-
+			if (attrs.hasOwnProperty('isCart')) scope.isCart = true;
 
       		scope.product = function(product) {
       			var titleMatch = function() {
@@ -63,6 +63,25 @@ app.directive('filter', function(CategoryFactory) {
       			
       			return lastNameMatch() && emailMatch();
       		};
+
+      		scope.cart = function(cart) {
+      			var lastNameMatch = function() {
+	      			if (!scope.lastName) {
+	      				return true;
+	      			}
+	      			return (cart.lastName.toLowerCase().indexOf(scope.lastName.toLowerCase()) > -1);
+	      		}
+
+	      		var statusMatch = function() {
+	      			if (!scope.status) {
+	      				return true;
+	      			}
+	      			return (cart.status.toLowerCase().indexOf(scope.status.toLowerCase()) > -1);
+
+	      		}
+
+	      		return lastNameMatch() && statusMatch();
+      		}
     	},
 	};
 });	

@@ -20,7 +20,8 @@ var schema = new mongoose.Schema({
         type: String
     },
     photoUrl: {
-        type: String
+        type: String,
+        default: 'https://cdn2.iconfinder.com/data/icons/users-2/512/User_16-512.png'
     },
     isAdmin: {
         type: Boolean,

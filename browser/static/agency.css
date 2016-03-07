@@ -47,6 +47,16 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
 }
+
+.long-status-input {
+  width: 300px;
+}
+
+.img-holder {
+  border: 1px;
+  border-style: solid;
+  border-color: lightgray;
+}
 .img-centered {
   margin: 0 auto;
 }
@@ -64,6 +74,10 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
 }
+.btn-centered {
+  text-align:center;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
@@ -100,6 +114,11 @@ fieldset[disabled] .btn-primary.active {
   color: #fed136;
   background-color: #ffffff;
 }
+
+.btn-delete {
+  color: #FFCC33;
+  background-color:#D00000 ;
+}
 .btn-xl {
   color: #ffffff;
   background-color: #fed136;
@@ -110,6 +129,9 @@ fieldset[disabled] .btn-primary.active {
   border-radius: 3px;
   font-size: 18px;
   padding: 20px 40px;
+}
+.warn {
+  font-weight:bold;
 }
 .btn-xl:hover,
 .btn-xl:focus,
@@ -346,6 +368,9 @@ section h3.section-subheading {
   background-color: white;
   text-align: center;
   padding: 25px;
+  border: 1px;
+  border-style: solid;
+  border-color: lightgray;
 }
 #portfolio .portfolio-item .portfolio-caption h4 {
   text-transform: none;
