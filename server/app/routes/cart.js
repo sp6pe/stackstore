@@ -8,10 +8,8 @@ var _ = require('lodash');
 
 // Get or create cart for current session
 router.get('/current', function(req, res, next) {
-	console.log('hit this route');
 	// If there is already a cartId on the session, find that cart
 	if (req.session.cart) {
-		console.log(req.session.cart, 'the current cart');
 		Cart.findById(req.session.cart)
 			.populate('productList.product customer')
 			.deepPopulate('productList.product.interviewer')
@@ -31,9 +29,25 @@ router.get('/current', function(req, res, next) {
 	}
 });
 
+// Get past orders for currently logged in user
+router.get('/previous-orders', function(req, res, next) {
+	if (req.user) {
+		Cart.find({customer: req.user._id, status: 'complete'})
+			.populate('productList.product customer')
+			.deepPopulate('productList.product.interviewer')
+			.then(function(pastOrders) {
+				res.json(pastOrders);
+			})
+			.then(null, next);
+	} else {
+		res.json({
+			'Message': 'There is no logged in user'
+		});
+	}
+});
+
 // POST to api/carts, brand new cart for very first product added.
 router.post('/',function(req,res,next){
-	console.log(req.session.cart);
 	//if there is no cart 
 	if(!req.session.cart){
 		//create an empty cart and add req.session.cart to it 

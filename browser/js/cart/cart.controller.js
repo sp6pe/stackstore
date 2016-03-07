@@ -1,4 +1,4 @@
-app.controller('cartCtrl',function($scope, CartFactory, cart){
+app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 
     //add product when on the cart 
 	$scope.increaseItemQuantity = function(productId){
@@ -32,6 +32,10 @@ app.controller('cartCtrl',function($scope, CartFactory, cart){
 			total += productObj.product.price * productObj.quantity;
 		});
 		$scope.total = total;
+	};
+
+	$scope.isLoggedIn = function() {
+		return AuthService.isAuthenticated();
 	};
 
 	$scope.viewCompletedOrders = function(){};
