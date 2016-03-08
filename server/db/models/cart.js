@@ -67,6 +67,8 @@ schema.methods.addProduct = function (productId) {
 };
 
 
+
+
 schema.methods.decreaseQty = function(productId) {
     var isInCart = checkInCart.call(this, productId);
 
@@ -127,6 +129,7 @@ schema.methods.merge = function(sessionCart){
     return userCart.save();
 
 };
+
 schema.methods.mergeAddProduct = function (productId) {
 
     var isInCart = checkInCartNotPopulated.call(this, productId); //need to set context of this to function
@@ -136,7 +139,26 @@ schema.methods.mergeAddProduct = function (productId) {
     } else {
         this.productList.push({product:productId, quantity:1});
     }
+
     
+};
+
+
+
+function checkInCartNotPopulated(productId) {
+
+    console.log('this productList', this.productList);
+    console.log('the product id', productId);
+
+    for (var x = 0; x < this.productList.length; x++) {
+        console.log('in the loop', x)
+        if (this.productList[x].product.toString() === productId.toString()) {
+            console.log('in the if');
+            return x;
+        }
+    }
+
+    return false;
 };
 
 //returns false if not found, returns the index of the product if it is found
@@ -151,17 +173,21 @@ function checkInCart(productId) {
     return false;
 };
 
-function checkInCartNotPopulated(productId) {
 
-    for (var x = 0; x < this.productList.length; x++) {
-  
-        if (this.productList[x].product.toString() === productId) {
-            return x;
-        }
-    }
 
-    return false;
-};
+schema.statics.findOrCreate = function(id){
+    return this.findOne({customer:id})
+          .populate('productList.product customer')
+          .deepPopulate('productList.product.interviewer')
+        .then(function(userCart){
+            if(userCart){
+                return userCart
+            } else{
+
+                return mongoose.model('Cart').create({customer:id})
+            }
+        })
+}
 
 mongoose.model('Cart', schema);
 

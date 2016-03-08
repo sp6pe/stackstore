@@ -4,6 +4,7 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var CartModel = mongoose.model('Cart');
 
 module.exports = function (app) {
 
@@ -16,13 +17,15 @@ module.exports = function (app) {
     };
 
     var createNewUser = function (token, tokenSecret, profile) {
+        var email = [profile.username , 'fake-auther-email.com'].join('@');
         return UserModel.create({
             twitter: {
                 id: profile.id,
                 username: profile.username,
                 token: token,
                 tokenSecret: tokenSecret
-            }
+            },
+            email:email
         });
     };
 
@@ -61,27 +64,26 @@ module.exports = function (app) {
     app.get('/auth/twitter/callback',
         passport.authenticate('twitter', {failureRedirect: '/login'}),
         function (req, res) {
-            var userCart, sessionCart;
-            CartModel.create({customer: req.user._id})
-                .then(function(cart) {
+            var userCart;
+            CartModel.findOrCreate(req.user._id)
+                .then(function(cart){
                     userCart = cart;
                     return CartModel.findById(req.session.cart)
-                    .populate('productList.product customer')
-                    .deepPopulate('productList.product.interviewer');
+                       .populate('productList.product customer')
+                       .deepPopulate('productList.product.interviewer');
                 })
-                .then(function(sessionCart) {
-                    if (sessionCart){
+                .then(function(sessionCart){
+                    if(sessionCart){
                         return userCart.merge(sessionCart);
                     }
                     req.session.cart = null;
                 })
-                .then(function() {
+                .then(function(){
                     res.redirect('/');
                 })
-                .catch(function(err) {
+                .catch(function(err){
                     console.error(err);
                 })
-            res.redirect('/');
         });
 
 };

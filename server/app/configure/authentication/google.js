@@ -24,10 +24,12 @@ module.exports = function (app) {
                 if (user) {
                     return user;
                 } else {
+                    var email = profile.emails[0].value;
                     return UserModel.create({
                         google: {
                             id: profile.id
-                        }
+                        },
+                        email: email,
                     });
                 }
 
@@ -49,29 +51,60 @@ module.exports = function (app) {
         ]
     }));
 
-    app.get('/auth/google/callback',
+    // app.get('/auth/google/callback',
+    //     passport.authenticate('google', { failureRedirect: '/login' }),
+    //     function (req, res) {
+    //         var userCart, sessionCart;
+    //         CartModel.create({customer: req.user._id})
+    //             .then(function(cart) {
+    //                 userCart = cart;
+    //                 return CartModel.findById(req.session.cart)
+    //                 .populate('productList.product customer')
+    //                 .deepPopulate('productList.product.interviewer');
+    //             })
+    //             .then(function(sessionCart) {
+    //                 if (sessionCart){
+    //                     return userCart.merge(sessionCart);
+    //                 }
+    //                 req.session.cart = null;
+    //             })
+    //             .then(function() {
+    //                 res.redirect('/');
+    //             })
+    //             .catch(function(err) {
+    //                 console.error(err);
+    //             })
+    //     });
+
+
+       app.get('/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
-            var userCart, sessionCart;
-            CartModel.create({customer: req.user._id})
-                .then(function(cart) {
+            var userCart;
+            CartModel.findOrCreate(req.user._id)
+                .then(function(cart){
                     userCart = cart;
                     return CartModel.findById(req.session.cart)
-                    .populate('productList.product customer')
-                    .deepPopulate('productList.product.interviewer');
+                       .populate('productList.product customer')
+                       .deepPopulate('productList.product.interviewer');
                 })
-                .then(function(sessionCart) {
-                    if (sessionCart){
+                .then(function(sessionCart){
+                    if(sessionCart){
                         return userCart.merge(sessionCart);
                     }
                     req.session.cart = null;
                 })
-                .then(function() {
+                .then(function(){
                     res.redirect('/');
                 })
-                .catch(function(err) {
+                .catch(function(err){
                     console.error(err);
                 })
+
         });
+
+
+
+
 
 };
