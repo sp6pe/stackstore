@@ -6,7 +6,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.fetchAll = function() {
 		return $http.get('/api/carts')
 			.then(function(response) {
-				console.log("CartFactory.fetchAll: ", response.data);
 				return response.data;
 			})
 	};
@@ -15,7 +14,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.getCurrentCart = function() {
 		return $http.get('/api/carts/current')
 			.then(function(response) {
-				console.log("CartFactory.getCurrent: ", response.data);
 				return response.data;
 			})
 	};
@@ -23,7 +21,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.fetchById = function(id) {
 		return $http.get('/api/carts/' + id) 
 			.then(function(response) {
-				console.log("CartFactory.fetchById: ", response.data);
 				return response.data;
 			})
 	};
@@ -31,7 +28,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.create = function(data) {
 		return $http.post('/api/carts',data)
 			.then(function(response) {
-				console.log("CartFactory.create: ", response.data);
 				return response.data;
 			})
 	};
@@ -39,7 +35,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.increaseQty = function(id, data) {
 		return $http.post('/api/carts/' + id + '/add/', data)
 			.then(function(response) {
-				console.log('CartFactory.increaseQty: ', response.data);
 				return response.data;
 			})
 	};
@@ -47,7 +42,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.decreaseQty = function(id ,data) {
 		return $http.post('/api/carts/' + id +'/remove/', data)
 			.then(function(response) {
-				console.log('CartFactory.update: ', response.data);
 				return response.data;
 			})
 	};
@@ -55,7 +49,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.removeProduct = function(cartId,productId) {
 		return $http.delete('/api/carts/' + cartId + '/products/' + productId)
 			.then(function(response) {
-				console.log('CartFactory.remove: ', response.data);
 				return response.data;
 			})
 	};
@@ -63,7 +56,6 @@ app.factory("CartFactory", function($http) {
 	CartFactory.getPreviousOrders = function() {
 		return $http.get('/api/carts/previous-orders')
 			.then(function(response) {
-				console.log('CartFactory.getPreviousOrders: ', response.data);
 				return response.data;
 			})
 	};
@@ -71,7 +63,13 @@ app.factory("CartFactory", function($http) {
 	CartFactory.checkout = function(cartId) {
 		return $http.post('/api/carts/' + cartId + '/checkout')
 			.then(function(response) {
-				console.log('CartFactory.checkout: ', response.data);
+				return response.data;
+			})
+	}
+
+	CartFactory.remove = function(cartId) {
+		return $http.delete('/api/carts/' +cartId)
+			.then(function(response) {
 				return response.data;
 			})
 	}

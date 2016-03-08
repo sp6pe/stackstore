@@ -18,7 +18,6 @@ app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 	};
 
 	$scope.decreaseItemQuantity = function(productId) {
-		//console.log(cartId,productId);
 		CartFactory.decreaseQty($scope.cart._id,{'id': productId})
 			.then(function(cart){
 				$scope.cart = cart;

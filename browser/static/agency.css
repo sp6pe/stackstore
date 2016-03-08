@@ -52,6 +52,10 @@ h6 {
   width: 300px;
 }
 
+.edit {
+  font-size:20px;
+}
+
 .img-holder {
   border: 1px;
   border-style: solid;
@@ -69,6 +73,14 @@ h6 {
 .btn-primary {
   color: #ffffff;
   background-color: #fed136;
+  border-color: #fed136;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.btn-secondary {
+  color: #ffffff;
+  background-color: #66CCCC;
   border-color: #fed136;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
@@ -820,4 +832,34 @@ input[name=title]{
 
 .login-button {
   margin-top: 8px;
+}
+
+.need-to-clear {
+  padding-top:125px;
+
+.user-page {
+  margin-top: 10em;
+  margin-bottom: 10em;
+}
+
+.user-profile {
+  text-align: left;
+  margin-top: 4em;
+}
+
+.profile-pic {
+  width: 25%;
+}
+
+#save-profile-changes {
+  width: 40%;
+  background-color: green
+}
+
+.order-table {
+  text-align: center;
+}
+
+.change-user-url {
+  width: 75%;
 }

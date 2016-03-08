@@ -25,15 +25,15 @@ app.factory('ProductFactory', function($http){
 		});
 	};
 
-	ProductFactory.update = function(id){
-		return $http.put('/api/products/' + id)
+	ProductFactory.update = function(id,data){
+		return $http.put('/api/products/' + id,data)
 		.then(function(response){
 			return response.data;
 		});
 	};
 
 	ProductFactory.remove = function(id){
-		return $http.delete('/api/products/category', id)
+		return $http.delete('/api/products/' + id)
 		.then(function(response){
 			return response.data;
 		});
@@ -44,8 +44,15 @@ app.factory('ProductFactory', function($http){
 		return $http.get('/api/products/category/' + data._id)
 		.then(function(response){
 			return response.data;
-		})
-	}
+		});
+	};
+
+	ProductFactory.getByInterviewerId = function(id){
+		return $http.get('/api/products/interviewer/' + id)
+		.then(function(response){
+			return response.data;
+		});
+	};
 
 	return ProductFactory;
 

@@ -1,12 +1,13 @@
 'use strict'
 
-app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, ProductFactory, UserFactory) {
+app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, ProductFactory, UserFactory, CartFactory) {
 
 	$scope.products = allProducts;
 	$scope.users = allUsers;
 	$scope.carts = allCarts;
 
 	$scope.removeProduct = function(product) {
+		console.log(product);
 		var confirmation = prompt("please rewrite the product title to continue.");
 		if (confirmation === product.title)
 		ProductFactory.remove(product._id)

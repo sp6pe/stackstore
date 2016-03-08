@@ -3,8 +3,28 @@ module.exports = router;
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 
+router.param('productId', function(req, res, next, productId) {
+	Product.findById(productId)
+		.populate('interviewer categories')
+		.then(function(product) {
+			if (!product) return next(new Error('Product not found'));
+			req.product = product;
+			next();
+		})
+		.then(null, next);
+});
+
 router.get('/', function(req, res, next) {
 	Product.find({})
+		.populate('interviewer categories')
+		.then(function(products) {
+			res.json(products);
+		})
+		.then(null, next);
+});
+
+router.get('/interviewer/:interviewerId', function(req, res, next) {
+	Product.findByInterviewerId(req.params.interviewerId)
 		.then(function(products) {
 			res.json(products);
 		})
@@ -24,22 +44,10 @@ router.get('/category/:id', function(req,res,next){
 	Product.find({categories:req.params.id})
 		.populate('categories')
 		.then(function(products){
-			console.log('found products', products);
 			res.status(201).json(products);
 		})
 		.then(null,next);
 })
-
-router.param('productId', function(req, res, next, productId) {
-	Product.findById(productId)
-		.populate('interviewer categories')
-		.then(function(product) {
-			if (!product) return next(new Error('Product not found'));
-			req.product = product;
-			next();
-		})
-		.then(null, next);
-});
 
 router.get('/:productId', function(req, res, next) {
 	res.json(req.product);
@@ -47,6 +55,7 @@ router.get('/:productId', function(req, res, next) {
 
 router.put('/:productId', function(req, res, next) {
 	Product.findByIdAndUpdate(req.product._id, req.body, {new: true,runValidators: true})
+		.populate('categories interviewer')
 		.then(function(product) {
 			res.json(product);
 		})

@@ -15,6 +15,9 @@ app.config(function($stateProvider){
 			},
 			currentUser: function(AuthService) {
 				return AuthService.getLoggedInUser();
+			},
+			theCategories: function(CategoryFactory) {
+				return CategoryFactory.fetchAll();
 			}
 		}
 	});
