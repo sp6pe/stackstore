@@ -1,0 +1,27 @@
+<div class="user-profile">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1">
+				
+    				<form class="form-register" ng-submit='saveProfileChanges(user)' name='userForm' novalidate>
+						<label>Profile Picture</label><br>
+						<img class="profile-pic" src="{{ user.photoUrl }}"><br><br>
+						<button class="btn btn-default" ng-hide="changingPic" ng-click="toggle()">Change Picture</button>
+						<div ng-show="changingPic">
+							<button class="btn btn-default" ng-click="toggle()">Cancel Change</button>
+							<input class="form-control change-user-url" type="text" ng-model="user.photoUrl">
+						</div>
+
+						<br><br>
+						<label>Name
+						<input class="form-control" type="text" ng-model="fullName" required></label><br>
+						<label>Email
+						<input class="form-control" type="email" ng-model="user.email" required></label><br>
+						<br>
+						<button class="btn btn-submit" id="save-profile-changes" type="submit">Save Changes</button>
+					</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
