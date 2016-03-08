@@ -775,12 +775,6 @@ body {
   webkit-tap-highlight-color: #fed136;
 }
 
-#login-form {
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 6em;
-}
-
 #course-creation-form {
   width: 60%;
   margin: 0 auto;

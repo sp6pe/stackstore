@@ -33,11 +33,19 @@ app.factory('ProductFactory', function($http){
 	};
 
 	ProductFactory.remove = function(id){
-		return $http.delete('/api/products/' + id)
+		return $http.delete('/api/products/category', id)
 		.then(function(response){
 			return response.data;
 		});
 	};
+
+	ProductFactory.getByCategory = function(data){
+	
+		return $http.get('/api/products/category/' + data._id)
+		.then(function(response){
+			return response.data;
+		})
+	}
 
 	return ProductFactory;
 
