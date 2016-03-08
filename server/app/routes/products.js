@@ -16,6 +16,7 @@ router.param('productId', function(req, res, next, productId) {
 
 router.get('/', function(req, res, next) {
 	Product.find({})
+		.populate('interviewer categories')
 		.then(function(products) {
 			res.json(products);
 		})
@@ -43,7 +44,6 @@ router.get('/category/:id', function(req,res,next){
 	Product.find({categories:req.params.id})
 		.populate('categories')
 		.then(function(products){
-			console.log('found products', products);
 			res.status(201).json(products);
 		})
 		.then(null,next);

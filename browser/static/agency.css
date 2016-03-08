@@ -834,6 +834,9 @@ input[name=title]{
   margin-top: 8px;
 }
 
+.need-to-clear {
+  padding-top:125px;
+
 .user-page {
   margin-top: 10em;
   margin-bottom: 10em;
