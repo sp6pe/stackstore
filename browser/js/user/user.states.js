@@ -8,7 +8,6 @@ app.config(function($stateProvider){
 		controller: 'UserCtrl',
 		resolve: {
 			theUser: function(UserFactory, $stateParams){
-				console.log('$stateParams.userId', $stateParams.userId);
 				return UserFactory.fetchById($stateParams.userId);
 			}
 		}
@@ -23,7 +22,23 @@ app.config(function($stateProvider){
 	$stateProvider.state('user.orders', {
 		url: '/orders',
 		templateUrl: '/js/user/user.orders.html',
-		controller: 'UserOrdersCtlr'
+		controller: 'UserOrdersCtrl',
+		resolve: {
+			theOrders: function(CartFactory){
+				return CartFactory.getPreviousOrders();
+			}
+		}
+	});
+
+	$stateProvider.state('user.interviews', {
+		url: '/orders',
+		templateUrl: '/js/user/user.orders.html',
+		controller: 'UserOrdersCtrl',
+		resolve: {
+			theOrders: function(CartFactory){
+				return CartFactory.getPreviousOrders();
+			}
+		}
 	});
 
 });

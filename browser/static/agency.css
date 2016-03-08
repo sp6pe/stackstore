@@ -846,3 +846,7 @@ input[name=title]{
   width: 40%;
   background-color: green
 }
+
+.order-table {
+  text-align: center;
+}
