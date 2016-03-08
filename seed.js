@@ -21,6 +21,7 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
+var chance = require('chance')(123);
 
 
 var Product = Promise.promisifyAll(mongoose.model('Product'));
@@ -28,6 +29,25 @@ var Review = Promise.promisifyAll(mongoose.model('Review'));
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Cart = Promise.promisifyAll(mongoose.model('Cart'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
+
+function randPhoto () {
+    var g = chance.pick(['men', 'women']);
+    var n = chance.natural({
+        min: 0,
+        max: 96
+    });
+    return 'http://api.randomuser.me/portraits/' + g + '/' + n + '.jpg'
+}
+
+function randUser () {
+    return {
+        email: chance.email(),
+        password: chance.word(),
+        firstName: chance.first(),
+        lastName: chance.last(),
+        photoUrl: randPhoto(),
+    };
+}
 
 var seedCategories = function(){
     var categories = [
@@ -62,9 +82,14 @@ var seedUsers = function () {
             password: 'potus',
             firstName: 'Joe',
             lastName: 'Alvez',
+            isAdmin: true,
             photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
         }
     ];
+
+    for (var i = 0; i < 50; i++) {
+        users.push(randUser());
+    }
 
     return User.createAsync(users);
 
@@ -77,58 +102,67 @@ var seedProducts = function (users) {
             title: 'Test Course 1',
             price: 100,
             quantity: 10,
-            interviewer: users[0]._id
+            interviewer: users[11]._id
         },
         {
             title: 'Test Course 2',
             price: 80,
             quantity: 8,
-            interviewer: users[1]._id
+            interviewer: users[15]._id
         },
         {
             title: 'Test Course 3',
             price: 180,
-            quantity: 5
+            quantity: 5,
+            interviewer: users[2]._id
         },
         {
             title: 'Test Course 4',
             price: 100,
-            quantity: 10
+            quantity: 10,
+            interviewer: users[3]._id
         },
         {
             title: 'Test Course 5',
             price: 80,
-            quantity: 8
+            quantity: 8,
+            interviewer: users[4]._id
         },
         {
             title: 'Test Course 5',
             price: 180,
-            quantity: 5
+            quantity: 5,
+            interviewer: users[5]._id
         },
         {
             title: 'Test Course 6',
             price: 180,
-            quantity: 5
+            quantity: 5,
+            interviewer: users[6]._id
         },
         {
             title: 'Test Course 7',
             price: 100,
-            quantity: 10
+            quantity: 10,
+            interviewer: users[7]._id
         },
         {
             title: 'Test Course 8',
             price: 80,
-            quantity: 8
+            quantity: 8,
+            interviewer: users[8]._id
         },
         {
             title: 'Test Course 8',
             price: 180,
-            quantity: 5
+            quantity: 5,
+            interviewer: users[9]._id
         },
         {
             title: 'Test Course 9',
             price: 180,
-            quantity: 5
+            quantity: 5,
+            interviewer: users[10]._id
         }
     ];
 
@@ -208,30 +242,27 @@ var seedReviews = function (products) {
 };
 
 
-connectToDb.then(function(){
-        return seedCategories()
-    })
-    .then(function(){
-        console.log("succesfully seeded Categories")
-    })
-    .catch(function(err){
-        console.log(err);
-    })
+// connectToDb.then(function(){
+//         return seedCategories()
+//     })
+//     .then(function(){
+//         console.log("succesfully seeded Categories")
+//     })
+//     .catch(function(err){
+//         console.log(err);
+//     })
 
 
-// var savedUsers;
-// connectToDb.then(function () {      
-//     // return seedUsers();
+var savedUsers;
+connectToDb.then(function () {      
+    // return seedUsers();
    
-//     return seedUsers();
-// })
-// .then(function(users) {
-//     savedUsers = users;
-//     return seedProducts(users);
-// })
-// .then(function(products) {
-//     return seedCart(products, savedUsers);
-// })
-// .catch(function (err) {
-//     console.error(err);
-// });
+    return seedUsers();
+})
+.then(function(users) {
+    savedUsers = users;
+    return seedProducts(users);
+})
+.catch(function (err) {
+    console.error(err);
+});

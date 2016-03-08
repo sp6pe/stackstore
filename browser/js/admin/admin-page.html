@@ -36,7 +36,7 @@
                     <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="product in products | filter:productFilter">
                         <a ui-sref="product({productId:product._id})" class="portfolio-link" data-toggle="modal">
                             <div class='img-holder'>
-                                <img src="{{product.photoUrl}}" class="img-responsive img-centered">
+                                <img src="{{product.interviewer.photoUrl}}" class="img-responsive img-centered">
                             </div>
                             <div class="portfolio-caption">
                                 <h4>{{product.title}}</h4>
