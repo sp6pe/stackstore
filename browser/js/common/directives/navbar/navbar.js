@@ -7,7 +7,6 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         link: function (scope) {
 
             scope.items = [
-                { label: 'Admins', state: 'admin' },
                 { label: 'Interviews', state: 'allProducts' },
                 // { label: 'Create New Interview', state: 'create_product', auth: true},
                 { label: 'My Account', state: 'user({userId: user._id})', auth: true }
@@ -23,6 +22,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 AuthService.logout().then(function () {
                    $state.go('home');
                 });
+            };
+
+            scope.isAdmin = function() {
+                return scope.user.isAdmin;
             };
 
             var setUser = function () {

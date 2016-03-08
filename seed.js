@@ -82,6 +82,7 @@ var seedUsers = function () {
             password: 'potus',
             firstName: 'Joe',
             lastName: 'Alvez',
+            isAdmin: true,
             photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
         }
     ];

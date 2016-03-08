@@ -19,6 +19,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
 
+                    <li ng-show="isAdmin()"><a ui-sref="admin">Admin</a></li>
                     <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
                         <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
                     </li>

@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct, CartFactory, theReviews, ReviewFactory, currentUser, theCategories, ProductFactory){
+app.controller('ProductCtrl', function($scope, $state, theProduct, CartFactory, theReviews, ReviewFactory, currentUser, theCategories, ProductFactory){
 
 	$scope.currentUser = currentUser;
 	$scope.product = theProduct;
@@ -10,7 +10,7 @@ app.controller('ProductCtrl', function($scope, theProduct, CartFactory, theRevie
 
 	$scope.addToCart = function(product){
 		CartFactory.create(product).then(function(cart){
-			return cart;
+			$state.go('cart');
 		})
 	};
 	
