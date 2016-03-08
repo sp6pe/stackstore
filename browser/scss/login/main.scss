@@ -2,3 +2,41 @@
   width: 60%;
   margin: 0 auto;
 }
+
+.oauth-buttons {
+	padding-top: 2em;
+	a {
+		display: block;
+		margin: 0 auto;
+		width: 275px;
+		padding: 20px 40px;
+		border-radius: 3px;
+		color: white;
+		font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		margin-bottom: 1em;
+	}
+
+	.oauth-facebook {
+		background-color: #3B5898;
+	}
+
+	.oauth-google {
+		background-color: #D35541;
+	}
+
+	.oauth-twitter {
+		background-color: #55ACEE;
+	}
+
+	i {
+		font-size: 1.5em;
+		padding-right: 15px;
+		position: relative;
+		top: 4px;
+	}
+}
+
+.oauth-header {
+	margin-top: 2em;
+	text-align: center;
+}
