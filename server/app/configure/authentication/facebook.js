@@ -45,7 +45,26 @@ module.exports = function (app) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/');
+            var userCart, sessionCart;
+            CartModel.create({customer: req.user._id})
+                .then(function(cart) {
+                    userCart = cart;
+                    return CartModel.findById(req.session.cart)
+                    .populate('productList.product customer')
+                    .deepPopulate('productList.product.interviewer');
+                })
+                .then(function(sessionCart) {
+                    if (sessionCart){
+                        return userCart.merge(sessionCart);
+                    }
+                    req.session.cart = null;
+                })
+                .then(function() {
+                    res.redirect('/');
+                })
+                .catch(function(err) {
+                    console.error(err);
+                })
         });
 
 };
