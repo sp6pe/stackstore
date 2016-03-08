@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, ProductFactory, UserFactory) {
+app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, ProductFactory, UserFactory, CartFactory) {
 
 	$scope.products = allProducts;
 	$scope.users = allUsers;

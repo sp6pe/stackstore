@@ -76,5 +76,12 @@ app.factory("CartFactory", function($http) {
 			})
 	}
 
+	CartFactory.remove = function(cartId) {
+		return $http.delete('/api/carts/' +cartId)
+			.then(function(response) {
+				return response.data;
+			})
+	}
+
 	return CartFactory;
 });

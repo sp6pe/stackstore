@@ -1,22 +1,56 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <div class="product-single">
-                <!-- Product Details Go Here -->
+            <div class="product-single" ng-form>
                 <br><br>
-                <h1 ng-show="isInterviewer()">LOOK AT ME!</h1>
-                <h2>{{ product.title }}</h2>
-                <p class="item-intro text-muted" contenteditable="isInterviewer()">Lorem ipsum dolor sit amet consectetur.</p>
+
+                <!-- shows the title of the product -->
+                <h2 ng-if="!editMode">{{ product.title }}</h2>
+                <div ng-if='editMode' class="edit">
+                    <strong>Title:</strong>
+                    <input ng-model='product.title' value="{{product.title}}">
+                </div>
+                
+                <!-- show the picture -->
                 <img class="img-responsive img-centered product-image" src="{{product.photoUrl}}">
-                <p>{{ product.description }}</p>
-                <p><strong>Price: ${{ product.price }}/hour</strong></p>
+
+                <!-- shows the description -->
+                <p ng-if="!editMode">{{ product.description }}</p>
+                <div ng-if='editMode' class="edit">
+                    <strong>Description:</strong>
+                    <textarea rows="4" cols="50" id="course-creation-description" ng-model='product.description'>{{product.description}}</textarea>
+                </div>
+
+                <!-- show the price -->
+                <p ng-if="!editMode"><strong>Price: ${{ product.price }}/hour</strong></p>
+                <div ng-if='editMode' class="edit">
+                    <strong>Price:</strong>
+                    <input id="course-creation-price" value="{{product.price}}" ng-model='product.price'><span>/hour</span>
+                </div>
+                
                 <ul class="list-inline">
-                    <li>Interviewer: {{ product.user.name.firstName }} {{ product.user.name.lastName }}</li> 
+                    <li>Interviewer: {{ product.interviewer.firstName }} {{ product.interviewer.lastName }}</li> 
                     <br>
-                    <li>Category: {{ product.category.name }}</li>
+
+                    <!-- show the categories -->
+                    <li ng-if='!editMode'>Categories: <span ng-repeat="category in product.categories">{{ category.name}}{{$last ? '' : ', '}}</span></li>
+                    <div class="form-row" ng-if="editMode">
+                        <label>Pick all categories that apply (hold command to select more than one):</label>
+                        <br>
+                        <select multiple ng-options="category._id as category.name for category in allCategories" id="product-creation-categories" ng-model='product.categories'> 
+                        </select>
+                    </div>
                     <br>
                 </ul>
+
+                <!-- button to add to cart -->
                 <button type="button" class="btn btn-primary" ng-click ="addToCart(product)"><i class="fa fa-plus"></i> Add to Cart</button>
+
+                <!-- button to edit -->
+                <button class="btn btn-secondary" ng-if="isInterviewer()" ng-hide="editMode" ng-click="editPage()">Edit</button>
+
+                <!-- button to update -->
+                <button class="btn btn-secondary" ng-if="isInterviewer()" ng-show="editMode" ng-click="updatePage(product)">Update</button>
             </div>
             <br>
             <div class="product-reviews">
@@ -55,7 +89,11 @@
                     </ul>
 
             </div>
+            <br>
+            <div>
+                <recommendation product = "product"></recommendation>
 
+            </div>
         </div>
     </div>
 </div>
