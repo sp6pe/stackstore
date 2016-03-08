@@ -4,9 +4,10 @@
             <div class="product-single">
                 <!-- Product Details Go Here -->
                 <br><br>
+                <h1 ng-show="isInterviewer()">LOOK AT ME!</h1>
                 <h2>{{ product.title }}</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-responsive img-centered product-image" src="product.photoUrl" alt="">
+                <p class="item-intro text-muted" contenteditable="isInterviewer()">Lorem ipsum dolor sit amet consectetur.</p>
+                <img class="img-responsive img-centered product-image" src="{{product.photoUrl}}">
                 <p>{{ product.description }}</p>
                 <p><strong>Price: ${{ product.price }}/hour</strong></p>
                 <ul class="list-inline">
