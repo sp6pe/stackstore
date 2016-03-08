@@ -27,6 +27,24 @@ var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Cart = Promise.promisifyAll(mongoose.model('Cart'));
+var Category = Promise.promisifyAll(mongoose.model('Category'));
+
+var seedCategories = function(){
+    var categories = [
+        {
+            name: 'Javascript'
+        },
+        {
+            name: 'Ruby'
+        },
+        {
+            name: 'Java'
+        }
+    ];
+
+    return Category.createAsync(categories);
+
+}
 
 
 var seedUsers = function () {
@@ -188,19 +206,32 @@ var seedReviews = function (products) {
     return Review.createAsync(reviews);
 
 };
-var savedUsers;
-connectToDb.then(function () {      
-    // return seedUsers();
-    console.log(chalk.green('Seed successful!'));
-    return seedUsers();
-})
-.then(function(users) {
-    savedUsers = users;
-    return seedProducts(users);
-})
-.then(function(products) {
-    return seedCart(products, savedUsers);
-})
-.catch(function (err) {
-    console.error(err);
-});
+
+
+connectToDb.then(function(){
+        return seedCategories()
+    })
+    .then(function(){
+        console.log("succesfully seeded Categories")
+    })
+    .catch(function(err){
+        console.log(err);
+    })
+
+
+// var savedUsers;
+// connectToDb.then(function () {      
+//     // return seedUsers();
+   
+//     return seedUsers();
+// })
+// .then(function(users) {
+//     savedUsers = users;
+//     return seedProducts(users);
+// })
+// .then(function(products) {
+//     return seedCart(products, savedUsers);
+// })
+// .catch(function (err) {
+//     console.error(err);
+// });
