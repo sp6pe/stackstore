@@ -836,4 +836,30 @@ input[name=title]{
 
 .need-to-clear {
   padding-top:125px;
+
+.user-page {
+  margin-top: 10em;
+  margin-bottom: 10em;
+}
+
+.user-profile {
+  text-align: left;
+  margin-top: 4em;
+}
+
+.profile-pic {
+  width: 25%;
+}
+
+#save-profile-changes {
+  width: 40%;
+  background-color: green
+}
+
+.order-table {
+  text-align: center;
+}
+
+.change-user-url {
+  width: 75%;
 }

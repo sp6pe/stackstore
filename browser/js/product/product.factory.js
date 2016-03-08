@@ -44,8 +44,15 @@ app.factory('ProductFactory', function($http){
 		return $http.get('/api/products/category/' + data._id)
 		.then(function(response){
 			return response.data;
-		})
-	}
+		});
+	};
+
+	ProductFactory.getByInterviewerId = function(id){
+		return $http.get('/api/products/interviewer/' + id)
+		.then(function(response){
+			return response.data;
+		});
+	};
 
 	return ProductFactory;
 

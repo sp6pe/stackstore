@@ -7,36 +7,36 @@ app.factory("UserFactory", function($http) {
 		return $http.get('/api/users')
 		.then(function(response) {
 			return response.data;
-		})
-	}
+		});
+	};
 
 	UserFactory.fetchById = function(id) {
 		return $http.get('/api/users/' + id) 
 		.then(function(response) {
 			return response.data;
-		})
-	}
+		});
+	};
 
 	UserFactory.create = function(data) {
 		return $http.post('/api/users',data)
 		.then(function(response) {
 			return response.data;
-		})
-	}
+		});
+	};
 
-	UserFactory.update = function(id) {
-		return $http.put('/api/users/' + id)
+	UserFactory.update = function(id, data) {
+		return $http.put('/api/users/' + id, data)
 		.then(function(response) {
 			return response.data;
-		})
-	}
+		});
+	};
 
 	UserFactory.remove = function(id) {
 		return $http.delete('/api/users/' + id)
 		.then(function(response) {
 			return response.data;
-		})
-	}
+		});
+	};
 
 	return UserFactory;
 });
