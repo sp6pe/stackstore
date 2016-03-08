@@ -33,7 +33,6 @@ module.exports = function (app) {
 
     // When we give a cookie to the browser, it is just the userId (encrypted with our secret).
     passport.serializeUser(function (user, done) {
-        console.log(user, 'serialize')
         done(null, user.id);
     });
 
