@@ -24,6 +24,6 @@ app.config(function ($stateProvider) {
                 return CartFactory.getPreviousOrders();
             }
         }
-     })
+     });
 
 });

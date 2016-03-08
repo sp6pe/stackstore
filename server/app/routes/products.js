@@ -30,12 +30,24 @@ router.post('/', function(req, res, next) {
 		.then(null, next);
 });
 
+router.get('/category/:id', function(req,res,next){
+
+	Product.find({categories:req.params.id})
+		.populate('categories')
+		.then(function(products){
+			console.log('found products', products);
+			res.status(201).json(products);
+		})
+		.then(null,next);
+})
+
 router.get('/:productId', function(req, res, next) {
 	res.json(req.product);
 });
 
 router.put('/:productId', function(req, res, next) {
 	Product.findByIdAndUpdate(req.product._id, req.body, {new: true,runValidators: true})
+		.populate('categories interviewer')
 		.then(function(product) {
 			res.json(product);
 		})

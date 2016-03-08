@@ -52,6 +52,10 @@ h6 {
   width: 300px;
 }
 
+.edit {
+  font-size:20px;
+}
+
 .img-holder {
   border: 1px;
   border-style: solid;
@@ -69,6 +73,14 @@ h6 {
 .btn-primary {
   color: #ffffff;
   background-color: #fed136;
+  border-color: #fed136;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.btn-secondary {
+  color: #ffffff;
+  background-color: #66CCCC;
   border-color: #fed136;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
@@ -761,12 +773,6 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: #fed136;
-}
-
-#login-form {
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 6em;
 }
 
 #course-creation-form {
