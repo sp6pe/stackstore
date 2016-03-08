@@ -62,7 +62,7 @@ app.factory("CartFactory", function($http) {
 
 	CartFactory.checkout = function(cartId) {
 		return $http.post('/api/carts/' + cartId + '/checkout')
-			.then(function(response) {
+			.then(function(response) {	
 				return response.data;
 			})
 	}
