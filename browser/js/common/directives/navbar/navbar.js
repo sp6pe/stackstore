@@ -25,7 +25,11 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             };
 
             scope.isAdmin = function() {
-                return scope.user.isAdmin;
+                if(scope.user) {
+                    return scope.user.isAdmin;
+                } else {
+                    return false;
+                }
             };
 
             var setUser = function () {
