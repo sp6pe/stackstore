@@ -6,7 +6,6 @@ app.factory("UserFactory", function($http) {
 	UserFactory.fetchAll = function() {
 		return $http.get('/api/users')
 		.then(function(response) {
-			console.log("UserFactory.fetchAll: ", response.data);
 			return response.data;
 		})
 	}
@@ -14,7 +13,6 @@ app.factory("UserFactory", function($http) {
 	UserFactory.fetchById = function(id) {
 		return $http.get('/api/users/' + id) 
 		.then(function(response) {
-			console.log("UserFactory.fetchById: ", response.data);
 			return response.data;
 		})
 	}
@@ -22,7 +20,6 @@ app.factory("UserFactory", function($http) {
 	UserFactory.create = function(data) {
 		return $http.post('/api/users',data)
 		.then(function(response) {
-			console.log("UserFactory.create: ", response.data);
 			return response.data;
 		})
 	}
@@ -30,7 +27,6 @@ app.factory("UserFactory", function($http) {
 	UserFactory.update = function(id) {
 		return $http.put('/api/users/' + id)
 		.then(function(response) {
-			console.log('UserFactory.update: ', response.data);
 			return response.data;
 		})
 	}
@@ -38,7 +34,6 @@ app.factory("UserFactory", function($http) {
 	UserFactory.remove = function(id) {
 		return $http.delete('/api/users/' + id)
 		.then(function(response) {
-			console.log('UserFactory.remove: ', response.data);
 			return response.data;
 		})
 	}

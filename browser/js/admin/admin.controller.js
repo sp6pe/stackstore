@@ -7,6 +7,7 @@ app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, Pr
 	$scope.carts = allCarts;
 
 	$scope.removeProduct = function(product) {
+		console.log(product);
 		var confirmation = prompt("please rewrite the product title to continue.");
 		if (confirmation === product.title)
 		ProductFactory.remove(product._id)

@@ -5,12 +5,11 @@ app.controller('ProductCreationCtrl', function ($scope,ProductFactory,$state,all
  	$scope.allCategories = allCategories;
 	
 	$scope.createCourse = function() {
-		
 		$scope.newProduct.categories = $scope.category;
 		$scope.newProduct.interviewer = currentUser._id;
+		$scope.newProduct.isInterviewer = true;
 		ProductFactory.create($scope.newProduct)
 		.then(function(data) {
-			console.log(data);
 			$state.go('allProducts');
 		})
 		.catch(function (err) {

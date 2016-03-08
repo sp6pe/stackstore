@@ -53,7 +53,6 @@ schema.plugin(deepPopulate);
 
 // This is for both adding a product and increasing the quantity
 schema.methods.addProduct = function (productId) {
-    //console.log('product id ', productId);
 
     var isInCart = checkInCart.call(this, productId); //need to set context of this to function
     if (isInCart !== false) {
@@ -131,7 +130,6 @@ schema.methods.merge = function(sessionCart){
 schema.methods.mergeAddProduct = function (productId) {
 
     var isInCart = checkInCartNotPopulated.call(this, productId); //need to set context of this to function
-    console.log('result of is in cart',isInCart) //false for 1st iteration 
 
     if (isInCart !== false) {
         this.productList[isInCart].quantity++;

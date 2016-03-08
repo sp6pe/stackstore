@@ -5,7 +5,7 @@ var Category = mongoose.model('Category');
 
 router.param('categoryId', function(req, res, next, categoryId) {
 	Category.findById(categoryId)
-		.populate('user')
+		.populate('interviewer')
 		.then(function(category) {
 			if (!category) return next(new Error('Category not found'));
 			req.category = category;

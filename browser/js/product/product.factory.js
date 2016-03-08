@@ -33,7 +33,7 @@ app.factory('ProductFactory', function($http){
 	};
 
 	ProductFactory.remove = function(id){
-		return $http.delete('/api/products/category', id)
+		return $http.delete('/api/products/' + id)
 		.then(function(response){
 			return response.data;
 		});
