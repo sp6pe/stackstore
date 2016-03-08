@@ -31,12 +31,12 @@ app.config(function($stateProvider){
 	});
 
 	$stateProvider.state('user.interviews', {
-		url: '/orders',
-		templateUrl: '/js/user/user.orders.html',
-		controller: 'UserOrdersCtrl',
+		url: '/interviews',
+		templateUrl: '/js/user/user.interviews.html',
+		controller: 'UserInterviewCtrl',
 		resolve: {
-			theOrders: function(CartFactory){
-				return CartFactory.getPreviousOrders();
+			theInterviews: function(ProductFactory, theUser){
+				return ProductFactory.getByInterviewerId(theUser._id);
 			}
 		}
 	});

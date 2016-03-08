@@ -22,6 +22,14 @@ router.get('/', function(req, res, next) {
 		.then(null, next);
 });
 
+router.get('/interviewer/:interviewerId', function(req, res, next) {
+	Product.findByInterviewerId(req.params.interviewerId)
+		.then(function(products) {
+			res.json(products);
+		})
+		.then(null, next);
+});
+
 router.post('/', function(req, res, next) {
 	Product.create(req.body)
 		.then(function(product) {

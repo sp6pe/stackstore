@@ -2,26 +2,25 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-10 col-lg-offset-1">
-				<div class="row">
-    				<form class="form-register" ng-submit='saveProfileChanges()' name='userForm' novalidate>
+				
+    				<form class="form-register" ng-submit='saveProfileChanges(user)' name='userForm' novalidate>
 						<label>Profile Picture</label><br>
-						<img class="profile-pic" src="{{ user.photoUrl }}">
-						<button class="btn btn-default" ng-show="">Change Picture</button>
-						<button class="btn btn-default" ng-hide="">Cancel Change</button>
+						<img class="profile-pic" src="{{ user.photoUrl }}"><br><br>
+						<button class="btn btn-default" ng-hide="changingPic" ng-click="toggle()">Change Picture</button>
+						<div ng-show="changingPic">
+							<button class="btn btn-default" ng-click="toggle()">Cancel Change</button>
+							<input class="form-control change-user-url" type="text" ng-model="user.photoUrl">
+						</div>
 
 						<br><br>
 						<label>Name
-						<input class="form-control" type="text" name="name" ng-model="fullName" required></label><br>
+						<input class="form-control" type="text" ng-model="fullName" required></label><br>
 						<label>Email
-						<input class="form-control" type="email" name="name" ng-model="user.email" required></label><br>
-						<label>Phone
-						<input class="form-control" type="text" name="name" ng-model="user.phone" required></label><br>
-						<label>Skills
-						<input class="form-control" type="text" name="name" ng-model="user.skills" required></label><br>
+						<input class="form-control" type="email" ng-model="user.email" required></label><br>
 						<br>
 						<button class="btn btn-submit" id="save-profile-changes" type="submit">Save Changes</button>
 					</form>
-				</div>
+				
 			</div>
 		</div>
 	</div>

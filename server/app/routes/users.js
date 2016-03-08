@@ -54,8 +54,6 @@ router.put('/:userId', function (req, res, next) {
 
 		User.findByIdAndUpdate(req.user.id,req.body, {new: true,runValidators: true})
 		.then(function(user){
-
-			console.log("this is being sent", user)
 			res.json(user).status(200);
 		})
 		.then(null,next)

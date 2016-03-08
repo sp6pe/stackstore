@@ -24,8 +24,8 @@ app.factory("UserFactory", function($http) {
 		});
 	};
 
-	UserFactory.update = function(id) {
-		return $http.put('/api/users/' + id)
+	UserFactory.update = function(id, data) {
+		return $http.put('/api/users/' + id, data)
 		.then(function(response) {
 			return response.data;
 		});

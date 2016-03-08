@@ -856,3 +856,7 @@ input[name=title]{
 .order-table {
   text-align: center;
 }
+
+.change-user-url {
+  width: 75%;
+}
