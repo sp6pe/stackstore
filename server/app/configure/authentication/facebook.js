@@ -3,6 +3,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var CartModel = mongoose.model('Cart');
 
 module.exports = function (app) {
 
@@ -15,7 +16,7 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-
+        console.log(profile);
         UserModel.findOne({ 'facebook.id': profile.id }).exec()
             .then(function (user) {
 
@@ -45,24 +46,24 @@ module.exports = function (app) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
         function (req, res) {
-            var userCart, sessionCart;
-            CartModel.create({customer: req.user._id})
-                .then(function(cart) {
+            var userCart;
+            CartModel.findOrCreate(req.user._id)
+                .then(function(cart){
                     userCart = cart;
                     return CartModel.findById(req.session.cart)
-                    .populate('productList.product customer')
-                    .deepPopulate('productList.product.interviewer');
+                       .populate('productList.product customer')
+                       .deepPopulate('productList.product.interviewer');
                 })
-                .then(function(sessionCart) {
-                    if (sessionCart){
+                .then(function(sessionCart){
+                    if(sessionCart){
                         return userCart.merge(sessionCart);
                     }
                     req.session.cart = null;
                 })
-                .then(function() {
+                .then(function(){
                     res.redirect('/');
                 })
-                .catch(function(err) {
+                .catch(function(err){
                     console.error(err);
                 })
         });
