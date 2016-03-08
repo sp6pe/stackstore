@@ -60,17 +60,21 @@
         // Uses the session factory to see if an
         // authenticated user is currently registered.
         this.isAuthenticated = function () {
-            console.log(Session.user);
+
             return !!Session.user;
         };
 
 
         //uses session factory to see if an unauthenitcated user is admin
         this.typeOfUser= function () {
-            //console.log(Session.user);
+
             if(Session.user.isAdmin) return 'Admin';
             if(Session.user.isInterviewer) return 'Interviewer';
         };
+
+        this.user = function(){
+            return Session.user();
+        }
 
 
         this.getLoggedInUser = function (fromServer) {
@@ -79,7 +83,7 @@
             // return the user attached to that session
             // with a promise. This ensures that we can
             // always interface with this method asynchronously.
-            console.log(this.typeOfUser());
+
             // Optionally, if true is given as the fromServer parameter,
             // then this cached value will not be used.
 
