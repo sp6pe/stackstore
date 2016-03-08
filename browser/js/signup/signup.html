@@ -1,30 +1,41 @@
-<form id="login-form" class="need-to-clear" name="singupForm" ng-model="signup" ng-submit="sendSignup(signup)">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
 
-    <alert type="danger" ng-show="error">
-        {{ error }}
-    </alert>
+        <div class="cart-view col-lg-6">
 
-    <div class="form-group" >
-        <label>Email address</label>
-        <input type="text" ng-model="signup.email" class="form-control" id="email" placeholder="Enter email" required >
-    </div>
-    <div class="form-group" >
-        <label >Password</label>
-        <input type="password" ng-model="signup.password" class="form-control" id="login-password" placeholder="Password" required>
-    </div>
-     <div class="form-group">
-        <label >First Name</label>
-        <input type="FirstName" ng-model="signup.firstName" class="form-control" id="login-FirstName" placeholder="First Name">
-    </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input type="LastName" ng-model="signup.lastName" class="form-control" id="login-LastName" placeholder="Last Name">
-    </div>
-     <div class="form-group">
-        <label >Photo Url</label>
-        <input type="PhotoUrl" ng-model="signup.photoUrl" class="form-control" id="login-PhotoUrl" placeholder="Photo Url">
-    </div>
+            <form id="signup" class="signup-form" name="singupForm" ng-model="signup" ng-submit="sendSignup(signup)">
 
-    <button type="submit" class="btn btn-default">Submit</button>
+                <alert type="danger" ng-show="error">
+                    {{ error }}
+                </alert>
 
-</form>
+                <div class="form-group" >
+                    <label>Email address</label>
+                    <input type="text" ng-model="signup.email" class="form-control" id="email" placeholder="Enter email" required >
+                </div>
+                <div class="form-group" >
+                    <label>Password</label>
+                    <input type="password" ng-model="signup.password" class="form-control" id="login-password" placeholder="Password" required>
+                </div>
+                 <div class="form-group">
+                    <label>First Name</label>
+                    <input type="FirstName" ng-model="signup.firstName" class="form-control" id="login-FirstName" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="LastName" ng-model="signup.lastName" class="form-control" id="login-LastName" placeholder="Last Name">
+                </div>
+                 <div class="form-group">
+                    <label>Photo Url</label>
+                    <input type="PhotoUrl" ng-model="signup.photoUrl" class="form-control" id="login-PhotoUrl" placeholder="Photo Url">
+                </div>
+
+                <button type="submit" class="btn btn-default">Sign Up</button>
+
+            </form>
+        </div>
+
+        <div class="col-lg-3"></div>
+
+</div>
