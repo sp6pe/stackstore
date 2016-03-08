@@ -47,6 +47,7 @@ router.get('/:productId', function(req, res, next) {
 
 router.put('/:productId', function(req, res, next) {
 	Product.findByIdAndUpdate(req.product._id, req.body, {new: true,runValidators: true})
+		.populate('categories interviewer')
 		.then(function(product) {
 			res.json(product);
 		})

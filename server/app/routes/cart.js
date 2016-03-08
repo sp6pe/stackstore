@@ -174,7 +174,7 @@ router.delete('/:cartId/deleteCart',function(req,res,next){
 
 //delete product from specific cart 
 router.delete('/:cartId',function(req,res,next){
-	req.cart.removeProduct(req.body)
+	req.cart.remove()
 		.then(function(){
 			res.sendStatus(204);
 		})

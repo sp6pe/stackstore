@@ -1,31 +1,42 @@
 'use strict';
 
-app.controller('ProductCtrl', function($scope, theProduct,CartFactory,theReviews, ReviewFactory, currentUser){
+app.controller('ProductCtrl', function($scope, theProduct, CartFactory, theReviews, ReviewFactory, currentUser, theCategories, ProductFactory){
 
 	$scope.currentUser = currentUser;
 	$scope.product = theProduct;
 	$scope.reviews = theReviews;
+	$scope.allCategories = theCategories;
+	$scope.editMode = false;
 
 	$scope.addToCart = function(product){
-		console.log('product in controller',product);
 		CartFactory.create(product).then(function(cart){
 			return cart;
 		})
 	};
 	
-	var displayLimit = 2;
-	
-	$scope.reviewAmount = theReviews.length;
-	
 	$scope.isInterviewer = function() {
-		console.log($scope.currentUser._id);
-		console.log($scope.product.interviewer._id);
-		console.log("true or false", $scope.currentUser._id === $scope.product.interviewer._id);
 		return ($scope.currentUser._id === $scope.product.interviewer._id);
 	}
 
+	$scope.editPage = function() {
+		$scope.editMode = true;
+	}
+
+	$scope.updatePage = function(product) {
+		$scope.editMode = false;
+		ProductFactory.update(product._id,product)
+			.then(function(product) {
+				$scope.product = product;
+			})
+	}
+
+	var displayLimit = 2;
+	
+	$scope.reviewAmount = theReviews.length;
+
 	$scope.typingReview = false;
-	$scope.toggleWrite = function(){	
+	$scope.toggleWrite = function(){
+		console.log($scope.product.categories)	
 		$scope.typingReview = !$scope.typingReview;
 
 		ReviewFactory.fetchByProductId(theProduct._id)
