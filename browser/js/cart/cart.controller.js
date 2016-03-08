@@ -1,3 +1,5 @@
+
+
 app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 
     //add product when on the cart 
@@ -34,6 +36,7 @@ app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 	};
 
 	$scope.checkout = function() {
+
 		CartFactory.checkout($scope.cart._id)
 			.then(function(newCart) {
 				$scope.cart = newCart;
@@ -53,6 +56,10 @@ app.controller('cartCtrl',function($scope, CartFactory, AuthService, cart) {
 
 	$scope.cart = cart;
 	$scope.setCurrentTotal();
+
+
+
+	
 
 
 });
