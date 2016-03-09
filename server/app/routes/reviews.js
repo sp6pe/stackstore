@@ -3,7 +3,6 @@ module.exports = router;
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
 var _ = require('lodash');
-var authenticator = require('./authorize.js');
 
 router.param('reviewId', function(req, res, next, reviewId) {
 	Review.findById(reviewId)
@@ -35,7 +34,7 @@ router.get('/:reviewId', function(req, res, next) {
 	res.json(req.review);
 });
 
-router.post('/', authenticator.ensureAuthenticated, function(req, res, next) {
+router.post('/', function(req, res, next) {
 	Review.create(req.body)
 		.then(function(review) {
 			res.status(201).json(review);
@@ -43,7 +42,7 @@ router.post('/', authenticator.ensureAuthenticated, function(req, res, next) {
 		.then(null, next);
 });
 
-router.put('/:reviewId', authenticator.ensureAuthenticated, function(req, res, next) {
+router.put('/:reviewId', function(req, res, next) {
 	_.extend(req.review, req.body);
 	req.review.save()
 		.then(function(review) {
