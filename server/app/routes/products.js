@@ -64,7 +64,7 @@ router.put('/:productId', function(req, res, next) {
 
 router.delete('/:productId', function(req, res, next) {
 	req.product.remove()
-		.then(function(success) {
+		.then(function() {
 			res.status(204).end();
 		})
 		.then(null, next);

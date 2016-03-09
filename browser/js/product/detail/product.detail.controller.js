@@ -2,6 +2,10 @@
 
 app.controller('ProductCtrl', function($scope, $state, theProduct, CartFactory, theReviews, ReviewFactory, currentUser, theCategories, ProductFactory){
 
+	
+	$scope.max = 5
+	$scope.isReadonly = true;
+
 	$scope.currentUser = currentUser;
 	$scope.product = theProduct;
 	$scope.reviews = theReviews;
@@ -36,13 +40,14 @@ app.controller('ProductCtrl', function($scope, $state, theProduct, CartFactory, 
 
 	$scope.typingReview = false;
 	$scope.toggleWrite = function(){
-		console.log($scope.product.categories)	
+		console.log($scope.product.categories);	
 		$scope.typingReview = !$scope.typingReview;
 
 		ReviewFactory.fetchByProductId(theProduct._id)
 		.then(function(newReviews){
 			$scope.reviews = newReviews;
 			$scope.reviewAmount = newReviews.length;
+			if($scope.reviewAmount > 0) $scope.noReviews = false;
 		});
 	};
 

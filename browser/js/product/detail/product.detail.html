@@ -64,7 +64,7 @@
                 <button class="btn btn-default" ng-hide="typingReview" ng-click="toggleWrite()">Write a review</button>
                 <button class="btn btn-default" ng-show="typingReview" ng-click="toggleWrite()">Cancel review</button>
                 
-                <write-review product-id="{{ product._id }}" ng-show="typingReview" hideform="toggleWrite()"></write-review>
+                <write-review product-id="{{ product._id }}" author-id="{{ currentUser._id }}" ng-show="typingReview" hideform="toggleWrite()"></write-review>
 
                 <div ng-hide="noReviews">
                     <div ng-show="lessReviewsThanLimit">
@@ -79,9 +79,9 @@
                 </div>
 
                     <ul class="list-inline review-info" ng-repeat="review in reviews | limitTo:reviewDisplayLimit">
-                        <li>{{ review.stars }} stars <strong>{{ review.title }}</strong></li>
+                        <li><uib-rating ng-model="review.stars" max="max" read-only="isReadonly"></uib-rating> <strong>{{ review.title }}</strong></li>
                         <br>
-                        <li>By John on {{ review.date | date:'MM/dd/yyyy' }}</li>
+                        <li>By {{ review.author.firstName }} on {{ review.date | date:'MM/dd/yyyy' }}</li>
                         <br>
                         <li>{{ review.content }}</li>
                         <br>

@@ -1,6 +1,6 @@
 'use strict'
 
-app.directive('filter', function(CategoryFactory,UserFactory,ProductFactory) {
+app.directive('filter', function(CategoryFactory) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/filter/filter.html',
