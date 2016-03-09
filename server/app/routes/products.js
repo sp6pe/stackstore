@@ -43,6 +43,7 @@ router.get('/category/:id', function(req,res,next){
 
 	Product.find({categories:req.params.id})
 		.populate('categories')
+		.populate('interviewer')
 		.then(function(products){
 			res.status(201).json(products);
 		})

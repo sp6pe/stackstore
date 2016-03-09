@@ -15,7 +15,8 @@ app.controller('ProductCtrl', function($scope, $state, theProduct, CartFactory, 
 	};
 	
 	$scope.isInterviewer = function() {
-		return ($scope.currentUser._id === $scope.product.interviewer._id);
+		if($scope.currentUser) return ($scope.currentUser._id === $scope.product.interviewer._id);
+		return false;
 	}
 
 	$scope.editPage = function() {

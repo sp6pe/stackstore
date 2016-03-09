@@ -66,7 +66,6 @@ var seedCategories = function(){
 
 }
 
-
 var seedUsers = function () {
 
     var users = [
@@ -84,7 +83,15 @@ var seedUsers = function () {
             lastName: 'Alvez',
             isAdmin: true,
             photoUrl: 'http://s3.amazonaws.com/fullstackwebsite/joe_alves.jpg'
-        }
+        },
+        {
+            email: 'jai@gmail.com',
+            password: '1234',
+            firstName: 'Jai',
+            lastName: 'Prasad',
+            isInterviewer: true,
+            photoUrl: 'https://www.facebook.com/images/spacer.gif'
+        },
     ];
 
     for (var i = 0; i < 50; i++) {
@@ -95,116 +102,88 @@ var seedUsers = function () {
 
 };
 
-
-var seedProducts = function (users) {
+var seedProducts = function (users, categories) {
     var products = [
         {
             title: 'Test Course 1',
             price: 100,
             quantity: 10,
-            interviewer: users[11]._id
+            interviewer: users[11]._id,
+            categories: [categories[0]._id]
         },
         {
             title: 'Test Course 2',
             price: 80,
             quantity: 8,
-            interviewer: users[15]._id
+            interviewer: users[15]._id,
+            categories: [categories[0]._id]
         },
         {
             title: 'Test Course 3',
             price: 180,
-            quantity: 5,
-            interviewer: users[2]._id
+            quantity: 10,
+            interviewer: users[3]._id,
+            categories: [categories[1]._id]
         },
         {
             title: 'Test Course 4',
             price: 100,
             quantity: 10,
-            interviewer: users[3]._id
+            interviewer: users[3]._id,
+            categories: [categories[1]._id]
         },
         {
             title: 'Test Course 5',
             price: 80,
             quantity: 8,
-            interviewer: users[4]._id
+            interviewer: users[4]._id,
+            categories: [categories[1]._id]
         },
         {
             title: 'Test Course 5',
             price: 180,
             quantity: 5,
-            interviewer: users[5]._id
+            interviewer: users[5]._id,
+            categories: [categories[1]._id]
         },
         {
             title: 'Test Course 6',
             price: 180,
             quantity: 5,
-            interviewer: users[6]._id
+            interviewer: users[6]._id,
+            categories: [categories[2]._id]
         },
         {
             title: 'Test Course 7',
             price: 100,
             quantity: 10,
-            interviewer: users[7]._id
+            interviewer: users[7]._id,
+            categories: [categories[2]._id]
         },
         {
             title: 'Test Course 8',
             price: 80,
             quantity: 8,
-            interviewer: users[8]._id
+            interviewer: users[8]._id,
+            categories: [categories[2]._id]
         },
         {
             title: 'Test Course 8',
             price: 180,
             quantity: 5,
-            interviewer: users[9]._id
+            interviewer: users[9]._id,
+            categories: [categories[2]._id]
         },
         {
             title: 'Test Course 9',
             price: 180,
             quantity: 5,
-            interviewer: users[10]._id
+            interviewer: users[10]._id,
+            categories: [categories[2]._id]
         }
     ];
 
     return Product.createAsync(products);
-
-};
-
-var seedCart = function (products, users) {
-
-    var carts = [
-        {
-            status: 'created',
-            productList: [
-                {
-                    product: products[0]._id,
-                    quantity: 5
-                },
-                {
-                    product: products[1]._id,
-                    quantity: 3
-                }
-            ],
-            customer: users[0]._id
-        },
-        {
-            status: 'complete',
-            productList: [
-                {
-                    product: products[0]._id,
-                    quantity: 5
-                },
-                {
-                    product: products[1]._id,
-                    quantity: 3
-                }
-            ],
-            customer: users[0]._id
-        },
-  
-    ];
-
-    return Cart.createAsync(carts);
 
 };
 
@@ -241,7 +220,6 @@ var seedReviews = function (products) {
 
 };
 
-
 // connectToDb.then(function(){
 //         return seedCategories()
 //     })
@@ -252,16 +230,19 @@ var seedReviews = function (products) {
 //         console.log(err);
 //     })
 
-
 var savedUsers;
 connectToDb.then(function () {      
     // return seedUsers();
    
     return seedUsers();
 })
-.then(function(users) {
+.then(function(users){
     savedUsers = users;
-    return seedProducts(users);
+    return seedCategories();
+})
+.then(function(categories) {
+    
+    return seedProducts(savedUsers, categories);
 })
 .catch(function (err) {
     console.error(err);

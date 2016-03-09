@@ -2,7 +2,7 @@
 	<div ng-show='isProduct' class="product-search">
 		<label><input ng-model='title' placeholder="Search by title"></label>
 		<label><input ng-model="interviewerName" placeholder="Search by name"></label>
-		<label>Search By Category: <select ng-model="chosenCategory" ng-options="category._id as category.name for category in categories"></select>
+		<label><select ng-model="chosenCategory" ng-init="somethingHere" ng-options="category._id as category.name for category in categories" class="select-category"><option value="">Search by category</option></select>
 	</div>
 
 	<!-- <div ng-show = 'isProduct' >
