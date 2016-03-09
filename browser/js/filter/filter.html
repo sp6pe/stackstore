@@ -1,24 +1,26 @@
-<div ng-show = 'isProduct' >
-	<label>Search By Title: <input ng-model='title' placeholder="Title"></label>
-	<label>Search By Interviewer Name: <input ng-model="interviewerName" placeholder="Interviewer Name"></label>
-	<label>Search By Category: <select ng-model="chosenCategory" ng-options= "category._id as category.name for category in categories"></select>
-</div>
+<div class="filter-contain">
+	<div ng-show='isProduct' class="product-search">
+		<label><input ng-model='title' placeholder="Search by title"></label>
+		<label><input ng-model="interviewerName" placeholder="Search by name"></label>
+		<label>Search By Category: <select ng-model="chosenCategory" ng-options="category._id as category.name for category in categories"></select>
+	</div>
 
-<!-- <div ng-show = 'isProduct' >
-	<h4>There are no interviews right now!</h4>
-</div> -->
+	<!-- <div ng-show = 'isProduct' >
+		<h4>There are no interviews right now!</h4>
+	</div> -->
 
-<div ng-show = 'isUser'>
-	<label>Search By last name: <input ng-model='lastName' placeholder="Smith"></label>
-	<label>Search By email: <input ng-model="email" placeholder="smith123@gmail.com"></label>
-</div>
+	<div ng-show='isUser'>
+		<label>Search By last name: <input ng-model='lastName' placeholder="Smith"></label>
+		<label>Search By email: <input ng-model="email" placeholder="smith123@gmail.com"></label>
+	</div>
 
-<!-- <div ng-show = 'isUser' >
-	<h4>There are no users right now!</h4>
-</div>
- -->
+	<!-- <div ng-show = 'isUser' >
+		<h4>There are no users right now!</h4>
+	</div>
+	 -->
 
- <div ng-show = 'isCart' >
-	<label>Search By Last Name: <input ng-model='cartLastName' placeholder="Smith"></label>
-	<label>Search By Status: <input ng-model='status' placeholder="created, processing, cancelled, complete" class="long-status-input"></label>
+	 <div ng-show='isCart' >
+		<label>Search By Last Name: <input ng-model='cartLastName' placeholder="Smith"></label>
+		<label>Search By Status: <input ng-model='status' placeholder="created, processing, cancelled, complete" class="long-status-input"></label>
+	</div>
 </div>
