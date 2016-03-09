@@ -7,6 +7,7 @@
 		<td><strong>Description</strong></td>
 		<td><strong>Price ($)</strong></td>
 		<td><strong>Sessions Offered</strong></td>
+		<td> </td>
 	</tr>
 	<tr ng-repeat="interview in interviews">
 		<td>{{ $index + 1 }}</td>
@@ -14,5 +15,6 @@
 		<td>{{ interview.description }}</td>
 		<td>{{ interview.price }}</td>
 		<td>{{ interview.quantity }}</td>
+		<td><button class="btn">Remove</button></td>
 	</tr>
 </table>

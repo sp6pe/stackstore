@@ -24,7 +24,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/product/:productId', function(req, res, next) {
 	Review.findByProductId(req.params.productId)
-		.populate('author')
 		.then(function(reviews) {
 			res.json(reviews);
 		})
@@ -54,7 +53,7 @@ router.put('/:reviewId', function(req, res, next) {
 
 router.delete('/:reviewId', function(req, res, next) {
 	req.review.remove()
-		.then(function() {
+		.then(function(success) {
 			res.status(204).end();
 		})
 });
