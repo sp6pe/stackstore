@@ -7,7 +7,7 @@ app.controller('appCtrl',function($scope){
 		if (angular.isDefined(toState.data)) {
 	    	vm.bodyClasses = toState.data.bodyClasses;
 	    	return;
-		}
+	    }
 		vm.bodyClasses = 'default';
 	});
 });

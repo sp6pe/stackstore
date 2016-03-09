@@ -9,7 +9,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             scope.items = [
                 { label: 'Interviews', state: 'allProducts' },
                 // { label: 'Create New Interview', state: 'create_product', auth: true},
-                { label: 'My Account', state: 'user.profile({userId: user._id})', auth: true }
+                { label: 'My Account', state: 'user({userId: user._id})', auth: true }
             ];
 
             scope.user = null;
