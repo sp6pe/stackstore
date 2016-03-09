@@ -2,13 +2,12 @@
 var router = require('express').Router();
 module.exports = router;
 require('../../db/models');
-var authenticator = require('./authorize.js');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
-router.param('userId', authenticator.ensureAuthenticated, function(req,res,next,id){
+router.param('userId',function(req,res,next,id){
 	User.findById(id).exec()
 		.then(function(user){
 			if(!user) return next (new Error('No such user'));
@@ -18,7 +17,7 @@ router.param('userId', authenticator.ensureAuthenticated, function(req,res,next,
 		.then(null,next);
 });
 
-router.get('/',authenticator.ensureAdmin,function(req,res,next){
+router.get('/',function(req,res,next){
 	return User.find({})
 		.then(function(users){
 			res.json(users)
@@ -47,13 +46,13 @@ router.post('/',function(req,res,next){
 		.then(null,next)
 });
 
-router.get('/:userId', function (req,res,next) {
+router.get('/:userId',function(req,res,next){
 	res.json(req.user);
 });
 
 router.put('/:userId', function (req, res, next) {
 
-	User.findByIdAndUpdate(req.user.id,req.body, {new: true,runValidators: true})
+		User.findByIdAndUpdate(req.user.id,req.body, {new: true,runValidators: true})
 		.then(function(user){
 			res.json(user).status(200);
 		})
@@ -64,10 +63,10 @@ router.put('/:userId', function (req, res, next) {
 router.delete('/:userId',function(req,res,next){
 
 	User.findById(req.user.id).remove().exec()
-		.then(function(){
-			res.sendStatus(204);
-		})
-		.then(next,null)
+			.then(function(){
+				res.sendStatus(204);
+			})
+			.then(next,null)
 });
 
 router.use('/:userId/cart', require('./cart'));

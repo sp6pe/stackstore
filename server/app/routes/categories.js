@@ -2,7 +2,6 @@ var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
 var Category = mongoose.model('Category');
-var authenticator = require('./authorize.js');
 
 router.param('categoryId', function(req, res, next, categoryId) {
 	Category.findById(categoryId)
@@ -31,7 +30,7 @@ router.get('/:categoryId', function(req, res) {
 	res.json(req.category);
 });
 
-router.post('/', authenticator.ensureAdmin, function(req, res, next) {
+router.post('/', function(req, res, next) {
 	Category.create(req.body)
 		.then(function(category) {
 			res.status(201).json(category);
@@ -39,7 +38,7 @@ router.post('/', authenticator.ensureAdmin, function(req, res, next) {
 		.then(null, next);
 });
 
-router.put('/:categoryId', authenticator.ensureAdmin, function(req, res, next) {
+router.put('/:categoryId', function(req, res, next) {
 	Category.findByIdAndUpdate(req.category._id, req.body, {new: true})
 		.then(function(category) {
 			res.json(category);
@@ -47,7 +46,7 @@ router.put('/:categoryId', authenticator.ensureAdmin, function(req, res, next) {
 		.then(null, next);
 });
 
-router.delete('/:categoryId', authenticator.ensureAdmin, function(req, res) {
+router.delete('/:categoryId', function(req, res) {
 	req.category.remove()
 		.then(function() {
 			res.status(204).end();
