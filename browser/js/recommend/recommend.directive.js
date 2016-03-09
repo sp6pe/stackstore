@@ -10,7 +10,9 @@ app.directive('recommendation', function(ProductFactory){
 		link: function(scope){
 			ProductFactory.getByCategory(scope.product.categories[0])
 			.then(function(products){
+
 				scope.recCategory = products;
+				console.log(scope.recCategory);
 			})
 
 

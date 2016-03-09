@@ -9,8 +9,9 @@
 
   <div class="carousel-inner" >
     <div class="item" ng-repeat = "item in recCategory" ng-class="{active : $first}">
-      <img src="{{item.photoUrl}}" alt="...">
+      <img src="{{item.interviewer.photoUrl}}" alt="...">
       <div class="carousel-caption" >
+          
           <h3>{{item.title}}</h3>
           <h3>${{item.price}}/hour</h3>
       </div>
