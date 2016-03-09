@@ -5,8 +5,8 @@
 			<div class="col-lg-10 col-lg-offset-1">
 				<ul class="nav nav-tabs">
 				    <li ui-sref-active="active"><a ui-sref="user.profile">Profile</a></li>
-				    <li ui-sref-active="active"><a ui-sref="user.orders">My Orders</a></li>
-				    <li ui-sref-active="active"><a ui-sref="user.interviews">My Interviews</a></li>
+				    <li ui-sref-active="active" ng-hide="user.isInterviewer"><a ui-sref="user.orders">My Orders</a></li>
+				    <li ui-sref-active="active" ng-show="user.isInterviewer"><a ui-sref="user.interviews">My Interviews</a></li>
 				</ul>
 				<ui-view></ui-view>
 			</div>

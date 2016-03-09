@@ -4,20 +4,17 @@
 <form name="reviewform" ng-submit="addReview()" novalidate>
 	<div class="form-group clearfix">
 		
-		<input type="text" name="title" ng-model="reviewTitle" placeholder="Title" maxlength="100" required>
+		<input class="form-control" type="text" name="title" ng-model="reviewTitle" placeholder="Title" maxlength="100" required>
 		<span ng-show="reviewform.title.$error.required && reviewform.title.$touched">Title is required</span>
 		<br>
 		
-		<textarea name="content" rows="4" placeholder="Your review" ng-model="reviewContent" minlength="20" required></textarea>
-		<br>
+		<textarea class="form-control" name="content" rows="4" placeholder="Your review" ng-model="reviewContent" minlength="20" required></textarea>
+		
 		<span ng-show="reviewform.content.$error.required && reviewform.content.$touched">Review content is required<br></span>
 		<span ng-show="reviewform.content.$error.minlength && reviewform.content.$dirty">Review is too short<br></span>
 
-		<select name="rating" ng-model="stars" required>
-			<option value="" disabled selected>Select star rating</option>
-			<option ng-repeat="stars in starRating">{{ stars }}</option>
-		</select>
-		<span ng-show="reviewform.rating.$error.required && reviewform.rating.$touched"><br>Star rating is required</span>
+		<span ng-show="reviewform.rating.$error.required">Please select a rating</span><br>
+		<uib-rating name="rating" ng-model="stars" max="5" required></uib-rating>
 
 		<button type="submit" class="btn btn-primary pull-right" ng-disabled="reviewForm.$invalid">Submit Review</button>
 
