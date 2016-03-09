@@ -66,7 +66,6 @@ var seedCategories = function(){
 
 }
 
-
 var seedUsers = function () {
 
     var users = [
@@ -102,7 +101,6 @@ var seedUsers = function () {
     return User.createAsync(users);
 
 };
-
 
 var seedProducts = function (users, categories) {
     var products = [
@@ -189,7 +187,6 @@ var seedProducts = function (users, categories) {
 
 };
 
-
 var seedReviews = function (products) {
 
     var reviews = [
@@ -223,7 +220,6 @@ var seedReviews = function (products) {
 
 };
 
-
 // connectToDb.then(function(){
 //         return seedCategories()
 //     })
@@ -233,7 +229,6 @@ var seedReviews = function (products) {
 //     .catch(function(err){
 //         console.log(err);
 //     })
-
 
 var savedUsers;
 connectToDb.then(function () {      
