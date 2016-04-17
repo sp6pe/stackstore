@@ -5,8 +5,11 @@ Prototypal e-commerce store built using Angular.js, MongoDB, Node.js, and Expres
 To run -
 
 ```git clone```
+
 ```npm install```
+
 ```gulp```
+
 ```npm start```
 
 
