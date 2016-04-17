@@ -4,13 +4,15 @@ Prototypal e-commerce store built using Angular.js, MongoDB, Node.js, and Expres
 
 To run -
 
-```git clone```
+Clone the repository using ```git clone https://github.com/sp6pe/stackstore.git```
 
-```npm install```
+Once you have a local copy of the respositroy, cd to the repository and run ```npm install```
 
-```gulp```
+When the node modules are finished installing ```gulp```
 
-```npm start```
+Finally, run ```npm install```
+
+
 
 
 
