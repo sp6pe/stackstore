@@ -3,9 +3,7 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-var api_key = 'key-83b41137ca5f2a924bf6ba14f4259939';
-var domain = 'sandbox180bd002096348d3a802d8e7172f275b.mailgun.org';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
 
 var schema = new mongoose.Schema({
     productList:[{

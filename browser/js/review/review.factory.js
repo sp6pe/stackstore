@@ -5,7 +5,7 @@ app.factory('ReviewFactory', function($http){
 	ReviewFactory.fetchAll = function(){
 		return $http.get('/api/reviews')
 		.then(function(response){
-			// console.log('ReviewFactory fetchAll: ', response.data);
+
 			return response.data;
 		});
 	};
@@ -13,7 +13,7 @@ app.factory('ReviewFactory', function($http){
 	ReviewFactory.fetchByReviewId = function(id){
 		return $http.get('/api/reviews/' + id)
 		.then(function(response){
-			// console.log('ReviewFactory fetchById: ', response.data);
+			
 			return response.data;
 		});
 	};
@@ -22,7 +22,7 @@ app.factory('ReviewFactory', function($http){
 		//fetch all reviews corresponding to a product
 		return $http.get('/api/reviews/product/' + productId)
 		.then(function(response){
-			// console.log('ReviewFactory fetchById: ', response.data);
+		
 			return response.data;
 		});
 	};
@@ -30,7 +30,7 @@ app.factory('ReviewFactory', function($http){
 	ReviewFactory.create = function(data){
 		return $http.post('/api/reviews', data)
 		.then(function(response){
-			// console.log('ReviewFactory create: ', response.data);
+
 			return response.data;
 		});
 	};
@@ -46,7 +46,7 @@ app.factory('ReviewFactory', function($http){
 	ReviewFactory.remove = function(id){
 		return $http.delete('/api/reviews/' + id)
 		.then(function(response){
-			// console.log('ReviewFactory remove: ', response.data);
+	
 			return response.data;
 		});
 	};
