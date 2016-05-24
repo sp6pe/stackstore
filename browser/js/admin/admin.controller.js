@@ -1,11 +1,11 @@
 'use strict'
-
+//admin rights 
 app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, ProductFactory, UserFactory, CartFactory) {
 
 	$scope.products = allProducts;
 	$scope.users = allUsers;
 	$scope.carts = allCarts;
-
+	//admin can remove a product
 	$scope.removeProduct = function(product) {
 		console.log(product);
 		var confirmation = prompt("please rewrite the product title to continue.");
@@ -16,7 +16,7 @@ app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, Pr
 			$scope.products.splice(idx,1);
 		})
 	}
-
+	//admin can remove user
 	$scope.removeUser = function(user) {
 		var confirmation = prompt("please rewrite the user's first name to continue.");
 		if (confirmation === user.firstName)
@@ -26,7 +26,7 @@ app.controller('AdminCtrl', function($scope, allProducts, allUsers, allCarts, Pr
 			$scope.users.splice(idx,1);
 		})
 	}
-
+	//admin can remove a cart
 	$scope.removeCart = function(cart) {
 		var confirmation = confirm("You sure you want to delete this cart?"); 
 		if (confirmation)
