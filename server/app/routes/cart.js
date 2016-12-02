@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 require('../../db/models');
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
+var authenticator = require('./authorize.js');
 
 // Get or create cart for current session
 router.get('/current', function(req, res, next) {
@@ -38,7 +39,7 @@ router.get('/current', function(req, res, next) {
 });
 
 // Get all the carts 
-router.get('/', function(req, res, next) {
+router.get('/', authenticator.ensureAdmin, function(req, res, next) {
 	Cart.find({})
 		.populate('customer')
 		.then(function(carts){
